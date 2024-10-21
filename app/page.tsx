@@ -1,9 +1,10 @@
 import { HeroSection } from '@/components/hero-section';
 import { CategoryList } from '@/components/category-list';
 import { TimeDeal } from '@/components/time-deal';
-import { ProductList } from '@/components/product-list';
+import ProductList from '@/components/product-list';
 import { Footer } from '@/components/footer';
 import { getProductsByCategory } from '@/lib/products';
+import { ProductListType } from '@/types/productTypes';
 
 
 export default function Home() {
@@ -51,12 +52,12 @@ export default function Home() {
         <TimeDeal products={timeDealProducts} />
         <ProductList
           title="인기 상품"
-          category="popular" 
+          type={ProductListType.popular}
           scrollable={true}
         />
         <ProductList
           title="추천 상품"
-          category="recommended"
+          type={ProductListType.recommended}
           scrollable={true}
         />
       </div>

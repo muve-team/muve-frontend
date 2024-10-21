@@ -4,28 +4,19 @@ import { useState, useEffect, useRef } from 'react';
 import { ProductCard } from '@/components/product-card';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useProducts } from '@/contexts/ProductContext';
+import useProductStore from '@/hooks/useProductStore';
+import { Product, ProductListType } from '@/types/productTypes';
 
 interface ProductListProps {
-  title: string;
-  category: 'popular' | 'recommended';
-  scrollable?: boolean;
+  title: string,
+  type: ProductListType,
+  scrollable: boolean,
+  initialProducts?: Product[] | null;
 }
 
-export const ProductList: React.FC<ProductListProps> = ({ title, category, scrollable }) => {
+export default function ProductList({ title, type, scrollable, initialProducts }: ProductListProps) {
 
-  const { 
-    popularProducts, 
-    recommendedProducts, 
-    isPopularLoading, 
-    isRecommendedLoading, 
-    popularError, 
-    recommendedError 
-  } = useProducts();
-
-  const products = category === 'popular' ? popularProducts : recommendedProducts;
-  const isPending = category === 'popular' ? isPopularLoading : isRecommendedLoading;
-  const error = category === 'popular' ? popularError : recommendedError;
+  const { products, isLoading, error } = useProductStore<Product>(type);
 
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(false);
@@ -38,6 +29,7 @@ export const ProductList: React.FC<ProductListProps> = ({ title, category, scrol
       navigator.userAgent
     );
 
+  // 스크롤 버튼 상태 업데이트 함수
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
 
@@ -62,8 +54,9 @@ export const ProductList: React.FC<ProductListProps> = ({ title, category, scrol
       }
       window.removeEventListener('resize', checkScroll);
     };
-  }, []);
+  }, [products]);
 
+  // 스크롤 동작 함수
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
       const scrollAmount = scrollContainerRef.current.clientWidth;
@@ -80,11 +73,11 @@ export const ProductList: React.FC<ProductListProps> = ({ title, category, scrol
     }
   };
 
-  if (isPending) return <div>Loading...</div>;
+  // 로딩 및 에러 처리
+  if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-
-  if (products.length === 0) {
-    return null;
+  if (!products || products.length === 0) {
+    return <div>No products found</div>;
   }
 
   return (
@@ -131,4 +124,4 @@ export const ProductList: React.FC<ProductListProps> = ({ title, category, scrol
       )}
     </section>
   );
-}
+};
