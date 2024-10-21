@@ -51,25 +51,106 @@
 
 @layer components {
   .bg-background {
-    background-color: hsl(var(--background)); /* Use your defined --background variable */
+    background-color: hsl(var(--background));
   }
-  
+
   .border-border {
-    border-color: hsl(var(--border)); /* Example: use your defined --border variable */
-    border-width: 0px; /* Example: set the border width */
-    border-style: solid; /* Example: set the border style */
+    border-color: hsl(var(--border));
+    border-width: 0px;
+    border-style: solid;
   }
 
   .text-foreground {
-    color: hsl(var(--foreground)); /* Use your defined --foreground variable */
+    color: hsl(var(--foreground));
+    /* Use your defined --foreground variable */
   }
 }
 
 @layer base {
   * {
-    @apply border-border; /* Use the newly defined class */
+    @apply border-border;
+    /* Use the newly defined class */
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/Pretendard-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/Pretendard-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/Pretendard-Semibold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/Pretendard-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('/fonts/Pretendard-Extrabold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+
+* {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 400;
+}
+
+.pretendard {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 400;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background: #f0f0f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c4c9ce;
+}
+
+.hover\:rotate-y-180:hover {
+  transform: rotateY(180deg);
+}
+
+.bg-primary {
+  background: #365955;
+  color: #fff;
+}
+
+.bg-secondary {
+  background: #b2b3b3;
+  color: #fff;
+}
+
+.text-primary {
+  color: #365955;
+}
+
+.bannerTit {
+  font-size: 1.5rem;
 }

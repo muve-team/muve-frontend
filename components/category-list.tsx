@@ -49,28 +49,26 @@ export function CategoryList({ compact = false }: CategoryListProps) {
         <div className="flex space-x-4 justify-center">
           {categories.map((category) => (
             <Button
-              key={category.id}
-              variant="ghost"
-              className="flex flex-col items-center justify-center w-32 h-40 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900 transition-all duration-300 transform hover:scale-105"
-              onClick={() => handleCategoryClick(category.slug)}
-            >
-              <div className="relative w-20 h-20 mb-3 overflow-hidden rounded-full">
-                {!loadedImages[category.id] && (
-                  <Skeleton className="absolute inset-0 rounded-full" />
-                )}
-                <Image
-                  src={category.imageUrl}
-                  alt={category.name}
-                  layout="fill"
-                  objectFit="cover"
-                  className={`rounded-full transition-opacity duration-300 ${
-                    loadedImages[category.id] ? 'opacity-100' : 'opacity-0'
-                  }`}
-                  onLoad={() => handleImageLoad(category.id)}
-                />
-              </div>
-              <span className="text-sm font-medium text-center">{category.name}</span>
-            </Button>
+            key={category.id}
+            variant="ghost"
+            className="flex flex-col items-center justify-center w-32 h-40 rounded-lg transition-all duration-300 transform hover:scale-105"
+            onClick={() => handleCategoryClick(category.slug)}
+          >
+            <div className="relative w-20 h-20 mb-3 overflow-hidden rounded-full">
+              {!loadedImages[category.id] && (
+                <Skeleton className="absolute inset-0 rounded-full" />
+              )}
+              <Image
+                src={category.imageUrl}
+                alt={category.name}
+                layout="fill"
+                objectFit="cover"
+                className={`rounded-full transition-opacity duration-300 ${loadedImages[category.id] ? 'opacity-100' : 'opacity-0'} filter grayscale hover:filter-none`}
+                onLoad={() => handleImageLoad(category.id)}
+              />
+            </div>
+            <span className="text-sm font-medium text-center">{category.name}</span>
+          </Button>
           ))}
         </div>
         <ScrollBar orientation="horizontal" />

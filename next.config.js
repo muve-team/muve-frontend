@@ -5,4 +5,10 @@ const nextConfig = {
   images: { unoptimized: true },
 };
 
+module.exports = {
+  images: {
+    domains: ['unsplash.com'],
+  },
+}
+
 module.exports = nextConfig;

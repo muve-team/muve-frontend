@@ -102,11 +102,11 @@ export function ProductCard({ id, name, price, imageUrl, category }: ProductCard
       </Link>
       <CardFooter className="p-4">
         <div className="flex w-full gap-2">
-          <Button size="sm" className="flex-1 bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800 text-white" onClick={handlePurchase}>
+          <Button size="sm" className="flex-1 bg-gray-500 text-white bg-secondary" onClick={handlePurchase}>
             <CreditCard className="mr-2 h-4 w-4" /> 구매
           </Button>
           {isLoggedIn && (
-            <Button size="sm" className="flex-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900 text-white" onClick={handleAddToCart}>
+            <Button size="sm" className="flex-1 bg-gray-300 text-white bg-primary" onClick={handleAddToCart}>
               <ShoppingCart className="mr-2 h-4 w-4" /> 장바구니
             </Button>
           )}
