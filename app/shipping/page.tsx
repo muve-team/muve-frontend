@@ -15,7 +15,7 @@ export default function ShippingPage() {
               <Truck className="w-10 h-10 text-blue-500" />
               <div>
                 <h2 className="text-2xl font-semibold mb-2">배송 방법</h2>
-                <p>에스샵은 CJ대한통운을 통해 배송됩니다. 일부 제품은 다른 택배사를 이용할 수 있습니다.</p>
+                <p>무브는 CJ대한통운을 통해 배송됩니다. 일부 제품은 다른 택배사를 이용할 수 있습니다.</p>
               </div>
             </CardContent>
           </Card>

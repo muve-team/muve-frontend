@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 const contactMethods = [
   { icon: PhoneCall, title: "전화 문의", description: "1588-0000", action: "전화하기", href: "tel:1588-0000" },
-  { icon: Mail, title: "이메일 문의", description: "support@sshop.com", action: "이메일 보내기", href: "mailto:support@sshop.com" },
+  { icon: Mail, title: "이메일 문의", description: "support@muve.com", action: "이메일 보내기", href: "mailto:support@sshop.com" },
   { icon: MessageCircle, title: "실시간 채팅", description: "평일 9:00 - 18:00", action: "채팅 시작하기", href: "#" },
 ]
 

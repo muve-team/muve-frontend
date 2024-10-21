@@ -8,16 +8,13 @@ import TopBanner from '@/components/topbanner';
 import { allProducts, getProductsByCategory } from '@/lib/products';
 
 export default function Home() {
-  const randomProducts = allProducts.slice(0, 8);
-  const popularProducts = getProductsByCategory('electronics').slice(0, 8);
 
   const timeDealProducts = [
     {
       id: 19,
       name: '스마트 TV',
       price: 1000000,
-      imageUrl:
-        'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c21hcnQlMjB0dnxlbnwwfHwwfHx8MA%3D%3D',
+      imageUrl: '',
       endTime: new Date(Date.now() + 3600000).toISOString(),
       category: 'electronics',
     },
@@ -25,8 +22,7 @@ export default function Home() {
       id: 20,
       name: '태블릿',
       price: 500000,
-      imageUrl:
-        'https://images.unsplash.com/photo-1585790050230-5dd28404ccb9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dGFibGV0fGVufDB8fDB8fHww',
+      imageUrl: '',
       endTime: new Date(Date.now() + 7200000).toISOString(),
       category: 'electronics',
     },
@@ -34,8 +30,7 @@ export default function Home() {
       id: 21,
       name: '무선 이어폰',
       price: 180000,
-      imageUrl:
-        'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8d2lyZWxlc3MlMjBlYXJwaG9uZXN8ZW58MHx8MHx8fDA%3D',
+      imageUrl: '',
       endTime: new Date(Date.now() + 10800000).toISOString(),
       category: 'electronics',
     },
@@ -43,8 +38,7 @@ export default function Home() {
       id: 22,
       name: '스마트 홈 허브',
       price: 120000,
-      imageUrl:
-        'https://images.unsplash.com/photo-1558089687-f282ffcbc126?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c21hcnQlMjBob21lfGVufDB8fDB8fHww',
+      imageUrl: '',
       endTime: new Date(Date.now() + 14400000).toISOString(),
       category: 'electronics',
     },
@@ -66,12 +60,12 @@ export default function Home() {
           />
         <ProductList
           title="인기 상품"
-          products={popularProducts}
+          category="popular" 
           scrollable={true}
         />
         <ProductList
           title="추천 상품"
-          products={randomProducts}
+          category="recommended"
           scrollable={true}
         />
       </div>

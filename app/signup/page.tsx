@@ -12,7 +12,7 @@ import { useAuth } from '@/lib/AuthContext'
 import { useRouter } from 'next/navigation'
 
 export default function SignupPage() {
-  const { signup } = useAuth()
+  const { signUp } = useAuth()
   const router = useRouter()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -30,7 +30,7 @@ export default function SignupPage() {
 
     setLoading(true)
     try {
-      await signup(name, email, password)
+      await signUp(name, email, password)
       setMessage('회원가입이 성공적으로 완료되었습니다.')
       router.push('/login')
     } catch (error) {

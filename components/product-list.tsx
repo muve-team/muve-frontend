@@ -4,26 +4,29 @@ import { useState, useEffect, useRef } from 'react';
 import { ProductCard } from '@/components/product-card';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  imageUrl: string;
-  category: string;
-}
+import { useProducts } from '@/contexts/ProductContext';
 
 interface ProductListProps {
   title: string;
-  products: Product[];
+  category: 'popular' | 'recommended';
   scrollable?: boolean;
 }
 
-export function ProductList({
-  title,
-  products,
-  scrollable = false,
-}: ProductListProps) {
+export const ProductList: React.FC<ProductListProps> = ({ title, category, scrollable }) => {
+
+  const { 
+    popularProducts, 
+    recommendedProducts, 
+    isPopularLoading, 
+    isRecommendedLoading, 
+    popularError, 
+    recommendedError 
+  } = useProducts();
+
+  const products = category === 'popular' ? popularProducts : recommendedProducts;
+  const isPending = category === 'popular' ? isPopularLoading : isRecommendedLoading;
+  const error = category === 'popular' ? popularError : recommendedError;
+
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -76,6 +79,9 @@ export function ProductList({
       });
     }
   };
+
+  if (isPending) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   if (products.length === 0) {
     return null;

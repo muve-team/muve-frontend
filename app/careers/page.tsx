@@ -47,9 +47,9 @@ export default function CareersPage() {
         </h1>
         
         <div className="max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl font-bold mb-4 text-center">에스샵과 함께 성장하세요</h2>
+          <h2 className="text-3xl font-bold mb-4 text-center">무브과 함께 성장하세요</h2>
           <p className="text-lg leading-relaxed mb-6 text-center text-blue-700 dark:text-blue-300">
-            에스샵은 혁신적인 아이디어와 도전 정신으로 온라인 쇼핑의 미래를 만들어갈 열정 넘치는 인재를 찾고 있습니다. 우리와 함께 고객들에게 최고의 쇼핑 경험을 제공하고, 기술의 발전을 선도하며, 지속 가능한 비즈니스를 만들어갈 준비가 되셨나요?
+            무브는 혁신적인 아이디어와 도전 정신으로 온라인 쇼핑의 미래를 만들어갈 열정 넘치는 인재를 찾고 있습니다. 우리와 함께 고객들에게 최고의 쇼핑 경험을 제공하고, 기술의 발전을 선도하며, 지속 가능한 비즈니스를 만들어갈 준비가 되셨나요?
           </p>
         </div>
 
@@ -79,7 +79,7 @@ export default function CareersPage() {
         </div>
 
         <div className="mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">에스샵에서 일하는 이유</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">무브에서 일하는 이유</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {/* 첫 번째 카드: 성장 기회 */}
             <Card className="bg-blue-500 dark:bg-blue-700 text-white hover:shadow-lg transition-shadow duration-300">
@@ -108,7 +108,7 @@ export default function CareersPage() {
         <div className="text-center">
           <h2 className="text-3xl font-bold mb-4">함께 미래를 만들어갈 준비가 되셨나요?</h2>
           <p className="text-xl mb-8 max-w-3xl mx-auto text-blue-700 dark:text-blue-300">
-            에스샵은 항상 열정적이고 창의적인 인재를 찾고 있습니다. 우리와 함께 온라인 쇼핑의 새로운 장을 열어갈 준비가 되셨다면 지금 바로 지원해보세요!
+            무브는 항상 열정적이고 창의적인 인재를 찾고 있습니다. 우리와 함께 온라인 쇼핑의 새로운 장을 열어갈 준비가 되셨다면 지금 바로 지원해보세요!
           </p>
           <Button 
             size="lg" 

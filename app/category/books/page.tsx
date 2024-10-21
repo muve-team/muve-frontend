@@ -8,7 +8,7 @@ export default function BooksCategoryPage() {
   return (
     <>
       <CategoryList compact={true} />
-      <ProductList title="상품 목록" products={bookProducts} />
+      <ProductList title="상품 목록" category="popular" />
     </>
   )
 }

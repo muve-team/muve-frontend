@@ -9,7 +9,7 @@ export default function TermsPage() {
         <h1 className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">이용약관</h1>
         <div className="prose prose-lg max-w-none dark:prose-invert">
           <h2>1. 서비스 이용 약관</h2>
-          <p>본 약관은 에스샵(이하 "회사")이 제공하는 모든 서비스(이하 "서비스")의 이용 조건 및 절차, 회사와 회원 간의 권리, 의무 및 책임사항 등을 규정합니다.</p>
+          <p>본 약관은 무브(이하 &quot;회사&quot;)이 제공하는 모든 서비스(이하 &quot;서비스&quot;)의 이용 조건 및 절차, 회사와 회원 간의 권리, 의무 및 책임사항 등을 규정합니다.</p>
           
           <h2>2. 회원가입 및 서비스 이용</h2>
           <p>서비스 이용을 위해서는 회원가입이 필요합니다. 회원가입 시 제공한 개인정보는 개인정보처리방침에 따라 보호됩니다.</p>

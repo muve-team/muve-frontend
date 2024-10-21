@@ -8,7 +8,7 @@ export default function FoodCategoryPage() {
   return (
     <>
       <CategoryList compact={true} />
-      <ProductList title="상품 목록" products={foodProducts} />
+      <ProductList title="상품 목록" category="popular" />
     </>
   )
 }
