@@ -19,7 +19,7 @@ export default function ReturnsPage() {
             <CardContent className="p-6">
               <h2 className="text-2xl font-semibold mb-4">반품/교환 절차</h2>
               <ol className="list-decimal list-inside space-y-2">
-                <li>'마이페이지 > 주문내역'에서 해당 상품의 '반품/교환 신청' 버튼 클릭</li>
+                <li>&apos;마이페이지 &gt; 주문내역&apos;에서 해당 상품의 &apos;반품/교환 신청&apos; 버튼 클릭</li>
                 <li>반품/교환 사유 선택 및 상세 내용 작성</li>
                 <li>반품/교환 승인 후 안내된 주소로 상품 발송</li>
                 <li>상품 확인 후 환불 또는 교환 상품 발송</li>

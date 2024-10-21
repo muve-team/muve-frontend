@@ -8,7 +8,7 @@ export default function AutomotiveCategoryPage() {
   return (
     <>
       <CategoryList compact={true} />
-      <ProductList title="상품 목록" products={automotiveProducts} />
+      <ProductList title="상품 목록" category="popular" />
     </>
   )
 }

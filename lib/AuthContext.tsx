@@ -6,6 +6,8 @@ interface AuthContextType {
   isLoggedIn: boolean;
   login: () => void;
   logout: () => void;
+  signUp: (name: string, email: string, password: string) => void;
+  resetPassword: (password: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,8 +30,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem('isLoggedIn', 'false');
   };
 
+  const signUp = (name: string, email: string, password: string) => {
+    console.log("signUp");
+  }
+
+  const resetPassword = (password: string) => {
+    console.log("resetPassword");
+  }
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, signUp, resetPassword }}>
       {children}
     </AuthContext.Provider>
   );

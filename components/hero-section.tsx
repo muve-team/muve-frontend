@@ -53,13 +53,13 @@ export function HeroSection() {
               <div className="relative w-12 h-12">
                 <Image
                   src="/logo.svg"
-                  alt="에스샵 로고"
+                  alt="무브 로고"
                   fill
                   className="rounded-full object-cover"
                 />
               </div>
             )}
-            <span className="ml-2 text-xl font-bold">에스샵</span>
+            <span className="ml-2 text-xl font-bold">무브</span>
           </Link>
 
           {/* 네비게이션 링크 (데스크탑) */}
@@ -172,7 +172,7 @@ export function HeroSection() {
       {isHomePage && (
         <div className="container mx-auto px-4 py-12 md:py-16">
           <div className="max-w-2xl mx-auto text-center">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">에스샵에서 쇼핑을 시작하세요</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">무브에서 쇼핑을 시작하세요</h1>
             <p className="text-lg md:text-xl mb-8 text-blue-700 dark:text-blue-300">최신 트렌드와 특별한 할인, 모두 여기서 만나보세요</p>
             <div className="flex justify-center">
               <SearchBar />

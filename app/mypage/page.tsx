@@ -73,7 +73,7 @@ export default function MyPage() {
     }).then((result) => {
       if (result.isConfirmed) {
         logout()
-        MySwal.fire({
+        Swal.fire({
           icon: 'success',
           title: '로그아웃 되었습니다',
           background: isDark ? '#1F2937' : '#ffffff',
@@ -106,7 +106,7 @@ export default function MyPage() {
     // addToCart({ ...product, quantity: 1 })
 
     // Swal 테마에 맞게 조정
-    MySwal.fire({
+    Swal.fire({
       icon: 'success',
       title: '장바구니에 추가되었습니다',
       text: `${product.name}이(가) 장바구니에 추가되었습니다.`,
