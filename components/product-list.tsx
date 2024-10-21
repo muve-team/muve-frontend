@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useEffect, useState } from 'react';
 import { ProductCard } from '@/components/product-card';
 import useProductStore from '@/hooks/useProductStore';
 import { useInfiniteProductQuery } from '@/hooks/useInfiniteProductQuery';
@@ -8,35 +9,40 @@ import ScrollButton from '@/components/ui/ScrollButton';
 import { useScrollButtonVisibility } from '@/hooks/useScrollButtonVisibility';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { useInView } from 'react-intersection-observer';
-import { useEffect } from 'react';
 
 interface ProductListProps {
   title: string,
   type: ProductListType,
+  scrollable: boolean,
   initialProducts?: Product[] | null;
 }
 
-export default function ProductList({ title, type, initialProducts }: ProductListProps) {
-  const { products, isLoading, error } = useProductStore<Product>(type);
-  const { showLeftButton, showRightButton, scrollContainerRef } = useScrollButtonVisibility(products);
-  const isMobile = useIsMobile();
-
-  const {
-    data: infiniteData,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading: isLoadingInfinite,
-    error: errorInfinite
-  } = useInfiniteProductQuery();
-
+export default function ProductList({ title, type, scrollable, initialProducts }: ProductListProps) {
+  const isDefaultType = type === ProductListType.default;
+  const { products: storeProducts, isLoading: storeLoading, error: storeError } = useProductStore<Product>(type, !isDefaultType);
+  const { data: infiniteData, fetchNextPage, hasNextPage, isLoading: infiniteLoading, error: infiniteError } = useInfiniteProductQuery(isDefaultType);
   const { ref, inView } = useInView();
 
+  const products = isDefaultType ? infiniteData?.pages.flat() : storeProducts;
+  const isLoading = isDefaultType ? infiniteLoading : storeLoading;
+  const error = isDefaultType ? infiniteError : storeError;
+
+  const { showLeftButton, showRightButton, scrollContainerRef } = useScrollButtonVisibility(products || []);
+  const isMobile = useIsMobile();
+
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
   useEffect(() => {
-    if (inView && hasNextPage && type === ProductListType.default) {
+    if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView, fetchNextPage, hasNextPage, type]);
+  }, [inView, fetchNextPage, hasNextPage]);
+
+  useEffect(() => {
+    setCanScrollLeft(showLeftButton);
+    setCanScrollRight(showRightButton);
+  }, [showLeftButton, showRightButton]);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -54,31 +60,6 @@ export default function ProductList({ title, type, initialProducts }: ProductLis
     }
   };
 
-  if (type === ProductListType.default) {
-    if (isLoadingInfinite) return <div>Loading...</div>;
-    if (errorInfinite) return <div>Error: {(errorInfinite as Error).message}</div>;
-
-    return (
-      <section className="my-12">
-        <h2 className="text-3xl font-bold mb-6 text-center">{title}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {infiniteData?.pages.map((page, i) => (
-            page.map((product) => (
-              <ProductCard key={product.id} {...product} />
-            ))
-          ))}
-        </div>
-        <div ref={ref}>
-          {isFetchingNextPage
-            ? 'Loading more...'
-            : hasNextPage
-            ? 'Load More'
-            : 'Nothing more to load'}
-        </div>
-      </section>
-    );
-  }
-
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
   if (!products || products.length === 0) {
@@ -88,23 +69,34 @@ export default function ProductList({ title, type, initialProducts }: ProductLis
   return (
     <section className="my-12 relative">
       <h2 className="text-3xl font-bold mb-6 text-center">{title}</h2>
-      <div className="relative">
-        {!isMobile && showLeftButton && (
-          <ScrollButton direction="left" onClick={() => scroll('left')} />
-        )}
-        {!isMobile && showRightButton && (
-          <ScrollButton direction="right" onClick={() => scroll('right')} />
-        )}
-        <div ref={scrollContainerRef} className="w-full overflow-x-auto">
-          <div className="flex space-x-4 p-4 w-max">
-            {products.map((product) => (
-              <div key={product.id} className="w-64 flex-shrink-0">
-                <ProductCard {...product} />
-              </div>
-            ))}
+      {scrollable ? (
+        <div className="relative">
+          {!isMobile && canScrollLeft && (
+            <ScrollButton direction="left" onClick={() => scroll('left')} />
+          )}
+          {!isMobile && canScrollRight && (
+            <ScrollButton direction="right" onClick={() => scroll('right')} />
+          )}
+          <div ref={scrollContainerRef} className="w-full overflow-x-auto">
+            <div className="flex space-x-4 p-4 w-max">
+              {products.map((product) => (
+                <div key={product.id} className="w-64 flex-shrink-0">
+                  <ProductCard {...product} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <ProductCard key={product.id} {...product} />
+          ))}
+          {isDefaultType && hasNextPage && (
+            <div ref={ref} className="h-10 w-full col-span-full" />
+          )}
+        </div>
+      )}
     </section>
   );
 }

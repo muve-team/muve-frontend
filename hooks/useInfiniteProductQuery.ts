@@ -1,9 +1,8 @@
-// hooks/useInfiniteProductQuery.ts
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchProducts } from "../lib/api";
 import { Product } from "../types/productTypes";
 
-export function useInfiniteProductQuery() {
+export function useInfiniteProductQuery(enabled: boolean) {
   return useInfiniteQuery({
     queryKey: ['infiniteProducts'],
     queryFn: ({ pageParam = 1 }) => 
@@ -12,5 +11,6 @@ export function useInfiniteProductQuery() {
       return lastPage.length ? allPages.length + 1 : undefined;
     },
     initialPageParam: 1,
+    enabled,
   });
 }

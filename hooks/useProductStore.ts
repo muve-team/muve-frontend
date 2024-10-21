@@ -1,14 +1,15 @@
-// hooks/useProductStore.ts
+"use client";
+
 import { useEffect } from "react";
 import { Product, ProductListType } from "../types/productTypes";
 import { useProductQuery } from "./useProductQuery";
 import { storeProduct } from "../lib/productStore";
 
-export default function useProductStore<T extends Product>(type: ProductListType) {
+export default function useProductStore<T extends Product>(type: ProductListType, enabled: boolean) {
   const products = storeProduct((state) => state.productsByType[type]);
   const setProducts = storeProduct((state) => state.setProducts);
 
-  const { data, isLoading, error } = useProductQuery<T>(type);
+  const { data, isLoading, error } = useProductQuery<T>(type, { enabled });
 
   useEffect(() => {
     if (data) {
