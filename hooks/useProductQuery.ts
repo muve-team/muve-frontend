@@ -1,11 +1,9 @@
-import { useQuery, QueryKey, UseQueryOptions } from "@tanstack/react-query";
+// hooks/useProductQuery.ts
+import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "../lib/api";
 import { Product, ProductListType } from "../types/productTypes";
 
-export function useProductQuery<T extends Product>(
-  type: ProductListType,
-  options?: Omit<UseQueryOptions<T[], Error, T[], QueryKey>, "queryKey" | "queryFn">
-) {
+export function useProductQuery<T extends Product>(type: ProductListType) {
   const urlMap = {
     [ProductListType.default]: `${process.env.NEXT_PUBLIC_API_URL}/product/random`,
     [ProductListType.popular]: `${process.env.NEXT_PUBLIC_API_URL}/product/random`,
@@ -14,9 +12,8 @@ export function useProductQuery<T extends Product>(
 
   const queryKey = `${type}Products`;
   
-  return useQuery<T[], Error>({
+  return useQuery({
     queryKey: [queryKey],
     queryFn: () => fetchProducts<T>(urlMap[type]),
-    ...options,
   });
 }
