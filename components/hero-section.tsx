@@ -27,7 +27,7 @@ export function HeroSection() {
   useEffect(() => {
     const img = new window.Image()
     img.onload = () => setLogoLoaded(true)
-    img.src = "/logo.svg"
+    img.src = "/images/logo.png"
   }, [])
 
   const handleLogout = () => {
@@ -42,32 +42,34 @@ export function HeroSection() {
   const isHomePage = pathname === '/'
 
   return (
-    <div className={`relative bg-gradient-to-r from-blue-300 via-blue-200 to-blue-100 dark:from-blue-950 dark:via-blue-900 dark:to-blue-800 text-blue-900 dark:text-white ${!isHomePage ? 'py-5' : 'py-4'}`}>
+    <div
+  className={`relative dark:from-blue-950 bg-gray-200 dark:via-blue-900 dark:to-blue-800 text-blue-900 dark:text-white ${!isHomePage ? 'py-5' : 'py-4'} bg-contain bg-center bg-no-repeat`}
+  style={{ backgroundImage: `url('/images/banner.png')` }}
+>
       <div className="container mx-auto px-4">
         <nav className={`flex items-center justify-between ${!isHomePage ? 'py-5' : 'py-4'} relative`}>
           {/* 로고 및 사이트 이름 */}
           <Link href="/" className="flex items-center z-30">
             {!logoLoaded ? (
-              <Skeleton className="w-12 h-12 rounded-full" />
+              <Skeleton className="w-32 h-12 rounded-full" />
             ) : (
-              <div className="relative w-12 h-12">
+              <div className="relative w-28 h-10">
                 <Image
-                  src="/logo.svg"
-                  alt="무브 로고"
+                  src="/images/logo.png"
+                  alt="muve_logo"
                   fill
-                  className="rounded-full object-cover"
+                  className="object-contain"
                 />
               </div>
             )}
-            <span className="ml-2 text-xl font-bold">무브</span>
+            <span className="ml-2 text-xl font-bold">에스샵</span>
           </Link>
 
           {/* 네비게이션 링크 (데스크탑) */}
           <div className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="hover:text-blue-700 dark:hover:text-blue-300 transition-colors">홈</Link>
-            <Link href="/about" className="hover:text-blue-700 dark:hover:text-blue-300 transition-colors">회사 소개</Link>
-            <Link href="/careers" className="hover:text-blue-700 dark:hover:text-blue-300 transition-colors">채용 정보</Link>
-            <Link href="/customer-service" className="hover:text-blue-700 dark:hover:text-blue-300 transition-colors">고객센터</Link>
+            <Link href="/about" className="text-black">회사 소개</Link>
+            <Link href="/careers" className="text-black">채용 정보</Link>
+            <Link href="/customer-service" className="text-black">고객센터</Link>
           </div>
 
           {/* 우측 섹션: 검색바 (데스크탑), 테마 토글, 사용자 메뉴 */}

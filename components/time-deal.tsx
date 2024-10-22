@@ -110,7 +110,7 @@ export function TimeDeal({ products: initialProducts }: TimeDealProps) {
   }
 
   return (
-    <section className="my-12 relative">
+    <section className="my-20 relative">
       <h2 className="text-3xl font-bold mb-6 text-center">오늘의 특가</h2>
       <div className="relative">
         {!isMobile && showLeftButton && (
@@ -133,14 +133,14 @@ export function TimeDeal({ products: initialProducts }: TimeDealProps) {
             <ChevronRight className="h-4 w-4" />
           </Button>
         )}
-        <div ref={scrollContainerRef} className="w-full overflow-x-auto">
+        <div ref={scrollContainerRef} className="w-full overflow-x-auto flex justify-center">
           <div className="flex space-x-4 p-4 w-max">
             {products.map((product, index) => (
               <Card
                 key={product.id}
                 className="w-[250px] overflow-hidden relative flex-shrink-0"
               >
-                <div className="absolute top-0 left-0 right-0 z-10 bg-gradient-to-r from-blue-600 to-teal-400 text-white text-center py-3 font-bold text-lg">
+                <div className="absolute top-0 left-0 right-0 z-10 bg-black text-white text-center py-3 font-bold text-lg bg-primary ">
                   남은 시간: {timeLeft[index]}
                 </div>
                 <CardContent className="p-0 pt-12">

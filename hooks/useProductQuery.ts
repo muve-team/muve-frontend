@@ -7,7 +7,7 @@ export function useProductQuery<T extends Product>(
   options?: { enabled: boolean }
 ) {
   const urlMap = {
-    [ProductListType.default]: `${process.env.NEXT_PUBLIC_API_URL}/product/random`,
+    [ProductListType.default]: ``,
     [ProductListType.popular]: `${process.env.NEXT_PUBLIC_API_URL}/product/random`,
     [ProductListType.recommended]: `${process.env.NEXT_PUBLIC_API_URL}/product/random`,
   };

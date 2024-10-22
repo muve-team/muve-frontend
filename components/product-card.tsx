@@ -17,10 +17,9 @@ interface ProductCardProps {
   name: string
   price: number
   imageUrl: string
-  category: string
 }
 
-export function ProductCard({ id, name, price, imageUrl, category }: ProductCardProps) {
+export function ProductCard({ id, name, price, imageUrl }: ProductCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false)
   const router = useRouter()
   const { addToCart } = useCart()
@@ -78,7 +77,7 @@ export function ProductCard({ id, name, price, imageUrl, category }: ProductCard
 
   return (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg group cursor-pointer h-full flex flex-col justify-between transform hover:scale-105 dark:bg-gray-800 dark:border-gray-700">
-      <Link href={`/category/${category}/product/${id}`} passHref>
+      <Link href={`product/${id}`} passHref>
         <CardContent className="p-4 flex flex-col items-center">
           <div className="relative w-full h-56 mb-4 overflow-hidden rounded-lg">
             {!imageLoaded && (
@@ -97,16 +96,16 @@ export function ProductCard({ id, name, price, imageUrl, category }: ProductCard
             />
           </div>
           <h3 className="text-lg font-semibold mb-2 text-center line-clamp-2 dark:text-gray-100">{name}</h3>
-          <p className="text-xl font-bold text-blue-600 dark:text-blue-400">{price.toLocaleString()}원</p>
+          {/* <p className="text-xl font-bold text-blue-600 dark:text-blue-400">{price.toLocaleString()}원</p> */}
         </CardContent>
       </Link>
       <CardFooter className="p-4">
         <div className="flex w-full gap-2">
-          <Button size="sm" className="flex-1 bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800 text-white" onClick={handlePurchase}>
+          <Button size="sm" className="flex-1 bg-gray-500 text-white bg-secondary" onClick={handlePurchase}>
             <CreditCard className="mr-2 h-4 w-4" /> 구매
           </Button>
           {isLoggedIn && (
-            <Button size="sm" className="flex-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-900 text-white" onClick={handleAddToCart}>
+            <Button size="sm" className="flex-1 bg-gray-300 text-white bg-primary" onClick={handleAddToCart}>
               <ShoppingCart className="mr-2 h-4 w-4" /> 장바구니
             </Button>
           )}
