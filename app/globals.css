@@ -138,7 +138,8 @@
 }
 
 .bg-primary {
-  background: #365955;
+  /* background: #365955; */
+  background: #3c4566;
   color: #fff;
 }
 
@@ -148,7 +149,8 @@
 }
 
 .text-primary {
-  color: #365955;
+  /* color: #365955; */
+  color: #3c4566
 }
 
 .bannerTit {

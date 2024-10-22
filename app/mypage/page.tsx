@@ -125,7 +125,7 @@ export default function MyPage() {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
       <HeroSection />
       <main className="container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">
+        <h1 className="text-4xl mb-12 text-center bg-clip-text bg-none transparent">
           마이페이지
         </h1>
         <Tabs defaultValue="profile" className="max-w-5xl mx-auto">

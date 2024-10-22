@@ -105,7 +105,6 @@ export function CategoryList({ compact = false }: CategoryListProps) {
 
   return (
     <section className={`my-${compact ? "6" : "12"}`}>
-      <h2 className="text-3xl font-bold mb-6 text-center">카테고리</h2>
       <ScrollArea className="w-full pb-4">
         {/* Flex 컨테이너에 justify-center를 추가하여 가운데 정렬 */}
         <div className="flex space-x-4 justify-center">

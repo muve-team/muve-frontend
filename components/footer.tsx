@@ -29,16 +29,16 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">소셜 미디어</h3>
             <div className="flex space-x-4">
-              <a href="#" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+              <a href="#" className="text-primary">
                 <Facebook />
               </a>
-              <a href="#" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+              <a href="#" className="text-primary">
                 <Twitter />
               </a>
-              <a href="#" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+              <a href="#" className="text-primary">
                 <Instagram />
               </a>
-              <a href="#" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+              <a href="#" className="text-primary">
                 <Youtube />
               </a>
             </div>
@@ -48,7 +48,7 @@ export function Footer() {
             <p className="mb-4">최신 상품 정보와 특별 할인 소식을 받아보세요!</p>
             <form className="flex flex-col space-y-2">
               <Input type="email" placeholder="이메일 주소" />
-              <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">구독하기</Button>
+              <Button type="submit" className="bg-primary text-white">구독하기</Button>
             </form>
           </div>
         </div>

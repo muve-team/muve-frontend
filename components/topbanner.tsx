@@ -11,18 +11,18 @@ interface BannerProps {
 
 const banners: BannerProps[] = [
     {
-        title: '공식몰 가입혜택',
-        imageUrl: 'https://images.unsplash.com/photo-1600504511046-f10b78a04e0e?w=500&auto=format&fit=crop&q=60',
+        title: '회원가입 시 3만원 쿠폰팩 증정!',
+        imageUrl: '/images/topbanner1.jpg',
         linkUrl: '/',
     },
     {
-        title: '한정 특별 행사!',
-        imageUrl: 'https://images.unsplash.com/photo-1600504511046-f10b78a04e0e?w=500&auto=format&fit=crop&q=60',
+        title: '가을맞이 시즌 할인 ~11/31',
+        imageUrl: '/images/topbanner2.jpg',
         linkUrl: '/',
     },
     {
-        title: '여름 시즌 할인!',
-        imageUrl: 'https://images.unsplash.com/photo-1592756209383-3c52fb77ee6f?w=500&auto=format&fit=crop&q=60',
+        title: '2024 BEST 브랜드 바로가기',
+        imageUrl: '/images/topbanner3.jpg',
         linkUrl: '/',
     },
     ];
@@ -51,11 +51,11 @@ const banners: BannerProps[] = [
                 alt="Top Banner Background"
                 fill
                 objectFit="cover"
-                className="rounded-lg"
+                className=""
             />
         
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-white bg-black bg-opacity-50">
-                <h2 className="text-xl font-bold mb-1">{currentBanner.title}</h2>
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+                <h2 className="text-xl mb-1">{currentBanner.title} <span className="font-normal"></span></h2>
             </div>
         
             <div className="absolute bottom-2 right-4 flex space-x-2">

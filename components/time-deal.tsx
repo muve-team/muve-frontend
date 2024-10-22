@@ -111,7 +111,7 @@ export function TimeDeal({ products: initialProducts }: TimeDealProps) {
 
   return (
     <section className="my-20 relative">
-      <h2 className="text-3xl font-bold mb-6 text-center">오늘의 특가</h2>
+      <h2 className="text-3xl mb-6 text-center">오늘의 특가</h2>
       <div className="relative">
         {!isMobile && showLeftButton && (
           <Button

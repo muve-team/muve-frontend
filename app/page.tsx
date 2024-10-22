@@ -57,9 +57,9 @@ export default function Home() {
         <TimeDeal products={timeDealProducts} />
         <Banner
           title="원하는 제품을 자유롭게 찾아 움직이는 공간, 무브"
-          imageUrl="https://images.unsplash.com/photo-1585128742181-93e3de3ae518?w=500&auto=format&fit=crop&q=60"
+          subtitle=""
           buttonText="지금 쇼핑하기"
-          subtitle=''
+          backgroundColor="#ccc"
           onButtonClick={() => {}}
           />
         <ProductList
