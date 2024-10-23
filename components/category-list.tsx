@@ -65,36 +65,37 @@ export function CategoryList({ compact = false }: CategoryListProps) {
 
   return (
     <section className={`my-${compact ? "6" : "12"}`}>
-      <ScrollArea className="w-full pb-4">
-        <div className="flex space-x-4 justify-center">
+      <ScrollArea className="w-full pb-4 overflow-x-auto">
+        <div className="flex space-x-2 sm:space-x-4 justify-start">
           {categories.map((category) => (
             <Button
               key={category.id}
               variant="ghost"
-              className={`flex flex-col items-center justify-center w-32 h-40 rounded-lg transition-all duration-300 transform`}
+              className={`flex flex-col items-center justify-center w-24 h-28 sm:w-28 sm:h-32 md:w-32 md:h-36 rounded-lg transition-all duration-300 transform`}
               onClick={() => handleCategoryClick(category.id.toString())}
               onMouseEnter={() => handleMouseEnter(category.id)}
               onMouseLeave={handleMouseLeave}
             >
-              <div className={`relative w-20 h-20 mb-3 overflow-hidden rounded-full flex items-center justify-center transition-colors duration-300 ${
+              <div className={`relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mb-3 overflow-hidden rounded-full flex items-center justify-center transition-colors duration-300 ${
                 hoveredCategory === category.id ? 'bg-primary' : 'bg-white border-primary'
               }`}>
                 {!loadedImages[category.id] && (
                   <Skeleton className="absolute inset-0 rounded-full" />
                 )}
                 <Icon
-                  icon={category.icon} // 각 카테고리에 맞는 아이콘 사용
-                  className={`text-[3rem] transition-colors duration-300 ${
+                  icon={category.icon}
+                  className={`text-[2rem] sm:text-[2.5rem] md:text-[3rem] transition-colors duration-300 ${
                     hoveredCategory === category.id ? 'text-white' : 'text-gray-500'
                   }`}
                 />
               </div>
-              <span className="text-sm font-medium text-center">{category.name}</span>
+              <span className="text-xs sm:text-sm md:text-base font-medium text-center">{category.name}</span>
             </Button>
           ))}
         </div>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
     </section>
+
   );
 }

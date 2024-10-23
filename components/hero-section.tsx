@@ -187,7 +187,7 @@ export function HeroSection() {
       {/* 메인 페이지일 경우 Hero 섹션 */}
       {isHomePage && (
         <div className="container mx-auto">
-          <div className="max-w-6xl mx-auto py-40 lg:text-left sm:text-center">
+          <div className="max-w-6xl mx-auto py-40 lg:text-left text-center">
             <h1 className="text-black text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">2024 BEST BRAND</h1>
             <p className="text-black text-xl mt-4">시즌오프 상품 행사 진행중</p>
             <Button
