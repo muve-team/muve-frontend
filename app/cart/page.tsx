@@ -90,8 +90,8 @@ export default function CartPage() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
         <HeroSection />
-        <main className="container mx-auto px-4 py-16 text-center">
-          <h1 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">장바구니에 상품이 없습니다</h1>
+        <main className="container mx-auto px-4 py-40 text-center">
+          <h1 className="text-3xl mb-8 bg-clip-text text-black">장바구니에 상품이 없습니다</h1>
           <Button asChild>
             <Link href="/">쇼핑 계속하기</Link>
           </Button>

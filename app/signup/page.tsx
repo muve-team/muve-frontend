@@ -113,7 +113,7 @@ export default function SignupPage() {
               )}
               <Button 
                 type="submit" 
-                className="w-full bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800 text-white"
+                className="w-full bg-primary text-white"
                 disabled={loading}
               >
                 {loading ? '회원가입 중...' : '회원가입'}
@@ -121,7 +121,7 @@ export default function SignupPage() {
             </form>
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600 dark:text-gray-300">이미 계정이 있으신가요?</p>
-              <Link href="/login" className="text-sm text-blue-600 hover:underline dark:text-blue-400">
+              <Link href="/login" className="text-sm text-primary hover:underline dark:text-blue-400">
                 로그인
               </Link>
             </div>

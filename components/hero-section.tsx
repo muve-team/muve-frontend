@@ -24,11 +24,31 @@ export function HeroSection() {
   const router = useRouter()
   const pathname = usePathname()
 
+  //slide
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [showSlide, setShowSlide] = useState(true);
+  const slides = [
+    '/images/banner1.png',
+    '/images/banner2.png',
+  ];
+
   useEffect(() => {
     const img = new window.Image()
     img.onload = () => setLogoLoaded(true)
     img.src = "/images/logo.png"
   }, [])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowSlide(false);
+      setTimeout(() => {
+        setCurrentSlide((prev) => (prev + 1) % slides.length);
+        setShowSlide(true); 
+      }, 500);
+    }, 5000); 
+
+    return () => clearInterval(interval);
+  }, [slides.length]);
 
   const handleLogout = () => {
     logout()
@@ -41,11 +61,12 @@ export function HeroSection() {
 
   const isHomePage = pathname === '/'
 
+
   return (
     <div
-  className={`relative dark:from-blue-950 bg-gray-200 dark:via-blue-900 dark:to-blue-800 text-blue-900 dark:text-white ${!isHomePage ? 'py-5' : 'py-4'} bg-contain bg-center bg-no-repeat`}
-  style={{ backgroundImage: `url('/images/banner.png')` }}
->
+      className={`relative ${isHomePage ? 'bg-cover bg-center bg-no-repeat' : 'bg-gray-200'} ${!isHomePage ? 'py-3' : 'h-[60vh]'}`}
+      style={isHomePage ? { backgroundImage: `url('${slides[currentSlide]}')`, height: '65vh' } : {}}
+    >
       <div className="container mx-auto px-4">
         <nav className={`flex items-center justify-between ${!isHomePage ? 'py-5' : 'py-4'} relative`}>
           {/* 로고 및 사이트 이름 */}
@@ -62,33 +83,29 @@ export function HeroSection() {
                 />
               </div>
             )}
-            {/* <span className="ml-2 text-xl font-bold">에스샵</span> */}
           </Link>
-
+  
           {/* 네비게이션 링크 (데스크탑) */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center justify-center space-x-6">
             <Link href="/about" className="text-black">회사 소개</Link>
             <Link href="/careers" className="text-black">채용 정보</Link>
             <Link href="/customer-service" className="text-black">고객센터</Link>
           </div>
-
+  
           {/* 우측 섹션: 검색바 (데스크탑), 테마 토글, 사용자 메뉴 */}
           <div className="flex items-center space-x-4">
-            {/* SearchBar를 데스크탑에서만 표시 */}
-            {!isHomePage && (
               <div className="hidden md:block flex-shrink-0 w-40 sm:w-48 md:w-56">
                 <SearchBar />
               </div>
-            )}
             <ModeToggle />
             {isLoggedIn ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="rounded-full bg-white/10 text-blue-900 hover:bg-white/20 dark:bg-blue-800/30 dark:text-white dark:hover:bg-blue-700/50">
+                  <Button variant="ghost" size="icon" className="text-primary">
                     <User className="h-5 w-5" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 bg-white dark:bg-gray-800 p-2 mt-2 md:mt-0">
+                <DropdownMenuContent align="end" className="w-56 p-2 mt-2 md:mt-0">
                   <DropdownMenuItem onSelect={() => router.push('/mypage')} className="cursor-pointer">
                     <User className="mr-2 h-4 w-4" />
                     <span>마이페이지</span>
@@ -120,23 +137,20 @@ export function HeroSection() {
             </Button>
           </div>
         </nav>
-
-        {/* Backdrop for mobile menu when open */}
+  
         {isMenuOpen && (
           <div
             className="fixed inset-0 bg-black bg-opacity-50 z-10"
             onClick={() => setIsMenuOpen(false)}
           ></div>
         )}
-
-        {/* 모바일 메뉴 */}
+  
         {isMenuOpen && (
           <div 
             id="mobile-menu"
             className={`md:hidden fixed z-20 top-26 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg`}
           >
             <div className="container mx-auto px-4 py-6">
-              {/* SearchBar 추가 */}
               <div className="block w-full mb-4">
                 <SearchBar />
               </div>
@@ -169,16 +183,20 @@ export function HeroSection() {
           </div>
         )}
       </div>
-
+  
       {/* 메인 페이지일 경우 Hero 섹션 */}
       {isHomePage && (
-        <div className="container mx-auto px-4 py-12 md:py-16">
-          <div className="max-w-2xl mx-auto text-center">
-            {/* <h1 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">무브에서 쇼핑을 시작하세요</h1>
-            <p className="text-lg md:text-xl mb-8 text-blue-700 dark:text-blue-300">최신 트렌드와 특별한 할인, 모두 여기서 만나보세요</p> */}
-            <div className="flex justify-center">
-              <SearchBar />
-            </div>
+        <div className="container mx-auto">
+          <div className="max-w-6xl mx-auto py-40 lg:text-left sm:text-center">
+            <h1 className="text-black text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">2024 BEST BRAND</h1>
+            <p className="text-black text-xl mt-4">시즌오프 상품 행사 진행중</p>
+            <Button
+              className="mt-6 px-6 py-3 bg-primary"
+              onClick={() => router.push('/explore')}
+            >
+              지금 구매하기
+            </Button>
+            
           </div>
         </div>
       )}

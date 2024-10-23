@@ -112,6 +112,18 @@
   font-style: normal;
 }
 
+html,body {
+  height: 100%;
+  margin: 0;
+}
+
+.app-container {
+  min-height: 100vh;
+}
+
+.content {
+  flex :1;
+}
 
 * {
   font-family: 'Pretendard', sans-serif;
@@ -138,7 +150,6 @@
 }
 
 .bg-primary {
-  /* background: #365955; */
   background: #3c4566;
   color: #fff;
 }
@@ -149,10 +160,23 @@
 }
 
 .text-primary {
-  /* color: #365955; */
   color: #3c4566
 }
 
-.bannerTit {
-  font-size: 1.5rem;
+.text-primary:hover {
+  opacity: 0.8;
+  transition: all .5s;
 }
+
+.border-primary {
+  border: 1px solid #3c4566
+}
+
+.bannerTit {
+  font-size: 1.8rem;
+}
+
+.inputCustom {
+  padding: 10px 20px;
+}
+

@@ -1,77 +1,29 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useCategoryStore } from "@/hooks/useCategoryStore";
+import { Icon } from '@iconify/react';
 
 interface Category {
   id: number;
   name: string;
-  imageUrl: string;
   slug: string;
+  icon: string; // 아이콘 추가
 }
 
 const categories: Category[] = [
-  {
-    id: 1,
-    name: "의류",
-    imageUrl:
-      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xvdGhpbmd8ZW58MHx8MHx8fDA%3D",
-    slug: "clothing",
-  },
-  {
-    id: 2,
-    name: "전자기기",
-    imageUrl:
-      "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWxlY3Ryb25pY3N8ZW58MHx8MHx8fDA%3D",
-    slug: "electronics",
-  },
-  {
-    id: 3,
-    name: "식품",
-    imageUrl:
-      "https://images.unsplash.com/photo-1506617420156-8e4536971650?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JvY2VyaWVzfGVufDB8fDB8fHww",
-    slug: "food",
-  },
-  {
-    id: 4,
-    name: "가구",
-    imageUrl:
-      "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZnVybml0dXJlfGVufDB8fDB8fHww",
-    slug: "furniture",
-  },
-  {
-    id: 5,
-    name: "도서",
-    imageUrl:
-      "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Ym9va3N8ZW58MHx8MHx8fDA%3D",
-    slug: "books",
-  },
-  {
-    id: 6,
-    name: "스포츠",
-    imageUrl:
-      "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3BvcnRzfGVufDB8fDB8fHww",
-    slug: "sports",
-  },
-  {
-    id: 7,
-    name: "뷰티",
-    imageUrl:
-      "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVhdXR5JTIwcHJvZHVjdHN8ZW58MHx8MHx8fDA%3D",
-    slug: "beauty",
-  },
-  {
-    id: 8,
-    name: "자동차",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2FyfGVufDB8fDB8fHww",
-    slug: "automotive",
-  },
+  { id: 1, name: "의류", slug: "clothing", icon: "fluent:clothes-hanger-24-regular" },
+  { id: 2, name: "전자기기", slug: "electronics", icon: "f7:device-laptop" },
+  { id: 3, name: "식품", slug: "food", icon: "ep:food" },
+  { id: 4, name: "가구", slug: "furniture", icon: "fluent:home-24-regular" },
+  { id: 5, name: "도서", slug: "books", icon: "fluent:book-24-regular" },
+  { id: 6, name: "스포츠", slug: "sports", icon: "fluent:sport-24-regular" },
+  { id: 7, name: "뷰티", slug: "beauty", icon: "solar:cosmetic-linear" },
+  { id: 8, name: "자동차", slug: "automotive", icon: "pepicons-pencil:car" },
 ];
 
 interface CategoryListProps {
@@ -80,11 +32,11 @@ interface CategoryListProps {
 
 export function CategoryList({ compact = false }: CategoryListProps) {
   const [loadedImages, setLoadedImages] = useState<{ [key: number]: boolean }>({});
+  const [hoveredCategory, setHoveredCategory] = useState<number | null>(null);
   const router = useRouter();
   const { setCategoryId } = useCategoryStore();
 
   useEffect(() => {
-    // 서버 환경에서는 window가 없으므로 체크
     if (typeof window !== "undefined") {
       const urlCategoryId = new URLSearchParams(window.location.search).get("categoryId");
       if (urlCategoryId) {
@@ -92,7 +44,7 @@ export function CategoryList({ compact = false }: CategoryListProps) {
         setCategoryId(parsedCategoryId);
       }
     }
-  }, [setCategoryId]); // Run this only on the first render
+  }, [setCategoryId]);
 
   const handleCategoryClick = (categoryId: string) => {
     setCategoryId(parseInt(categoryId));
@@ -103,31 +55,38 @@ export function CategoryList({ compact = false }: CategoryListProps) {
     setLoadedImages((prev) => ({ ...prev, [categoryId]: true }));
   };
 
+  const handleMouseEnter = (id: number) => {
+    setHoveredCategory(id);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredCategory(null);
+  };
+
   return (
     <section className={`my-${compact ? "6" : "12"}`}>
       <ScrollArea className="w-full pb-4">
-        {/* Flex 컨테이너에 justify-center를 추가하여 가운데 정렬 */}
         <div className="flex space-x-4 justify-center">
           {categories.map((category) => (
             <Button
               key={category.id}
               variant="ghost"
-              className="flex flex-col items-center justify-center w-32 h-40 rounded-lg transition-all duration-300 transform hover:scale-105"
+              className={`flex flex-col items-center justify-center w-32 h-40 rounded-lg transition-all duration-300 transform`}
               onClick={() => handleCategoryClick(category.id.toString())}
+              onMouseEnter={() => handleMouseEnter(category.id)}
+              onMouseLeave={handleMouseLeave}
             >
-              <div className="relative w-20 h-20 mb-3 overflow-hidden rounded-full">
+              <div className={`relative w-20 h-20 mb-3 overflow-hidden rounded-full flex items-center justify-center transition-colors duration-300 ${
+                hoveredCategory === category.id ? 'bg-primary' : 'bg-white border-primary'
+              }`}>
                 {!loadedImages[category.id] && (
                   <Skeleton className="absolute inset-0 rounded-full" />
                 )}
-                <Image
-                  src={category.imageUrl}
-                  alt={category.name}
-                  layout="fill"
-                  objectFit="cover"
-                  className={`rounded-full transition-opacity duration-300 ${
-                    loadedImages[category.id] ? "opacity-100" : "opacity-0"
-                  } filter grayscale hover:filter-none`}
-                  onLoad={() => handleImageLoad(category.id)}
+                <Icon
+                  icon={category.icon} // 각 카테고리에 맞는 아이콘 사용
+                  className={`text-[3rem] transition-colors duration-300 ${
+                    hoveredCategory === category.id ? 'text-white' : 'text-gray-500'
+                  }`}
                 />
               </div>
               <span className="text-sm font-medium text-center">{category.name}</span>

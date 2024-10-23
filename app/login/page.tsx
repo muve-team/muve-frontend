@@ -59,14 +59,13 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-blue-900 dark:to-blue-800">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-blue-900 dark:to-black-800">
       <HeroSection />
-      <main className="container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
-          로그인
+      <main className="container max-w-2xl mx-auto px-6 py-32">
+        <h1 className="text-4xl mx-auto text-black text-center mb-5 dark:text-white">
+          무브 로그인
         </h1>
-        <Card className="max-w-md mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-lg">
-          <CardContent className="p-6">
+        <div className="p-5">
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
                 <Label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-200">이메일</Label>
@@ -92,19 +91,18 @@ export default function LoginPage() {
                   className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                 />
               </div>
-              <Button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800 text-white">
+              <Button type="submit" className="w-full bg-primary text-white dark:bg-gray-50 dark:text-black">
                 로그인
               </Button>
             </form>
+          </div>
             <div className="mt-4 text-center">
-              <Link href="/forgot-password" className="text-sm text-blue-600 hover:underline dark:text-blue-400">비밀번호를 잊으셨나요?</Link>
+              <Link href="/forgot-password" className="text-sm text-primary hover:underline dark:text-white">비밀번호를 잊으셨나요?</Link>
             </div>
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600 dark:text-gray-300">계정이 없으신가요?</p>
-              <Link href="/signup" className="text-sm text-blue-600 hover:underline dark:text-blue-400">회원가입</Link>
+              <Link href="/signup" className="text-sm text-blue-600 hover:underline dark:text-white">회원가입</Link>
             </div>
-          </CardContent>
-        </Card>
       </main>
       <Footer />
     </div>

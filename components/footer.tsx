@@ -29,16 +29,16 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">소셜 미디어</h3>
             <div className="flex space-x-4">
-              <a href="#" className="text-primary">
+              <a href="#" className="text-primary dark:text-white">
                 <Facebook />
               </a>
-              <a href="#" className="text-primary">
+              <a href="#" className="text-primary dark:text-white">
                 <Twitter />
               </a>
-              <a href="#" className="text-primary">
+              <a href="#" className="text-primary dark:text-white">
                 <Instagram />
               </a>
-              <a href="#" className="text-primary">
+              <a href="#" className="text-primary dark:text-white">
                 <Youtube />
               </a>
             </div>

@@ -89,7 +89,7 @@ export default function PurchasePage() {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
       <HeroSection />
       <main className="container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">구매하기</h1>
+        <h1 className="text-4xl mb-8 text-center bg-clip-text text-black">주문결제</h1>
         <div className="grid md:grid-cols-2 gap-8">
           {/* 주문 상품 카드 */}
           <Card className="bg-white dark:bg-gray-800 shadow-lg rounded-lg">
@@ -196,7 +196,7 @@ export default function PurchasePage() {
                     />
                   </div>
                 </div>
-                <Button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800 text-white">
+                <Button type="submit" className="w-full bg-primary text-white">
                   결제하기
                 </Button>
               </form>

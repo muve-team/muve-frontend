@@ -52,16 +52,20 @@ export default function Home() {
     <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-950 dark:to-gray-900">
       <TopBanner/>
       <HeroSection />
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4">
         <CategoryList />
         <TimeDeal products={timeDealProducts} />
-        <Banner
-          title="원하는 제품을 자유롭게 찾아 움직이는 공간, 무브"
+      </div>
+      <div className="flex items-center justify-center">
+      <Banner
+          title="무브 회원이라면 전상품 무료배송"
           subtitle=""
           buttonText="지금 쇼핑하기"
           backgroundColor="#ccc"
           onButtonClick={() => {}}
           />
+      </div>
+      <div className="container mx-auto px-4">
         <ProductList
           title="인기 상품"
           type={ProductListType.popular}

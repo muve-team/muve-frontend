@@ -1,81 +1,76 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import { Button } from "@/components/ui/button"
-import { ShoppingCart, CreditCard } from "lucide-react"
-import { useCart } from '@/lib/CartContext'
-import { useAuth } from '@/lib/AuthContext'
-import { useRouter } from 'next/navigation'
-import Swal from 'sweetalert2'
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { Button } from "@/components/ui/button";
+import { ShoppingCart, CreditCard } from "lucide-react";
+import { useCart } from '@/lib/CartContext';
+import { useAuth } from '@/lib/AuthContext';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast'; // react-hot-toast import 추가
 
 interface Product {
-  id: number
-  name: string
-  price: number
-  imageUrl: string
-  description: string
-  category: string
+  id: number;
+  name: string;
+  price: number;
+  imageUrl: string;
+  description: string;
+  category: string;
 }
 
 interface ProductDetailProps {
-  product: Product
+  product: Product;
 }
 
 export function ProductDetail({ product }: ProductDetailProps) {
-  const { addToCart } = useCart()
-  const { isLoggedIn } = useAuth()
-  const router = useRouter()
+  const { addToCart } = useCart();
+  const { isLoggedIn } = useAuth();
+  const router = useRouter();
 
   // 테마 감지 상태
-  const [isDark, setIsDark] = useState(false)
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     // 다크 모드가 적용되어 있는지 확인
-    const root = window.document.documentElement
-    setIsDark(root.classList.contains('dark'))
+    const root = window.document.documentElement;
+    setIsDark(root.classList.contains('dark'));
 
     // 테마 변경 시 감지
     const observer = new MutationObserver(() => {
-      setIsDark(root.classList.contains('dark'))
-    })
+      setIsDark(root.classList.contains('dark'));
+    });
 
-    observer.observe(root, { attributes: true, attributeFilter: ['class'] })
+    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
   const handlePurchase = () => {
     if (!isLoggedIn) {
-      router.push('/login')
-      return
+      router.push('/login');
+      return;
     }
-    addToCart({ ...product, quantity: 1 })
-    router.push('/purchase')
-  }
+    addToCart({ ...product, quantity: 1 });
+    router.push('/purchase');
+  };
 
   const handleAddToCart = () => {
     if (!isLoggedIn) {
-      router.push('/login')
-      return
+      router.push('/login');
+      return;
     }
-    addToCart({ ...product, quantity: 1 })
+    addToCart({ ...product, quantity: 1 });
 
-    // Swal 테마에 맞게 조정
-    Swal.fire({
-      icon: 'success',
-      title: '장바구니에 추가되었습니다',
-      text: `${product.name}이(가) 장바구니에 추가되었습니다.`,
-      background: isDark ? '#1F2937' : '#ffffff', // 밝은 모드에서는 흰색 배경
-      color: isDark ? '#ffffff' : '#000000', // 밝은 모드에서는 검은색 텍스트
-      confirmButtonColor: isDark ? '#3B82F6' : '#1E40AF',
-      timer: 2000,
-      timerProgressBar: true,
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false
-    })
-  }
+    // react-hot-toast를 사용하여 알림 표시
+    toast.success(`${product.name}이(가) 장바구니에 추가되었습니다.`, {
+      duration: 2000,
+      style: {
+        background: isDark ? '#1F2937' : '#ffffff', // 밝은 모드에서는 흰색 배경
+        color: isDark ? '#ffffff' : '#000000', // 밝은 모드에서는 검은색 텍스트
+      },
+      position: 'top-right',
+    });
+  };
 
   return (
     <div className="flex flex-col md:flex-row gap-8 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
@@ -116,5 +111,5 @@ export function ProductDetail({ product }: ProductDetailProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }
