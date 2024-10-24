@@ -7,7 +7,7 @@ import { ShoppingCart, CreditCard } from "lucide-react";
 import { useCart } from '@/lib/CartContext';
 import { useAuth } from '@/lib/AuthContext';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-hot-toast'; // react-hot-toast import 추가
+import { toast } from 'react-hot-toast'; 
 
 interface Product {
   id: number;
@@ -61,14 +61,18 @@ export function ProductDetail({ product }: ProductDetailProps) {
     }
     addToCart({ ...product, quantity: 1 });
 
-    // react-hot-toast를 사용하여 알림 표시
-    toast.success(`${product.name}이(가) 장바구니에 추가되었습니다.`, {
+    // react-hot-toast로 변경
+    toast(`${product.name}이(가) 장바구니에 추가되었습니다.`, {
       duration: 2000,
+      icon: '🙂',
       style: {
-        background: isDark ? '#1F2937' : '#ffffff', // 밝은 모드에서는 흰색 배경
-        color: isDark ? '#ffffff' : '#000000', // 밝은 모드에서는 검은색 텍스트
+        background: isDark ? '#1F2937' : '#ffffff', 
+        color: isDark ? '#ffffff' : '#000000', 
+        fontSize: '16px',
+        padding: '10px',
+        width: 'fit-content',
       },
-      position: 'top-right',
+      position: 'top-center',
     });
   };
 
@@ -88,12 +92,12 @@ export function ProductDetail({ product }: ProductDetailProps) {
       <div className="md:w-1/2 flex flex-col justify-between">
         <div>
           <h1 className="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100">{product.name}</h1>
-          <p className="text-2xl font-semibold mb-4 text-blue-600 dark:text-blue-400">{product.price.toLocaleString()}원</p>
+          <p className="text-2xl font-semibold mb-4 text-primary">{product.price.toLocaleString()}원</p>
           <p className="mb-6 text-gray-700 dark:text-gray-300">{product.description}</p>
         </div>
         <div className="flex space-x-4">
           <Button
-            className="flex-1 bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white"
+            className="flex-1 bg-primary text-white"
             onClick={handlePurchase}
             aria-label="구매하기"
           >
@@ -101,11 +105,11 @@ export function ProductDetail({ product }: ProductDetailProps) {
           </Button>
           {isLoggedIn && (
             <Button
-              className="flex-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white"
+              className="flex-1 bg-secondary text-white"
               onClick={handleAddToCart}
-              aria-label="장바구니에 담기"
+              aria-label="장바구니"
             >
-              <ShoppingCart className="mr-2 h-4 w-4" /> 장바구니에 담기
+              <ShoppingCart className="mr-2 h-4 w-4" /> 장바구니
             </Button>
           )}
         </div>

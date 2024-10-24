@@ -45,7 +45,7 @@ export function SearchBar() {
             />
           )}
           <Search
-            className={`absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400 dark:text-primary transition-transform duration-300 ${showInput ? 'text-white' : 'text-primary'}`}
+            className={`absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-primary dark:text-white transition-transform duration-300 ${showInput ? 'text-white' : 'text-primary'}`}
             onClick={handleIconClick}
           />
         </div>

@@ -28,8 +28,20 @@ export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showSlide, setShowSlide] = useState(true);
   const slides = [
-    '/images/banner1.png',
-    '/images/banner2.png',
+    {
+      image: '/images/banner1.png',
+      title: '2024 BEST BRAND',
+      description: '시즌오프 상품 행사 진행중',
+      buttonText: '지금 구매하기',
+      buttonLink: '/',
+    },
+    {
+      image: '/images/banner2.png',
+      title: 'NEW ARRIVALS',
+      description: '최신 상품을 만나보세요!',
+      buttonText: '자세히 보기',
+      buttonLink: '/',
+    },
   ];
 
   useEffect(() => {
@@ -64,10 +76,10 @@ export function HeroSection() {
 
   return (
     <div
-      className={`relative ${isHomePage ? 'bg-cover bg-center bg-no-repeat' : 'bg-gray-200'} ${!isHomePage ? 'py-3' : 'h-[60vh]'}`}
-      style={isHomePage ? { backgroundImage: `url('${slides[currentSlide]}')`, height: '65vh' } : {}}
+      className={`relative ${isHomePage ? 'bg-cover bg-center bg-no-repeat' : 'bg-gray-200'} ${!isHomePage ? '' : 'h-[60vh]'}`}
+      style={isHomePage ? { backgroundImage: `url('${slides[currentSlide].image}')`, height: '65vh' } : {}}
     >
-      <div className="container mx-auto px-4">
+      <div className="container-fluid mx-auto px-4 bg-white">
         <nav className={`flex items-center justify-between ${!isHomePage ? 'py-5' : 'py-4'} relative`}>
           {/* 로고 및 사이트 이름 */}
           <Link href="/" className="flex items-center z-30">
@@ -94,7 +106,7 @@ export function HeroSection() {
   
           {/* 우측 섹션: 검색바 (데스크탑), 테마 토글, 사용자 메뉴 */}
           <div className="flex items-center space-x-4">
-              <div className="hidden md:block flex-shrink-0 w-40 sm:w-48 md:w-56">
+              <div className="hidden md:block flex-shrink-0">
                 <SearchBar />
               </div>
             <ModeToggle />
@@ -105,7 +117,7 @@ export function HeroSection() {
                     <User className="h-5 w-5" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 p-2 mt-2 md:mt-0">
+                <DropdownMenuContent align="end" className="w-56 p-2 mt-2 md:mt-0 bg-white" style={{ marginTop: '13px' }}>
                   <DropdownMenuItem onSelect={() => router.push('/mypage')} className="cursor-pointer">
                     <User className="mr-2 h-4 w-4" />
                     <span>마이페이지</span>
@@ -121,7 +133,7 @@ export function HeroSection() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button variant="outline" className="hidden md:inline-flex bg-white/10 text-blue-900 hover:bg-white/20 dark:bg-blue-800/30 dark:text-white dark:hover:bg-blue-700/50" onClick={() => router.push('/login')}>
+              <Button variant="outline" className="hidden md:inline-flex bg-white/10 text-primary" onClick={() => router.push('/login')}>
                 로그인
               </Button>
             )}
@@ -150,21 +162,21 @@ export function HeroSection() {
             id="mobile-menu"
             className={`md:hidden fixed z-20 top-26 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg`}
           >
-            <div className="container mx-auto px-4 py-6">
-              <div className="block w-full mb-4">
+            <div className="container mx-auto px-0 py-6">
+              <div className="block w-full mb-6">
                 <SearchBar />
               </div>
               <nav className="flex flex-col space-y-4">
-                <Link href="/" className="py-2 text-blue-800 dark:text-blue-200 hover:text-blue-600 dark:hover:text-blue-300" onClick={handleMenuItemClick}>홈</Link>
-                <Link href="/about" className="py-2 text-blue-800 dark:text-blue-200 hover:text-blue-600 dark:hover:text-blue-300" onClick={handleMenuItemClick}>회사 소개</Link>
-                <Link href="/careers" className="py-2 text-blue-800 dark:text-blue-200 hover:text-blue-600 dark:hover:text-blue-300" onClick={handleMenuItemClick}>채용 정보</Link>
-                <Link href="/customer-service" className="py-2 text-blue-800 dark:text-blue-200 hover:text-blue-600 dark:hover:text-blue-300" onClick={handleMenuItemClick}>고객센터</Link>
+                <Link href="/" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>홈</Link>
+                <Link href="/about" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>회사 소개</Link>
+                <Link href="/careers" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>채용 정보</Link>
+                <Link href="/customer-service" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>고객센터</Link>
                 {isLoggedIn ? (
                   <>
-                    <Link href="/mypage" className="py-2 text-blue-800 dark:text-blue-200 hover:text-blue-600 dark:hover:text-blue-300" onClick={handleMenuItemClick}>마이페이지</Link>
-                    <Link href="/cart" className="py-2 text-blue-800 dark:text-blue-200 hover:text-blue-600 dark:hover:text-blue-300" onClick={handleMenuItemClick}>장바구니</Link>
+                    <Link href="/mypage" className="py-2 ml-5 text-primary" onClick={handleMenuItemClick}>마이페이지</Link>
+                    <Link href="/cart" className="py-2 ml-5 text-primary" onClick={handleMenuItemClick}>장바구니</Link>
                     <Button 
-                      className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white"
+                      className="w-full mt-4 bg-primary text-white"
                       onClick={() => { handleLogout(); handleMenuItemClick(); }}
                     >
                       로그아웃
@@ -186,20 +198,31 @@ export function HeroSection() {
   
       {/* 메인 페이지일 경우 Hero 섹션 */}
       {isHomePage && (
-        <div className="container mx-auto">
-          <div className="max-w-6xl mx-auto py-40 lg:text-left text-center">
-            <h1 className="text-black text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">2024 BEST BRAND</h1>
-            <p className="text-black text-xl mt-4">시즌오프 상품 행사 진행중</p>
-            <Button
-              className="mt-6 px-6 py-3 bg-primary"
-              onClick={() => router.push('/explore')}
-            >
-              지금 구매하기
-            </Button>
-            
-          </div>
+      <div className="container mx-auto">
+        <div className="max-w-6xl mx-auto py-40 lg:text-left text-center">
+        <h1
+          className={`text-3xl md:text-4xl lg:text-5xl font-bold leading-tight ${
+            currentSlide === 1 ? 'text-white' : 'text-black'
+          }`}
+        >
+          {slides[currentSlide].title}
+        </h1>
+        <p
+          className={`text-xl mt-4 ${
+            currentSlide === 1 ? 'text-white' : 'text-black'
+          }`}
+        >
+          {slides[currentSlide].description}
+        </p>
+          <Button
+            className="mt-6 px-6 py-3 bg-primary"
+            onClick={() => router.push(slides[currentSlide].buttonLink)}
+          >
+            {slides[currentSlide].buttonText}
+          </Button>
         </div>
-      )}
-    </div>
-  )
+      </div>
+    )}
+  </div>
+);
 }

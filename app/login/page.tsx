@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import Link from 'next/link'
 import { useAuth } from '@/lib/AuthContext'
 import { useRouter } from 'next/navigation'
-import Swal from 'sweetalert2'
+import { toast } from 'react-hot-toast'; 
 
 export default function LoginPage() {
   const { login } = useAuth()
@@ -37,26 +37,22 @@ export default function LoginPage() {
   }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (email === 'test@test.com' && password === '1234') {
-      login()
-      router.push('/')
+      login();
+      router.push('/');
     } else {
-      Swal.fire({
-        icon: 'error',
-        title: '로그인에 실패하였습니다',
-        text: '로그인에 실패하였습니다.',
-        background: isDark ? '#1F2937' : '#ffffff', // 밝은 모드에서는 흰색 배경
-        color: isDark ? '#ffffff' : '#000000', // 밝은 모드에서는 검은색 텍스트
-        confirmButtonColor: isDark ? '#3B82F6' : '#1E40AF',
-        timer: 2000,
-        timerProgressBar: true,
-        toast: false,
-        position: 'center',
-        showConfirmButton: false
-      })
+      toast('로그인에 실패하였습니다.', {
+        icon: '😥',
+        style: {
+          background: isDark ? '#1F2937' : '#ffffff',
+          color: isDark ? '#ffffff' : '#000000',
+        },
+        duration: 2000,
+        position: 'top-center',
+      });
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-blue-900 dark:to-black-800">

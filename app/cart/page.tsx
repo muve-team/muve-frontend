@@ -11,7 +11,7 @@ import Link from 'next/link'
 import { Checkbox } from "@/components/ui/checkbox"
 import { useCart } from '@/lib/CartContext'
 import Image from 'next/image'
-import Swal from 'sweetalert2'
+import { toast } from 'react-hot-toast'; 
 
 export default function CartPage() {
   const { cartItems, removeFromCart, updateQuantity } = useCart()
@@ -56,42 +56,33 @@ export default function CartPage() {
   }
 
   const handleRemove = (id: number, name: string) => {
-    Swal.fire({
-      title: '정말 삭제하시겠습니까?',
-      text: `${name}을(를) 장바구니에서 삭제하시겠습니까?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: isDark ? '#3B82F6' : '#1E40AF',
-      cancelButtonColor: isDark ? '#6B7280' : '#d1d5db',
-      confirmButtonText: '삭제',
-      cancelButtonText: '취소',
-      background: isDark ? '#1F2937' : '#ffffff',
-      color: isDark ? '#ffffff' : '#000000',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        removeFromCart(id)
-        Swal.fire({
-          icon: 'success',
-          title: '삭제되었습니다',
-          text: `${name}이(가) 장바구니에서 삭제되었습니다.`,
+
+    const confirmDelete = window.confirm(`${name}을(를) 장바구니에서 삭제하시겠습니까?`);
+  
+    if (confirmDelete) {
+      removeFromCart(id);
+      toast(`${name}이(가) 장바구니에서 삭제되었습니다.`, {
+        icon: '🗑️',
+        style: {
           background: isDark ? '#1F2937' : '#ffffff',
           color: isDark ? '#ffffff' : '#000000',
-          confirmButtonColor: isDark ? '#3B82F6' : '#1E40AF',
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-          position: 'center',
-        })
-      }
-    })
+          fontSize: '16px',
+          padding: '16px', 
+          borderRadius: '8px', 
+        },
+        duration: 2000,
+        position: 'top-center',
+      });
+    }
   }
+  
 
   if (cartItems.length === 0) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
         <HeroSection />
         <main className="container mx-auto px-4 py-40 text-center">
-          <h1 className="text-3xl mb-8 bg-clip-text text-black">장바구니에 상품이 없습니다</h1>
+          <h1 className="text-3xl mb-8 bg-clip-text text-black dark:text-white">장바구니에 상품이 없습니다</h1>
           <Button asChild>
             <Link href="/">쇼핑 계속하기</Link>
           </Button>

@@ -10,7 +10,7 @@ import { useAuth } from '@/lib/AuthContext'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { allProducts } from '@/lib/products'
-import Swal from 'sweetalert2'
+import { toast } from 'react-hot-toast';
 import { CheckCircle, ShoppingCart, CreditCard, LogOut } from "lucide-react"
 
 interface Order {
@@ -60,34 +60,29 @@ export default function MyPage() {
   }, [])
 
   const handleLogout = () => {
-    Swal.fire({
-      title: '정말 로그아웃 하시겠습니까?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: isDark ? '#3B82F6' : '#1E40AF',
-      cancelButtonColor: isDark ? '#6B7280' : '#d1d5db',
-      confirmButtonText: '로그아웃',
-      cancelButtonText: '취소',
-      background: isDark ? '#1F2937' : '#ffffff',
-      color: isDark ? '#ffffff' : '#000000',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        logout()
-        Swal.fire({
-          icon: 'success',
-          title: '로그아웃 되었습니다',
+    toast.promise(
+      new Promise<string>((resolve, reject) => {
+        if (confirm('정말 로그아웃 하시겠습니까?')) {
+          logout();
+          resolve('로그아웃 되었습니다');
+        } else {
+          reject('로그아웃이 취소되었습니다');
+        }
+      }),
+      {
+        loading: '로그아웃 중...',
+        success: (msg: string) => msg,
+        error: (msg: string) => msg,
+      },
+      {
+        style: {
           background: isDark ? '#1F2937' : '#ffffff',
           color: isDark ? '#ffffff' : '#000000',
-          confirmButtonColor: isDark ? '#3B82F6' : '#1E40AF',
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-          position: 'center',
-        })
-        router.push('/')
+        },
+        duration: 2000,
       }
-    })
-  }
+    );
+  };
 
   // 임시 주문 내역 데이터
   const orders: Order[] = [
@@ -98,28 +93,21 @@ export default function MyPage() {
 
   const handleAddToCart = (product: Product) => {
     if (!isLoggedIn) {
-      router.push('/login')
-      return
+      router.push('/login');
+      return;
     }
-    // 여기서 CartContext의 addToCart 함수를 호출하여 장바구니에 추가합니다.
-    // 예시:
-    // addToCart({ ...product, quantity: 1 })
-
-    // Swal 테마에 맞게 조정
-    Swal.fire({
-      icon: 'success',
-      title: '장바구니에 추가되었습니다',
-      text: `${product.name}이(가) 장바구니에 추가되었습니다.`,
-      background: isDark ? '#1F2937' : '#ffffff',
-      color: isDark ? '#ffffff' : '#000000',
-      confirmButtonColor: isDark ? '#3B82F6' : '#1E40AF',
-      timer: 2000,
-      timerProgressBar: true,
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false
-    })
-  }
+  
+    // react-hot-toast 사용
+    toast(`${product.name}이(가) 장바구니에 추가되었습니다.`, {
+      icon: '🛒',
+      style: {
+        background: isDark ? '#1F2937' : '#ffffff',
+        color: isDark ? '#ffffff' : '#000000',
+      },
+      duration: 2000,
+      position: 'top-center',
+    });
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
@@ -130,13 +118,13 @@ export default function MyPage() {
         </h1>
         <Tabs defaultValue="profile" className="max-w-5xl mx-auto">
           <TabsList className="grid w-full grid-cols-3 bg-white dark:bg-gray-800 shadow-lg rounded-t-lg">
-            <TabsTrigger value="profile" className="flex items-center justify-center space-x-2">
+            <TabsTrigger value="profile" className="flex items-center justify-center space-x-2 tab-trigger">
               <CheckCircle className="h-5 w-5" /> <span>프로필</span>
             </TabsTrigger>
-            <TabsTrigger value="orders" className="flex items-center justify-center space-x-2">
+            <TabsTrigger value="orders" className="flex items-center justify-center space-x-2 tab-trigger">
               <CreditCard className="h-5 w-5" /> <span>주문 내역</span>
             </TabsTrigger>
-            <TabsTrigger value="recent" className="flex items-center justify-center space-x-2">
+            <TabsTrigger value="recent" className="flex items-center justify-center space-x-2 tab-trigger">
               <ShoppingCart className="h-5 w-5" /> <span>최근 본 상품</span>
             </TabsTrigger>
           </TabsList>
@@ -221,7 +209,7 @@ export default function MyPage() {
                       <p className="font-semibold text-gray-800 dark:text-gray-100 text-center">{product.name}</p>
                       <p className="text-gray-600 dark:text-gray-300">{product.price.toLocaleString()}원</p>
                       <Button
-                        className="mt-4 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white flex items-center space-x-2"
+                        className="mt-4 bg-primary text-white flex items-center space-x-2"
                         onClick={() => handleAddToCart(product)}
                         aria-label={`장바구니에 추가: ${product.name}`}
                       >

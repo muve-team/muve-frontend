@@ -12,7 +12,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Plus, Minus } from "lucide-react"
-import Swal from 'sweetalert2'
+import { toast } from 'react-hot-toast'; 
 
 export default function PurchasePage() {
   const { cartItems, clearCart, updateQuantity } = useCart()
@@ -43,24 +43,23 @@ export default function PurchasePage() {
   }, [cartItems])
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     // 결제 처리 로직을 추가할 수 있습니다.
-    Swal.fire({
-      icon: 'success',
-      title: '구매가 완료되었습니다!',
-      text: '감사합니다. 즐거운 쇼핑 되세요!',
-      background: isDark ? '#1F2937' : '#ffffff', // 밝은 모드에서는 흰색 배경
-      color: isDark ? '#ffffff' : '#000000', // 밝은 모드에서는 검은색 텍스트
-      confirmButtonColor: isDark ? '#3B82F6' : '#1E40AF',
-      timer: 2000,
-      timerProgressBar: true,
-      toast: false,
-      position: 'center',
-      showConfirmButton: false
-    })
-    clearCart() // 구매 완료 후 장바구니 비우기
-    router.push('/')
-  }
+    
+    toast('구매가 완료되었습니다! 감사합니다. 즐거운 쇼핑 되세요!', {
+      icon: "😎",
+      style: {
+        background: isDark ? '#1F2937' : '#ffffff',
+        color: isDark ? '#ffffff' : '#000000',
+      },
+      duration: 2000,
+      position: 'top-center',
+    });
+  
+    clearCart(); // 구매 완료 후 장바구니 비우기
+    router.push('/');
+  };
+  
 
   const handleQuantityChange = (id: number, change: number) => {
     const item = cartItems.find(item => item.id === id)
@@ -75,7 +74,7 @@ export default function PurchasePage() {
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
         <HeroSection />
         <main className="container mx-auto px-4 py-16 text-center">
-          <h1 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">구매할 상품이 없습니다</h1>
+          <h1 className="text-4xl mb-8 text-center bg-clip-text text-black">구매할 상품이 없습니다.</h1>
           <Button asChild>
             <Link href="/">쇼핑 계속하기</Link>
           </Button>

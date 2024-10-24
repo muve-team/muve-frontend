@@ -1,5 +1,6 @@
 "use client"
 
+import Head from 'next/head';
 import { HeroSection } from '@/components/hero-section';
 import { CategoryList } from '@/components/category-list';
 import { TimeDeal } from '@/components/time-deal';
@@ -9,8 +10,8 @@ import { ProductListType } from '@/types/productTypes';
 import Banner from '@/components/banner';
 import TopBanner from '@/components/topbanner';
 
-export default function Home() {
 
+export default function Home() {
   const timeDealProducts = [
     {
       id: 19,
@@ -46,38 +47,42 @@ export default function Home() {
     },
   ];
 
-  
-
   return (
-    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-950 dark:to-gray-900">
-      <TopBanner/>
-      <HeroSection />
-      <div className="container mx-auto px-4">
-        <CategoryList />
-        <TimeDeal products={timeDealProducts} />
-      </div>
-      <div className="flex items-center justify-center">
-      <Banner
-          title="무브 회원이라면 전상품 무료배송"
-          subtitle=""
-          buttonText="지금 쇼핑하기"
-          backgroundColor="#ccc"
-          onButtonClick={() => {}}
+    <>
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+        <title>Muve</title>
+      </Head>
+      <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-950 dark:to-gray-900">
+        <TopBanner />
+        <HeroSection />
+        <div className="container mx-auto px-4">
+          <CategoryList />
+          <TimeDeal products={timeDealProducts} />
+        </div>
+        <div className="flex items-center justify-center">
+          <Banner
+            title="무브 회원이라면 전상품 무료배송"
+            subtitle=""
+            buttonText="지금 쇼핑하기"
+            backgroundColor="#ccc"
+            onButtonClick={() => {}}
           />
-      </div>
-      <div className="container mx-auto px-4">
-        <ProductList
-          title="인기 상품"
-          type={ProductListType.popular}
-          scrollable={true}
-        />
-        <ProductList
-          title="추천 상품"
-          type={ProductListType.recommended}
-          scrollable={true}
-        />
-      </div>
-      <Footer />
-    </main>
+        </div>
+        <div className="container mx-auto px-4">
+          <ProductList
+            title="인기 상품"
+            type={ProductListType.popular}
+            scrollable={true}
+          />
+          <ProductList
+            title="추천 상품"
+            type={ProductListType.recommended}
+            scrollable={true}
+          />
+        </div>
+        <Footer />
+      </main>
+    </>
   );
 }

@@ -10,7 +10,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCart } from '@/lib/CartContext'
 import { useAuth } from '@/lib/AuthContext'
-import Swal from 'sweetalert2'
+import { toast } from 'react-hot-toast'; 
 
 interface ProductCardProps {
   id: number
@@ -58,21 +58,17 @@ export function ProductCard({ id, name, price, imageUrl }: ProductCardProps) {
       return
     }
     addToCart({ id, name, price, quantity: 1, imageUrl })
+
+    toast(`${name}이(가) 장바구니에 추가되었습니다`, {
+      icon: "🙂",
+      style: {
+        background: isDark ? '#1F2937' : '#ffffff',
+        color: isDark ? '#ffffff' : '#000000',
+      },
+      duration: 2000,
+      position: 'top-center',
+    });
     
-    // Swal 테마에 맞게 조정
-    Swal.fire({
-      icon: 'success',
-      title: '장바구니에 추가되었습니다',
-      text: `${name}이(가) 장바구니에 추가되었습니다.`,
-      background: isDark ? '#1F2937' : '#ffffff', // 밝은 모드에서는 흰색 배경
-      color: isDark ? '#ffffff' : '#000000', // 밝은 모드에서는 검은색 텍스트
-      confirmButtonColor: isDark ? '#3B82F6' : '#1E40AF',
-      timer: 2000,
-      timerProgressBar: true,
-      toast: false,
-      position: 'center',
-      showConfirmButton: false
-    })
   }
 
   return (

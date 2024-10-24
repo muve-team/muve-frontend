@@ -66,7 +66,7 @@ export function CategoryList({ compact = false }: CategoryListProps) {
   return (
     <section className={`my-${compact ? "6" : "12"}`}>
       <ScrollArea className="w-full pb-4 overflow-x-auto">
-        <div className="flex space-x-2 sm:space-x-4 justify-start">
+        <div className="flex space-x-2 sm:space-x-4 justify-start md:justify-center">
           {categories.map((category) => (
             <Button
               key={category.id}
