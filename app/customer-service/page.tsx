@@ -22,10 +22,10 @@ export default function CustomerServicePage() {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
       <HeroSection />
       <main className="container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">고객센터</h1>
+      <h1 className="text-4xl mb-8 text-center bg-clip-text text-black">무엇을 도와드릴까요?</h1>
         
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6 text-center">문의 방법</h2>
+        <section className="my-12">
+          
           <div className="grid md:grid-cols-3 gap-6">
             {contactMethods.map((method, index) => (
               <Card key={index}>

@@ -1,7 +1,7 @@
 export const allProducts = [
-  { id: 1, name: "편안한 티셔츠", price: 25000, imageUrl: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dCUyMHNoaXJ0fGVufDB8fDB8fHww", category: "clothing", description: "편안하고 스타일리시한 일상복" },
-  { id: 2, name: "스마트폰", price: 800000, imageUrl: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGhvbmV8ZW58MHx8MHx8fDA%3D", category: "electronics", description: "최신 기술이 탑재된 스마트폰" },
-  { id: 3, name: "유기농 과일 세트", price: 35000, imageUrl: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZnJ1aXQlMjBiYXNrZXR8ZW58MHx8MHx8fDA%3D", category: "food", description: "신선한 유기농 과일 모음" },
+  { id: 1, name: "편안한 티셔츠", price: 25000, imageUrl: "/images/product1.png", category: "clothing", description: "편안하고 스타일리시한 일상복" },
+  { id: 2, name: "스마트폰", price: 800000, imageUrl: "/images/product2.png", category: "electronics", description: "최신 기술이 탑재된 스마트폰" },
+  { id: 3, name: "유기농 과일 세트", price: 35000, imageUrl: "/images/product3.png", category: "food", description: "신선한 유기농 과일 모음" },
   { id: 4, name: "편안한 소파", price: 890000, imageUrl: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c29mYXxlbnwwfHwwfHx8MA%3D%3D", category: "furniture", description: "거실을 위한 편안한 소파" },
   { id: 5, name: "베스트셀러 소설", price: 15000, imageUrl: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Ym9va3xlbnwwfHwwfHx8MA%3D%3D", category: "books", description: "흥미진진한 베스트셀러 소설" },
   { id: 6, name: "요가 매트", price: 35000, imageUrl: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8eW9nYSUyMG1hdHxlbnwwfHwwfHx8MA%3D%3D", category: "sports", description: "편안한 요가를 위한 고품질 매트" },
@@ -18,9 +18,9 @@ export const allProducts = [
   { id: 17, name: "립스틱 세트", price: 45000, imageUrl: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGlwc3RpY2t8ZW58MHx8MHx8fDA%3D", category: "beauty", description: "다양한 색상의 고급 립스틱 세트" },
   { id: 18, name: "차량용 블랙박스", price: 199000, imageUrl: "https://images.unsplash.com/photo-1617503752587-97d2103a96ea?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGFzaGNhbXxlbnwwfHwwfHx8MA%3D%3D", category: "automotive", description: "고화질 녹화가 가능한 차량용 블랙박스" },
   // 타임딜 제품 추가
-  { id: 19, name: "스마트 TV", price: 1000000, imageUrl: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c21hcnQlMjB0dnxlbnwwfHwwfHx8MA%3D%3D", category: "electronics", description: "고화질 대화면 스마트 TV" },
-  { id: 20, name: "태블릿", price: 500000, imageUrl: "https://images.unsplash.com/photo-1585790050230-5dd28404ccb9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dGFibGV0fGVufDB8fDB8fHww", category: "electronics", description: "휴대성과 성능을 겸비한 태블릿" },
-  { id: 21, name: "무선 이어폰", price: 180000, imageUrl: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8d2lyZWxlc3MlMjBlYXJwaG9uZXN8ZW58MHx8MHx8fDA%3D", category: "electronics", description: "고음질 무선 이어폰" },
+  { id: 1, name: "편안한 티셔츠", price: 25000, imageUrl: "/images/product1.png", category: "clothing", description: "편안하고 스타일리시한 일상복" },
+  { id: 2, name: "스마트폰", price: 800000, imageUrl: "/images/product2.png", category: "electronics", description: "최신 기술이 탑재된 스마트폰" },
+  { id: 3, name: "유기농 과일 세트", price: 35000, imageUrl: "/images/product3.png", category: "food", description: "신선한 유기농 과일 모음" },
   { id: 22, name: "스마트 홈 허브", price: 120000, imageUrl: "https://images.unsplash.com/photo-1558089687-f282ffcbc126?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c21hcnQlMjBob21lfGVufDB8fDB8fHww", category: "electronics", description: "스마트 홈 기기 제어를 위한 중앙 허브" },
 ];
 
