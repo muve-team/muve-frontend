@@ -1,9 +1,9 @@
 export interface CategoryProduct {
-    product: Product[];
+    products: Product[];
     categoryId: number | null;
-    categoryName: string | null;
-    categorySlug: string | null;
-    categoryImageUrl: string | null;
+    name: string | null;
+    slug: string | null;
+    imageUrl: string | null;
 }
 
 export interface Product {

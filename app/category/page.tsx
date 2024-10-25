@@ -31,12 +31,12 @@ export default async function CategoriesPage({
   const category = categoryId !== undefined
     ? fetchedCategories.find((c) => c.id === categoryId)
     : undefined;
-  const categoryName = category ? category.name : 'All Products';
+  const name = category ? category.name : 'All Products';
 
   // 쿼리 파라미터만을 이용해 조건 처리
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Category: {categoryName}</h1>
+      <h1 className="text-3xl font-bold mb-8">Category: {name}</h1>
       <CategoryList compact={true} />
       <ProductList 
         title="Product List" 

@@ -92,7 +92,7 @@ export function ProductCard({ id, name, price, imageUrl }: ProductCardProps) {
             />
           </div>
           <h3 className="text-lg font-semibold mb-2 text-center line-clamp-2 dark:text-gray-100">{name}</h3>
-          {/* <p className="text-xl font-bold text-blue-600 dark:text-blue-400">{price.toLocaleString()}원</p> */}
+          <p className="text-xl font-bold text-blue-600 dark:text-blue-400">{price.toLocaleString()}원</p>
         </CardContent>
       </Link>
       <CardFooter className="p-4">
