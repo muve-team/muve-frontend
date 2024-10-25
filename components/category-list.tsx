@@ -19,7 +19,7 @@ const categories: Category[] = [
   { id: 1, name: "의류", slug: "clothing", icon: "fluent:clothes-hanger-24-regular" },
   { id: 2, name: "전자기기", slug: "electronics", icon: "f7:device-laptop" },
   { id: 3, name: "식품", slug: "food", icon: "ep:food" },
-  { id: 4, name: "가구", slug: "furniture", icon: "fluent:home-24-regular" },
+  { id: 4, name: "가구", slug: "furniture", icon: "mdi:table-furniture" },
   { id: 5, name: "도서", slug: "books", icon: "fluent:book-24-regular" },
   { id: 6, name: "스포츠", slug: "sports", icon: "fluent:sport-24-regular" },
   { id: 7, name: "뷰티", slug: "beauty", icon: "solar:cosmetic-linear" },
