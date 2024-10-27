@@ -96,13 +96,14 @@ export default function ProductList({
     return <div>No products found</div>;
   }
 
-  const renderProduct = (product: Product, index: number) => {
-    // Ensure all required props are present and have fallback values
+  const renderProduct = (product: Product | null | undefined, index: number) => {
+    if (!product) return null;
+
     const safeProduct = {
-      id: product.id ?? index,
-      name: product.name ?? 'Unknown Product',
-      price: product.price ?? 0,
-      imageUrl: product.imageUrl ?? '/placeholder-image.jpg',
+      id: product.id || `product-${index}`,
+      name: product.name || 'Unknown Product',
+      price: product.price || 0,
+      imageUrl: product.imageUrl || '/placeholder-image.jpg',
     };
 
     return (

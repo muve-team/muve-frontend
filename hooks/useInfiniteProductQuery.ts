@@ -24,6 +24,11 @@ export function useInfiniteProductQuery(enabled: boolean) {
       return response;
     },
     getNextPageParam: (lastPage, allPages) => {
+      // lastPage가 undefined이거나 products가 없는 경우 처리
+      if (!lastPage?.products) {
+        return undefined;
+      }
+
       return lastPage.products.length === 10 ? allPages.length : undefined;
     },
     initialPageParam: 0,
@@ -34,11 +39,11 @@ export function useInfiniteProductQuery(enabled: boolean) {
 
   const categoryInfo = query.data?.pages[0]
     ? {
-        categoryId: query.data.pages[0].categoryId,
-        name: query.data.pages[0].name,
-        slug: query.data.pages[0].slug,
-        imageUrl: query.data.pages[0].imageUrl,
-      }
+      categoryId: query.data.pages[0].categoryId,
+      name: query.data.pages[0].name,
+      slug: query.data.pages[0].slug,
+      imageUrl: query.data.pages[0].imageUrl,
+    }
     : null;
 
   return {
