@@ -99,8 +99,11 @@ export default function ProductList({
   const renderProduct = (product: Product | null | undefined, index: number) => {
     if (!product) return null;
 
+    // Convert string ID to number if necessary, or use index as fallback
+    const numericId = typeof product.id === 'string' ? parseInt(product.id, 10) : (product.id ?? index);
+
     const safeProduct = {
-      id: product.id || `product-${index}`,
+      id: numericId,
       name: product.name || 'Unknown Product',
       price: product.price || 0,
       imageUrl: product.imageUrl || '/placeholder-image.jpg',
