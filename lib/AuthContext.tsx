@@ -10,14 +10,27 @@ interface AuthContextType {
   resetPassword: (password: string) => void;
 }
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    setIsLoggedIn(loggedIn);
+    // 페이지 로드 시 로그인 상태 확인
+    const token = localStorage.getItem('token');
+    const savedUser = localStorage.getItem('user');
+    
+    if (token && savedUser) {
+      setIsLoggedIn(true);
+      setUser(JSON.parse(savedUser));
+    }
   }, []);
 
   const login = () => {
@@ -27,19 +40,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = () => {
     setIsLoggedIn(false);
-    localStorage.setItem('isLoggedIn', 'false');
+    setUser(null);
+    localStorage.removeItem('token');
   };
 
   const signUp = (name: string, email: string, password: string) => {
-    console.log("signUp");
-  }
+    // 실제 구현에서는 API 호출이 필요합니다
+    console.log("signUp", { name, email, password });
+  };
 
   const resetPassword = (password: string) => {
-    console.log("resetPassword");
-  }
+    // 실제 구현에서는 API 호출이 필요합니다
+    console.log("resetPassword", { password });
+  };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout, signUp, resetPassword }}>
+    <AuthContext.Provider 
+      value={{ 
+        isLoggedIn, 
+        login, 
+        logout, 
+        signUp, 
+        resetPassword 
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
