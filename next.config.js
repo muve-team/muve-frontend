@@ -17,6 +17,10 @@ module.exports = {
   experimental: {
     appDir: true,
   },
+  webpack: (config, { isServer }) => {
+    config.cache = false;
+    return config;
+  },
 };
 
 module.exports = nextConfig;
