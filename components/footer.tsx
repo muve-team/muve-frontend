@@ -1,5 +1,5 @@
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/merged/Input"
+import { Button } from "@/components/ui/merged/Button"
 import { Facebook, Twitter, Instagram, Youtube } from "lucide-react"
 import Link from 'next/link'
 

@@ -18,7 +18,7 @@ const Banner: React.FC<BannerProps> = ({ title, subtitle, backgroundColor, backg
         >
             {/* 배너 내용 */}
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-                <p className="text-2xl md:text-3xl lg:text-4xl mb-4 text-black">{title}</p>
+                <p className="text-2xl md:text-3xl lg:text-3xl mb-4 text-black">{title}</p>
                 <button
                     onClick={onButtonClick}
                     className="px-4 py-2 bg-primary rounded transition mt-5"

@@ -1,14 +1,14 @@
 "use client"
 
 import Head from 'next/head';
-import { HeroSection } from '@/components/hero-section';
-import { CategoryList } from '@/components/category-list';
-import { TimeDeal } from '@/components/time-deal';
-import ProductList from '@/components/product-list';
-import { Footer } from '@/components/footer';
+import { HeroSection } from '@/components/HeroSection';
+import { CategoryList } from '@/components/CategoryList';
+// import { TimeDeal } from '@/temp/components/time-deal';
+import ProductList from '@/components/ProductList';
+import { Footer } from '@/components/Footer';
 import { ProductListType } from '@/types/productTypes';
-import Banner from '@/components/banner';
-import TopBanner from '@/components/topbanner';
+import Banner from '@/components/Banner';
+import TopBanner from '@/components/TopBanner';
 
 
 export default function Home() {
@@ -58,7 +58,7 @@ export default function Home() {
         <HeroSection />
         <div className="container mx-auto px-4">
           <CategoryList />
-          <TimeDeal products={timeDealProducts} />
+          {/* <TimeDeal products={timeDealProducts} /> */}
         </div>
         <div className="flex items-center justify-center">
           <Banner

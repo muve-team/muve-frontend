@@ -1,9 +1,8 @@
 "use client";
 
-import "./globals.css";
+import "../styles/globals.css";
 import { Noto_Sans } from "next/font/google";
-import { ThemeProvider } from "@/components/theme-provider";
-import { CartProvider } from "@/lib/CartContext";
+import { ThemeProvider } from "@/shared/providers/ThemeProvider";
 import { AuthProvider } from "@/lib/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
@@ -43,7 +42,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <AuthProvider>
-              <CartProvider>{children}</CartProvider>
+              {children}
             </AuthProvider>
           </ThemeProvider>
         </QueryClientProvider>

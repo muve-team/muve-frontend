@@ -1,8 +1,8 @@
 "use client";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { fetchProduct } from "../lib/api";
-import { CategoryProduct, Product } from "../types/productTypes";
+import { fetchProduct } from "@/lib/api";
+import { CategoryProduct, Product } from "@/types/productTypes";
 import { useCategoryStore } from "./useCategoryStore";
 
 export function useInfiniteProductQuery(enabled: boolean) {

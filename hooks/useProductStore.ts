@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { Product, ProductListType } from "../types/productTypes";
+import { Product, ProductListType } from "@/types/productTypes";
 import { useProductQuery } from "./useProductQuery";
 import { create } from "zustand";
 

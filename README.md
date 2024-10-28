@@ -9,6 +9,19 @@
 3. `pnpm install`
 4. `pnpm run dev`
 
+## 프로젝트 구조
+```
+src/
+│
+├── app/
+│   ├── shared/         # 공유 컴포넌트나 유틸리티 함수
+│   ├── entities/       # 주요 도메인 모델 (예: User, Product)
+│   ├── features/       # 개별 기능 (예: 로그인, 장바구니 추가)
+│   ├── widgets/        # 특정 페이지에만 쓰이는 컴포넌트
+│   ├── processes/      # 비즈니스 로직을 위한 프로세스 (예: 회원가입)
+│   └── pages/          # Next.js의 pages 디렉토리 역할
+```
+
 ## 파일 네이밍 컨벤션
 
 ### 1. 페이지 디렉터리 (`pages/`)

@@ -21,7 +21,7 @@ const TopBanner: React.FC = () => {
                 src={currentBanner.imageUrl}
                 alt="Top Banner Background"
                 fill
-                objectFit="cover"
+                // objectFit="cover"
                 className=""
             />
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white">

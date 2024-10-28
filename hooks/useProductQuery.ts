@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchProducts } from "../lib/api";
-import { Product, ProductListType } from "../types/productTypes";
+import { fetchProducts } from "@/lib/api";
+import { Product, ProductListType } from "@/types/productTypes";
 
 export function useProductQuery<T extends Product>(
   type: ProductListType,

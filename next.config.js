@@ -8,10 +8,15 @@ const nextConfig = {
 };
 
 module.exports = {
+  reactStrictMode: true,
+  pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
   images: {
     domains: ["unsplash.com"],
   },
   // productionBrowserSourceMaps: true,  
+  experimental: {
+    appDir: true,
+  },
 };
 
 module.exports = nextConfig;

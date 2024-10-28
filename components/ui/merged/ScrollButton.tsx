@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/merged/Button';
+import { Button } from '@/components/ui/button';
 
 interface ScrollButtonProps {
   direction: 'left' | 'right';
