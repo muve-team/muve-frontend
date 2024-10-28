@@ -129,13 +129,13 @@ export default function ProductList({
           )}
           <div ref={scrollContainerRef} className="w-full overflow-x-auto">
             <div className="flex space-x-4 p-4 w-max">
-              {/* {products.map((product, index) => renderProduct(product, index))} */}
+              {products.map((product, index) => renderProduct(product, index))}
             </div>
           </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {/* {products.map((product, index) => renderProduct(product, index))} */}
+          {products.map((product, index) => renderProduct(product, index))}
 
           {isDefaultType && hasNextPage && (
             <div ref={ref} className="h-10 w-full col-span-full" />
