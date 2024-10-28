@@ -111,7 +111,7 @@ export function LoginForm() {
           계정이 없으신가요?
         </p>
         <Link
-          href="/signup"
+          href="/join"
           className="text-sm text-blue-600 hover:underline dark:text-white"
         >
           회원가입
