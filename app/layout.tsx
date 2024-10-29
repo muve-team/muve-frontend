@@ -3,10 +3,9 @@
 import "../styles/globals.css";
 import { Noto_Sans } from "next/font/google";
 import { ThemeProvider } from "@/shared/providers/ThemeProvider";
-import { AuthProvider } from "@/lib/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
@@ -41,9 +40,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <AuthProvider>
-              {children}
-            </AuthProvider>
+            {children}
           </ThemeProvider>
         </QueryClientProvider>
         <Toaster />

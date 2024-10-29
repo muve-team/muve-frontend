@@ -22,7 +22,7 @@
     "paths": {
       "@/*": ["./*"],
       "@/components/*": ["./components/*"],
-      "@/lib/*": ["./lib/*"],
+      "@/lib/*": ["shared/lib/*"],
       "@/hooks/*": ["./hooks/*"],
       "@/features/*": ["./features/*"],
       "@/entities/*": ["./entities/*"],

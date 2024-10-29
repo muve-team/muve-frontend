@@ -18,7 +18,7 @@ import { useTheme } from '@/hooks/useTheme'
 
 export function LoginForm() {
   const router = useRouter();
-  const login = useLoginStore((state) => state.login);
+  const login = useLoginStore((state) => state.setLogin);
   const loginMutation = useLoginMutation();
   
   const {

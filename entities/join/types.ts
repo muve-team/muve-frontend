@@ -1,4 +1,4 @@
-import { CommonResponse } from "@/shared/types";
+import { CommonResponse } from "@/shared/types/types";
 
 export interface JoinRequest {
     name: string;

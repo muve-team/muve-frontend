@@ -28,6 +28,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   const handleAddToCart = () => {};
 
   return (
+
     <Card className="group h-full flex flex-col justify-between transform hover:scale-105 transition-all duration-300 hover:shadow-lg dark:bg-gray-800 dark:border-gray-700">
       <Link href={`/products/${productId}`}>
         <CardContent className="p-4 flex flex-col items-center">

@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/merged/Button"
 import { Menu, X, User, LogOut, ShoppingCart } from "lucide-react"
 import { ModeToggle } from "@/components/ui/ModeToggle"
 import Link from 'next/link'
-import { useAuth } from '@/lib/AuthContext'
 import { useRouter, usePathname } from 'next/navigation'
 import {
   DropdownMenu,
@@ -15,11 +14,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/merged/DropdownMenu"
+import { useLogin } from '@/features/login/hooks/useLogin'
+import { useLoginStore } from '@/features/login/model/store'
+import { useLogout } from '@/features/login/model/queries'
 
 export function HeroSection() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [logoLoaded, setLogoLoaded] = useState(false)
-  const { isLoggedIn, logout } = useAuth()
+  const { isAuthenticated, logout } = useLogin(); 
   const router = useRouter()
   const pathname = usePathname()
 
@@ -110,7 +112,7 @@ export function HeroSection() {
                 <SearchBar />
               </div>
             <ModeToggle />
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" className="text-primary">
@@ -171,7 +173,7 @@ export function HeroSection() {
                 <Link href="/about" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>회사 소개</Link>
                 <Link href="/careers" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>채용 정보</Link>
                 <Link href="/customer-service" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>고객센터</Link>
-                {isLoggedIn ? (
+                {isAuthenticated ? (
                   <>
                     <Link href="/mypage" className="py-2 ml-5 text-primary" onClick={handleMenuItemClick}>마이페이지</Link>
                     <Link href="/cart" className="py-2 ml-5 text-primary" onClick={handleMenuItemClick}>장바구니</Link>

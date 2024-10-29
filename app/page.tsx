@@ -9,6 +9,7 @@ import { ProductListType } from '@/types/productTypes';
 import Banner from '@/components/Banner';
 import TopBanner from '@/components/TopBanner';
 import { ProductList } from '@/features/product-list/ui/product-list';
+import { useLogin } from '@/features/login/hooks/useLogin'
 
 
 export default function Home() {

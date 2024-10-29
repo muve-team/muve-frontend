@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { JoinRequest, JoinResponse } from './types';
-import { CommonResponse } from '@/shared/types';
+import { CommonResponse } from '@/shared/types/types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8082/';
 
