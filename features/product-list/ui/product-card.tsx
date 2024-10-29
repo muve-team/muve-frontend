@@ -1,4 +1,3 @@
-// features/product/ui/product-card/product-card.tsx
 "use client";
 
 import { useState } from "react";
@@ -30,7 +29,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <Card className="h-full flex flex-col justify-between hover:shadow-lg dark:bg-gray-800 dark:border-gray-700 transition-all duration-300">
       <Link href={`/products/${productId}`}>
-        <CardContent className="p-4">
+        <CardContent className="p-4 flex-grow">
           <div className="relative aspect-square mb-4 overflow-hidden rounded-lg bg-gray-100">
             <Image
               src={imageUrl || '/placeholder.png'}
@@ -62,7 +61,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           <Button
             size="sm"
             variant="secondary"
-            className="flex-1 py-2 h-9"
+            className="flex-1 py-2 h-9 min-w-[80px]" // 최소 크기 지정
             onClick={handlePurchase}
           >
             <CreditCard className="mr-2 h-4 w-4" />
@@ -71,7 +70,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           <Button
             size="sm"
             variant="default"
-            className="flex-1 py-2 h-9"
+            className="flex-1 py-2 h-9 min-w-[80px]" // 최소 크기 지정
             onClick={handleAddToCart}
           >
             <ShoppingCart className="mr-2 h-4 w-4" />

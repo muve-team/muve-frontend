@@ -2,7 +2,6 @@
 
 import Head from 'next/head';
 import { HeroSection } from '@/components/HeroSection';
-import { CategoryList } from '@/components/CategoryList';
 // import { TimeDeal } from '@/temp/components/time-deal';
 import { Footer } from '@/components/Footer';
 import { ProductListType } from '@/types/productTypes';
@@ -10,6 +9,7 @@ import Banner from '@/components/Banner';
 import TopBanner from '@/components/TopBanner';
 import { ProductList } from '@/features/product-list/ui/product-list';
 import { useLogin } from '@/features/login/hooks/useLogin'
+import { CategoryList } from '@/features/category/ui/category-list';
 
 
 export default function Home() {
@@ -36,7 +36,7 @@ export default function Home() {
             onButtonClick={() => {}}
           />
         </div>
-        <div className="container mx-auto px-4 py-10">
+        <div className="w-full flex justify-center items-center px-4 py-10">
           {/* <ProductList
             title="인기 상품"
             type={ProductListType.popular}

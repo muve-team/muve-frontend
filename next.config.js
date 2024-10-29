@@ -7,7 +7,7 @@ const nextConfig = {
   // reactStrictMode: true,
 };
 
-module.exports = {
+module.exports = ({
   reactStrictMode: true,
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
   images: {
@@ -21,6 +21,6 @@ module.exports = {
     config.cache = false;
     return config;
   },
-};
+});
 
 module.exports = nextConfig;
