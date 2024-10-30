@@ -1,10 +1,10 @@
 'use client';
 
 import { useHottestProducts } from '../model/queries';
-import { ProductCard } from './category-product-card';
 import { Skeleton } from '@/components/ui/merged/Skeleton';
 import { Button } from '@/components/ui/merged/Button';
 import { useState, useEffect } from 'react';
+import { ProductCard } from './hottest-product-card';
 
 export const ProductList = () => {
   const { data: products, isLoading, error } = useHottestProducts();

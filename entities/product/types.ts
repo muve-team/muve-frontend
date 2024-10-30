@@ -11,7 +11,7 @@ export interface CategoryProduct {
 
 export interface HottestProduct {
   productId: string;
-  title: string;
+  name: string;
   price: number;
   imageUrl: string;
   categoryId: string;

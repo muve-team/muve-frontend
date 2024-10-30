@@ -15,7 +15,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
-  const { productId, title, price, imageUrl } = product;
+  const { productId, name, price, imageUrl } = product;
   const [imageLoaded, setImageLoaded] = useState(false);
   const router = useRouter();
   const { isDark } = useTheme();
@@ -33,7 +33,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           <div className="relative aspect-square mb-4 overflow-hidden rounded-lg bg-gray-100">
             <Image
               src={imageUrl || '/placeholder.png'}
-              alt={title}
+              alt={name}
               fill
               className={`
                 object-cover
@@ -48,7 +48,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           </div>
           <div className="space-y-2">
             <h3 className="text-base font-medium line-clamp-2 dark:text-gray-100">
-              {title}
+              {name}
             </h3>
             <p className="text-xl font-bold text-primary">
               {price.toLocaleString()}원
