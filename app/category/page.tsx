@@ -1,10 +1,7 @@
 import { Suspense } from "react";
 import { CategoryList } from "@/features/category/ui/category-list";
 import { CategoryProductList } from "@/features/product/ui/category-product-list";
-import { ProductListSkeleton } from "@/features/product/ui/category-product-list-skeleton";
 import { getCategoryProductApi } from "@/entities/product/api";
-
-export const dynamic = "force-dynamic";
 
 export default async function CategoryPage({
   searchParams,
@@ -22,12 +19,10 @@ export default async function CategoryPage({
     <main className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-col gap-8">
         <CategoryList />
-        <Suspense fallback={<ProductListSkeleton />}>
-          <CategoryProductList 
-            categoryId={searchParams.categoryId} 
-            initialData={initialData} 
-          />
-        </Suspense>
+        <CategoryProductList
+          categoryId={searchParams.categoryId}
+          initialData={initialData}
+        />
       </div>
     </main>
   );

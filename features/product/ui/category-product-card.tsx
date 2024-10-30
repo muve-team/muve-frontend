@@ -9,6 +9,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/merged/Card";
 import { Button } from "@/components/ui/merged/Button";
 import { useTheme } from "@/hooks/useTheme";
 import { CategoryProduct } from "@/entities/product/types";
+import Skeleton from "react-loading-skeleton";
 
 interface ProductCardProps {
   product: CategoryProduct;
@@ -16,7 +17,6 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product }: ProductCardProps) => {
   const { productId, title, price, imageUrl } = product;
-  const [imageLoaded, setImageLoaded] = useState(false);
   const router = useRouter();
   const { isDark } = useTheme();
 
@@ -39,9 +39,8 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                 object-cover
                 transition-transform duration-300 
                 hover:scale-105
-                ${imageLoaded ? "opacity-100" : "opacity-0"}
+                opacity-100"
               `}
-              onLoad={() => setImageLoaded(true)}
               draggable={false}
               sizes="(max-width: 768px) 50vw, 320px"
             />

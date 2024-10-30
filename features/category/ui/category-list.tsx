@@ -5,7 +5,6 @@ import { useCategories } from '../model/queries';
 import { useCategoryStore } from '../model/store';
 import { Button } from '@/components/ui/merged/Button';
 import { ScrollArea, ScrollBar } from '@/components/ui/merged/ScrollArea';
-import { Skeleton } from '@/components/ui/merged/Skeleton';
 import { Icon } from '@iconify/react';
 import { useRouter } from 'next/navigation';
 
@@ -26,22 +25,6 @@ export const CategoryList = ({ compact = false }: CategoryListProps) => {
     } else {
       router.push('/');
     }
-  };
-
-  if (isLoading) {
-    return (
-      <ScrollArea className="w-full whitespace-nowrap">
-        <div className="flex space-x-6 p-6">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="flex flex-col items-center">
-              <Skeleton className="h-36 w-36 rounded-full mb-6" />
-              <Skeleton className="h-8 w-28" />
-            </div>
-          ))}
-        </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
-    );
   }
 
   const categories = categoriesResponse?.data || [];

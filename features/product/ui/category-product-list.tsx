@@ -5,8 +5,9 @@ import { useEffect } from "react";
 import { CategoryProducts } from "@/entities/product/types";
 import { useInfiniteProducts } from "../api/useInifiniteProducts";
 import { ProductCard } from "./category-product-card";
-import { ProductListSkeleton } from "./category-product-list-skeleton";
 import { CategoryProductsApiResponse } from "../model/types";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 interface CategoryProductListProps {
   categoryId?: string;
@@ -22,6 +23,7 @@ export function CategoryProductList({ categoryId, initialData }: CategoryProduct
     hasNextPage,
     isFetchingNextPage,
     status,
+    isLoading
   } = useInfiniteProducts(categoryId, initialData.data);
 
   useEffect(() => {
@@ -29,10 +31,6 @@ export function CategoryProductList({ categoryId, initialData }: CategoryProduct
       fetchNextPage();
     }
   }, [inView, fetchNextPage, hasNextPage, isFetchingNextPage]);
-
-  if (isFetchingNextPage) {
-    return <ProductListSkeleton />;
-  }
 
   if (status === "error") {
     return (
@@ -54,6 +52,7 @@ export function CategoryProductList({ categoryId, initialData }: CategoryProduct
         )}
       </div>
 
+      {/* 인피니트 스크롤 - 다음 페이지 로딩 중 표시 */}
       <div
         ref={ref}
         className="w-full h-20 flex items-center justify-center mt-8"

@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: "standalone",
-  // swcMinify: true,
+  output: "standalone",
+  swcMinify: true,
   // trailingSlash: false,
   images: { unoptimized: true },
-  // reactStrictMode: true,
+  reactStrictMode: false,
 };
 
 module.exports = ({

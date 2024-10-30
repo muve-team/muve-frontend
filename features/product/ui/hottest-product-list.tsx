@@ -1,16 +1,20 @@
 'use client';
 
-import { useHottestProducts } from '../model/queries';
-import { Skeleton } from '@/components/ui/merged/Skeleton';
 import { Button } from '@/components/ui/merged/Button';
 import { useState, useEffect } from 'react';
 import { ProductCard } from './hottest-product-card';
+import { HottestProduct } from '@/entities/product/types';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css'; // Skeleton 스타일 추가
 
-export const ProductList = () => {
-  const { data: products, isLoading, error } = useHottestProducts();
+interface HottestProductListProps {
+  initialProducts: HottestProduct[]
+}
+
+export const HottestProductList = ({ initialProducts }: HottestProductListProps) => {
   const [isMobileView, setIsMobileView] = useState(false);
-  const [columnCount, setColumnCount] = useState(4);
-  const [visibleCount, setVisibleCount] = useState(5);
+  const [columnCount, setColumnCount] = useState(5);
+  const [visibleCount, setVisibleCount] = useState(5);  
 
   useEffect(() => {
     const handleResize = () => {
@@ -34,32 +38,7 @@ export const ProductList = () => {
     setVisibleCount((prev) => Math.min(prev + 5, 10));
   };
 
-  if (isLoading) {
-    return (
-      <div className={`grid grid-cols-${columnCount} gap-4 px-4 my-24 justify-center`}>
-        {[...Array(5)].map((_, i) => (
-          <div key={i} className="w-[160px]">
-            <Skeleton className="h-[200px] w-full rounded-lg" />
-            <div className="space-y-2 mt-2">
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-2/3" />
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="text-center text-red-500 my-24">
-        오류가 발생했습니다. 다시 시도해주세요.
-      </div>
-    );
-  }
-
-  if (!products?.data || !products?.data.length) {
-    console.log(products);
+  if (!initialProducts.length) {
     return (
       <div className="text-center text-gray-500 my-24">
         상품이 없습니다.
@@ -85,17 +64,17 @@ export const ProductList = () => {
           msOverflowStyle: 'none',
         }}
       >
-        {products.data.slice(0, visibleCount).map((product) => (
+        {initialProducts.slice(0, visibleCount).map((product: HottestProduct) => (
           <div key={product.productId} className="w-[120px] flex-none">
             <ProductCard product={product} />
           </div>
         ))}
       </div>
 
-      {visibleCount < 10 && (
+      {(visibleCount < 10 && initialProducts.length > 10) || (visibleCount >= 5 && initialProducts.length > 5) && (
         <div className="flex justify-center" style={{marginTop: 30}}> {/* 더보기 버튼과 리스트 사이에 간격 추가 */}
           <Button variant="outline" className="text-black border-white" onClick={handleLoadMore}>
-            더보기
+            더 보기
           </Button>
         </div>
       )}

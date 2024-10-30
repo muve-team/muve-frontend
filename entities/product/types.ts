@@ -32,3 +32,13 @@ export interface CategoryProducts {
   page: number;
   size: number;
 }
+
+export interface ProductDetailResponse {
+  productId: number;
+  name: string;
+  price: number;
+  imageUrl: string;
+  stockQuantity: number;
+  categoryName: string;
+  categorySlug: string;
+}
