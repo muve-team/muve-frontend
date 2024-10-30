@@ -71,6 +71,7 @@ export const ProductList = () => {
 
   return (
     <section className="py-24 overflow-hidden w-2/3">
+      <p className="text-3xl text-center mb-8">NEW ARRIVAL</p>
       <div
         className={`${
           isMobileView ? 'flex gap-2 overflow-x-auto px-4' : `grid grid-cols-${columnCount} gap-4 px-4 justify-center`
