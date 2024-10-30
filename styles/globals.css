@@ -190,3 +190,36 @@ a.text-primary:hover {
 .tab-trigger {
   transition: background-color 0.3s ease;
 }
+
+.loading-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(245, 245, 245, 0.95);
+}
+
+.shopping-bag-icon {
+  width: 65px;
+  height: 65px;
+  color: #3c4566;
+  stroke-width: 1px;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: dash 2.5s ease-in-out infinite;
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 100;
+  }
+
+  50% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: -100;
+  }
+}
