@@ -1,7 +1,7 @@
+import { HottestProduct } from '@/entities/product/types';
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Product } from '@/types/productTypes';
 
-export function useScrollButtonVisibility(products: Product[]) {
+export function useScrollButtonVisibility(products: HottestProduct[]) {
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);

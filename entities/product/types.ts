@@ -1,14 +1,34 @@
 // entities/product/types.ts
-export interface Product {
-    productId: number;
-    name: string;
-    price: number;
-    imageUrl: string;
+import { CommonResponse } from "@/shared/types/types";
+
+export interface CategoryProduct {
+  productId: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  categoryId: string;
 }
 
-export interface ProductsResponse {
-    result: 'SUCCESS' | 'FAIL';
-    data: Product[];
-    message: string;
-    errorCode: string | null;
-}  
+export interface HottestProduct {
+  productId: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  categoryId: string;
+}
+
+export interface CategoryProduct {
+  productId: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  categoryId: string;
+}
+
+export interface CategoryProducts {
+  products: CategoryProduct[];
+  hasMore: boolean;
+  total: number;
+  page: number;
+  size: number;
+}

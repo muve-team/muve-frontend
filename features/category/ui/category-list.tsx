@@ -85,7 +85,7 @@ export const CategoryList = ({ compact = false }: CategoryListProps) => {
               }`}>
                 <Icon
                   icon={category.imageUrl || 'lucide:folder'}
-                  className={`h-24 w-24 sm:h-28 sm:w-28 md:h-32 md:w-32 transition-colors duration-300 ${
+                  className={`h-32 w-24 sm:h-28 sm:w-28 md:h-32 md:w-32 transition-colors duration-300 ${
                     hoveredCategory === category.categoryId ? 'text-white' : 'text-gray-500'
                   }`}
                 />

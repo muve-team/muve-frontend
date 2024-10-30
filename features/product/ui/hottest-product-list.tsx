@@ -1,13 +1,13 @@
 'use client';
 
-import { useRandomProducts } from '../model/queries';
-import { ProductCard } from './product-card';
+import { useHottestProducts } from '../model/queries';
+import { ProductCard } from './category-product-card';
 import { Skeleton } from '@/components/ui/merged/Skeleton';
 import { Button } from '@/components/ui/merged/Button';
 import { useState, useEffect } from 'react';
 
 export const ProductList = () => {
-  const { data: products, isLoading, error } = useRandomProducts();
+  const { data: products, isLoading, error } = useHottestProducts();
   const [isMobileView, setIsMobileView] = useState(false);
   const [columnCount, setColumnCount] = useState(5);
   const [visibleCount, setVisibleCount] = useState(5);
@@ -58,7 +58,8 @@ export const ProductList = () => {
     );
   }
 
-  if (!products?.data.length) {
+  if (!products?.data || !products?.data.length) {
+    console.log(products);
     return (
       <div className="text-center text-gray-500 my-24">
         상품이 없습니다.

@@ -4,12 +4,10 @@ import Head from 'next/head';
 import { HeroSection } from '@/components/HeroSection';
 // import { TimeDeal } from '@/temp/components/time-deal';
 import { Footer } from '@/components/Footer';
-import { ProductListType } from '@/types/productTypes';
 import Banner from '@/components/Banner';
 import TopBanner from '@/components/TopBanner';
-import { ProductList } from '@/features/product-list/ui/product-list';
-import { useLogin } from '@/features/login/hooks/useLogin'
 import { CategoryList } from '@/features/category/ui/category-list';
+import { ProductList } from '@/features/product/ui/hottest-product-list';
 
 
 export default function Home() {

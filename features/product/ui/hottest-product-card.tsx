@@ -8,14 +8,14 @@ import { ShoppingCart, CreditCard } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/merged/Card";
 import { Button } from "@/components/ui/merged/Button";
 import { useTheme } from "@/hooks/useTheme";
-import { Product } from "@/entities/product/types";
+import { HottestProduct } from "@/entities/product/types";
 
 interface ProductCardProps {
-  product: Product;
+  product: HottestProduct;
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
-  const { productId, name, price, imageUrl } = product;
+  const { productId, title, price, imageUrl } = product;
   const [imageLoaded, setImageLoaded] = useState(false);
   const router = useRouter();
   const { isDark } = useTheme();
@@ -33,7 +33,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           <div className="relative aspect-square mb-4 overflow-hidden rounded-lg bg-gray-100">
             <Image
               src={imageUrl || '/placeholder.png'}
-              alt={name}
+              alt={title}
               fill
               className={`
                 object-cover
@@ -48,7 +48,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           </div>
           <div className="space-y-2">
             <h3 className="text-base font-medium line-clamp-2 dark:text-gray-100">
-              {name}
+              {title}
             </h3>
             <p className="text-xl font-bold text-primary">
               {price.toLocaleString()}원
