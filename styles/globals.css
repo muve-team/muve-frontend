@@ -160,6 +160,10 @@ body {
   color: #fff;
 }
 
+.bg-none {
+  background: transparent !important;
+}
+
 .text-primary {
   color: #3c4566
 }
@@ -176,6 +180,10 @@ a.text-primary:hover {
 
 .border-primary {
   border: 1px solid #3c4566
+}
+
+.border-none {
+  border: none !important;
 }
 
 .inputCustom {
@@ -222,4 +230,32 @@ a.text-primary:hover {
   100% {
     stroke-dashoffset: -100;
   }
+}
+
+@media (max-width: 767px) {
+  .shopping-bag-icon {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+.hottestWrap img {
+  border-radius: 10px;
+}
+
+.goodsTit {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.buyIcon,
+.cartIcon {
+  color: #3c4566 !important;
+}
+
+.buyIcon:hover,
+.cartIcon:hover {
+  opacity: 0.8;
+  transition: all .5s;
 }

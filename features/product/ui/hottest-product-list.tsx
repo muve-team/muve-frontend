@@ -9,7 +9,7 @@ import { ProductCard } from './hottest-product-card';
 export const ProductList = () => {
   const { data: products, isLoading, error } = useHottestProducts();
   const [isMobileView, setIsMobileView] = useState(false);
-  const [columnCount, setColumnCount] = useState(5);
+  const [columnCount, setColumnCount] = useState(4);
   const [visibleCount, setVisibleCount] = useState(5);
 
   useEffect(() => {
@@ -18,9 +18,11 @@ export const ProductList = () => {
       setIsMobileView(windowWidth < 1080);
 
       if (windowWidth >= 1300) {
-        setColumnCount(5);
-      } else if (windowWidth >= 960) {
         setColumnCount(4);
+      } else if (windowWidth >= 768) {
+        setColumnCount(4);
+      } else if (windowWidth < 767) {
+        setColumnCount(2); 
       }
     };
 
@@ -38,8 +40,8 @@ export const ProductList = () => {
     return (
       <div className={`grid grid-cols-${columnCount} gap-4 px-4 my-24 justify-center`}>
         {[...Array(5)].map((_, i) => (
-          <div key={i} className="w-[120px]">
-            <Skeleton className="h-[160px] w-full rounded-lg" />
+          <div key={i} className="w-[160px]">
+            <Skeleton className="h-[200px] w-full rounded-lg" />
             <div className="space-y-2 mt-2">
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-2/3" />
@@ -68,10 +70,10 @@ export const ProductList = () => {
   }
 
   return (
-    <section className="py-24 overflow-hidden">
+    <section className="py-24 overflow-hidden w-2/3">
       <div
         className={`${
-          isMobileView ? 'flex gap-4 overflow-x-auto px-4' : `grid grid-cols-${columnCount} gap-4 px-4 justify-center`
+          isMobileView ? 'flex gap-2 overflow-x-auto px-4' : `grid grid-cols-${columnCount} gap-4 px-4 justify-center`
         }`}
         style={{
           maxWidth: '1200px',
