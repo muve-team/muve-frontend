@@ -1,13 +1,7 @@
 ##  실행 방법
-
-1. 프로젝트 루트에 `.env.local 파일 추가`
-    ```
-    NEXT_PUBLIC_API_URL=https://api.muve.kr
-    ```
-
 2. `npm install -g pnpm`
 3. `pnpm install`
-4. `pnpm run dev`
+4. `pnpm run staging`
 
 ## 프로젝트 구조
 ```

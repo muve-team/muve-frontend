@@ -2,7 +2,7 @@
 import axios from 'axios';
 import type { CategoryApiResponse } from './types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8082';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const categoryApi = {
   getCategories: async (): Promise<CategoryApiResponse> => {

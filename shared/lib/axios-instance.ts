@@ -1,7 +1,7 @@
 // shared/api/base.ts
 import axios from 'axios';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8082';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const AUTH_TOKEN_KEY = 'authToken';
 
 export const api = axios.create({

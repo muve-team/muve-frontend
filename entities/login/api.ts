@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { LoginCredentials, LoginApiResponse, ValidateApiResponse, LogoutApiResponse } from './types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8082/';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const loginApi = {
   login: async (credentials: LoginCredentials): Promise<LoginApiResponse> => {

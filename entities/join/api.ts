@@ -2,7 +2,7 @@ import axios from 'axios';
 import { JoinRequest, JoinResponse } from './types';
 import { CommonResponse } from '@/shared/types/types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8082/';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const joinApi = {
   join: async (data: JoinRequest) => {

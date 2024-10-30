@@ -3,7 +3,7 @@ import axios from 'axios';
 import { HottestProduct } from './types';
 import { CategoryProductsApiResponse, HottestProductApiResponse } from '@/features/product/model/types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8082/';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const getProductApi = {
   getHottestProducts: async (): Promise<HottestProductApiResponse> => {
@@ -21,7 +21,7 @@ export async function getCategoryProductApi({
   page?: number;
   size?: number;
 }): Promise<CategoryProductsApiResponse> {
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8082';
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
   const params = new URLSearchParams({
     page: page.toString(),
     size: size.toString(),
