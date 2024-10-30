@@ -18,11 +18,9 @@ export const ProductList = () => {
       setIsMobileView(windowWidth < 1080);
 
       if (windowWidth >= 1300) {
-        setColumnCount(4);
-      } else if (windowWidth >= 768) {
-        setColumnCount(4);
-      } else if (windowWidth < 767) {
-        setColumnCount(2); 
+        setColumnCount(5);
+      }  else if (windowWidth < 767) {
+        setColumnCount(1); 
       }
     };
 
