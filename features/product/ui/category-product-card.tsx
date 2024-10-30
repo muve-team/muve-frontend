@@ -47,36 +47,34 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             />
           </div>
           <div className="space-y-2">
-            <h3 className="text-base font-medium line-clamp-2 dark:text-gray-100">
+            <p className="text-gray-300 text-sm font-light">브랜드명</p>
+            <h3 className="goodsTit text-base font-medium line-clamp-2 dark:text-gray-100">
               {title}
             </h3>
-            <p className="text-xl font-bold text-primary">
-              {price.toLocaleString()}원
-            </p>
+            <div className="flex items-center justify-between mt-2">
+              <p className="text-xl font-bold text-primary">{price.toLocaleString()}원</p>
+              <div className="flex">
+                <a
+                  className="buyIcon p-1 bg-none"
+                  onClick={handlePurchase}
+                  title="구매"
+                >
+                  <CreditCard className="h-5 w-5" />
+                </a>
+                <a
+                  className="cartIcon p-1 bg-none"
+                  onClick={handleAddToCart}
+                  title="장바구니"
+                >
+                  <ShoppingCart className="text-primary h-5 w-5" />
+                </a>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Link>
       <CardFooter className="p-4">
-        <div className="flex w-full gap-2">
-          <Button
-            size="sm"
-            variant="secondary"
-            className="flex-1 py-2 h-9 min-w-[80px]" // 최소 크기 지정
-            onClick={handlePurchase}
-          >
-            <CreditCard className="mr-2 h-4 w-4" />
-            구매
-          </Button>
-          <Button
-            size="sm"
-            variant="default"
-            className="flex-1 py-2 h-9 min-w-[80px]" // 최소 크기 지정
-            onClick={handleAddToCart}
-          >
-            <ShoppingCart className="mr-2 h-4 w-4" />
-            장바구니
-          </Button>
-        </div>
+        
       </CardFooter>
     </Card>
   );

@@ -20,7 +20,7 @@ export default async function CategoryPage({
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">
-      <div className="flex flex-col md:flex-row gap-8">
+      <div className="flex flex-col md:flex-col gap-8">
         <CategoryList />
         <Suspense fallback={<ProductListSkeleton />}>
           <CategoryProductList 

@@ -44,13 +44,12 @@ export function CategoryProductList({ categoryId, initialData }: CategoryProduct
 
   return (
     <div className="flex-1">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         {data.pages.map((page, pageIndex) =>
           page.products.map((product) => (
-            <ProductCard
-              key={`${pageIndex}-${product.productId}`} 
-              product={product} 
-            />
+            <div key={`${pageIndex}-${product.productId}`} className="flex flex-col">
+              <ProductCard product={product} />
+            </div>
           ))
         )}
       </div>
