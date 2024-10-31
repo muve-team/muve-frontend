@@ -101,9 +101,9 @@ export function HeroSection() {
   
           {/* 네비게이션 링크 (데스크탑) */}
           <div className="hidden md:flex items-center justify-center space-x-6">
-            <Link href="/about" className="text-black">회사 소개</Link>
+            {/* <Link href="/about" className="text-black">회사 소개</Link>
             <Link href="/careers" className="text-black">채용 정보</Link>
-            <Link href="/customer-service" className="text-black">고객센터</Link>
+            <Link href="/customer-service" className="text-black">고객센터</Link> */}
           </div>
   
           {/* 우측 섹션: 검색바 (데스크탑), 테마 토글, 사용자 메뉴 */}
@@ -168,10 +168,10 @@ export function HeroSection() {
                 <SearchBar />
               </div>
               <nav className="flex flex-col space-y-4">
-                <Link href="/" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>홈</Link>
+                {/* <Link href="/" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>홈</Link>
                 <Link href="/about" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>회사 소개</Link>
                 <Link href="/careers" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>채용 정보</Link>
-                <Link href="/customer-service" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>고객센터</Link>
+                <Link href="/customer-service" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>고객센터</Link> */}
                 {isAuthenticated ? (
                   <>
                     <Link href="/mypage" className="py-2 ml-5 text-primary" onClick={handleMenuItemClick}>마이페이지</Link>
