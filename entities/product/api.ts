@@ -45,7 +45,6 @@ export async function getCategoryProductApi({
 
   const response = await fetch(`${baseUrl}/category/products?${params}`, {
     // Enable cache for SSR
-    cache: 'force-cache',
     next: { revalidate: 60 }, // Revalidate every 60 seconds
   });
 

@@ -20,25 +20,9 @@ export default async function Home() {
   const { data: hottestInitialProducts } = await getHottestProductApi();
   const { data: newestInitialProducts } = await getHottestProductApi();
 
-  // const [isLoading, setIsLoading] = useState(true);
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 2000);
-  //   return () => clearTimeout(timer);
-  // }, []);
-
   return (
     <>
-      {/* <Head>
-        <link rel="icon" href="/favicon.ico" />
-        <title>Muve</title>
-      </Head> */}
-      {/* {isLoading ? (
-        <Loading />  // 로딩 중일 때 표시할 컴포넌트
-      ) : ( */}
-
-      <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-950 dark:to-gray-900">
+      <main className="min-h-screen bg-white dark:bg-gray-900">
         <TopBanner />
         <HeroSection />
         <div className="container mx-auto px-4 py-6">

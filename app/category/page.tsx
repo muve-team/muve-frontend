@@ -2,6 +2,9 @@ import { Suspense } from "react";
 import { CategoryList } from "@/features/category/ui/category-list";
 import { CategoryProductList } from "@/features/product/ui/category-product-list";
 import { getCategoryProductApi } from "@/entities/product/api";
+import { HeroSection } from "@/components/HeroSection";
+import { Footer } from "@/components/Footer";
+import TopBanner from "@/components/TopBanner";
 
 export default async function CategoryPage({
   searchParams,
@@ -12,18 +15,23 @@ export default async function CategoryPage({
   const initialData = await getCategoryProductApi({
     categoryId: searchParams.categoryId,
     page: 0,
-    size: 5,
+    size: 6,
   });
 
   return (
-    <main className="max-w-7xl mx-auto px-4 py-8">
-      <div className="flex flex-col md:flex-col gap-8">
-        <CategoryList />
-        <CategoryProductList
-          categoryId={searchParams.categoryId}
-          initialData={initialData}
-        />
-      </div>
-    </main>
+    <>
+      <TopBanner />
+      <HeroSection />
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        <div className="flex flex-col md:flex-col gap-8">
+          <CategoryList />
+          <CategoryProductList
+            categoryId={searchParams.categoryId}
+            initialData={initialData}
+          />
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 }
