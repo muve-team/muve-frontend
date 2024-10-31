@@ -209,7 +209,8 @@ body {
 }
 
 .text-primary {
-  color: #3c4566
+  /* color: #3c4566 */
+  color: #4a5524 !important;
 }
 
 .text-primary:hover {
