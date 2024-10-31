@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { HeroSection } from "@/components/HeroSection";
 import { Footer } from "@/components/Footer";
 import Banner from "@/components/Banner";
@@ -8,9 +7,18 @@ import { getHottestProductApi } from "@/entities/product/api";
 import { Suspense } from "react";
 import TopBanner from "@/components/TopBanner";
 import "react-loading-skeleton/dist/skeleton.css";
+import { NewestProductList } from "@/features/product/ui/newest-product-list";
+
+export const metadata = {
+  title: "Muve",
+  icons: {
+    icon: "/favicon.ico",
+  },
+};
 
 export default async function Home() {
-  const { data: initialProducts } = await getHottestProductApi();
+  const { data: hottestInitialProducts } = await getHottestProductApi();
+  const { data: newestInitialProducts } = await getHottestProductApi();
 
   // const [isLoading, setIsLoading] = useState(true);
   // useEffect(() => {
@@ -22,10 +30,10 @@ export default async function Home() {
 
   return (
     <>
-      <Head>
+      {/* <Head>
         <link rel="icon" href="/favicon.ico" />
         <title>Muve</title>
-      </Head>
+      </Head> */}
       {/* {isLoading ? (
         <Loading />  // 로딩 중일 때 표시할 컴포넌트
       ) : ( */}
@@ -45,13 +53,9 @@ export default async function Home() {
             backgroundColor="#ccc"
           />
         </div>
-        <div className="w-full flex justify-center items-center px-4 py-10">
-          {/* <ProductList
-            title="인기 상품"
-            type={ProductListType.popular}
-            scrollable={true}
-          /> */}
-          <HottestProductList initialProducts={initialProducts ?? []} />
+        <div className="w-full justify-center items-center px-4 py-10">
+          <HottestProductList initialProducts={hottestInitialProducts ?? []} />
+          <NewestProductList initialProducts={newestInitialProducts ?? []} />
         </div>
         <Footer />
       </main>

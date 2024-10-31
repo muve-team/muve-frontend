@@ -4,13 +4,13 @@ import { Button } from "@/components/ui/merged/Button";
 import { useState, useEffect } from "react";
 import { HottestProduct } from "@/entities/product/types";
 import "react-loading-skeleton/dist/skeleton.css";
-import { HottestProductCard } from "./hottest-product-card";
+import { NewestProductCard } from "./newest-product-card";
 
 interface HottestProductListProps {
   initialProducts: HottestProduct[];
 }
 
-export const HottestProductList = ({
+export const NewestProductList = ({
   initialProducts,
 }: HottestProductListProps) => {
   const [visibleCount, setVisibleCount] = useState(5);
@@ -49,14 +49,14 @@ export const HottestProductList = ({
   return (
     <section className="product-list-section">
       <div className="space-y-1">
-        <h2 className="text-lg font-semibold text-left">Most Popular</h2>
-        <p className="text-sm text-left text-secondary">인기상품</p>
+        <h2 className="text-lg font-semibold text-left">New in</h2>
+        <p className="text-sm text-left text-secondary">신규 등록 상품</p>
       </div>
       
       <div className={`product-container ${layout}`}>
         {displayProducts.map((product: HottestProduct, index: number) => (
           <div key={product.productId} className="product-item">
-            <HottestProductCard product={product} index={index} />
+            <NewestProductCard product={product} index={index} />
           </div>
         ))}
       </div>

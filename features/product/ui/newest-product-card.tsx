@@ -13,7 +13,7 @@ interface ProductCardProps {
   index: number;
 }
 
-export const HottestProductCard = ({ product, index }: ProductCardProps) => {
+export const NewestProductCard = ({ product, index }: ProductCardProps) => {
   const { productId, name, price, imageUrl } = product;
   const router = useRouter();
 
