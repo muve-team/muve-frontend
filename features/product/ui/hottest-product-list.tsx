@@ -62,7 +62,7 @@ export const HottestProductList = ({
       </div>
 
       {layout === 'grid' && visibleCount < initialProducts.length && (
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-12">
           <Button
             variant="outline"
             className="text-black border-gray-200 hover:bg-gray-50"
