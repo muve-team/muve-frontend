@@ -23,7 +23,6 @@ export default async function Home() {
   return (
     <>
       <main className="min-h-screen bg-white dark:bg-gray-900">
-        <TopBanner />
         <HeroSection />
         <div className="container mx-auto px-4 py-6">
           <CategoryList />
