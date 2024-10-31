@@ -112,6 +112,41 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'SpoqaHanSansNeo';
+  src: url('/fonts/SpoqaHanSansNeo-Bold.ttf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SpoqaHanSansNeo';
+  src: url('/fonts/SpoqaHanSansNeo-Light.ttf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SpoqaHanSansNeo';
+  src: url('/fonts/SpoqaHanSansNeo-Medium.ttf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SpoqaHanSansNeo';
+  src: url('/fonts/SpoqaHanSansNeo-Regular.ttf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SpoqaHanSansNeo';
+  src: url('/fonts/SpoqaHanSansNeo-Thin.ttf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+}
+
 html,
 body {
   height: 100%;
@@ -127,12 +162,17 @@ body {
 }
 
 * {
-  font-family: 'Pretendard', sans-serif;
+  font-family: 'SpoqaHanSansNeo', sans-serif;
   font-weight: 400;
 }
 
 .pretendard {
   font-family: 'Pretendard', sans-serif;
+  font-weight: 400;
+}
+
+.spoqaHanSansNeo {
+  font-family: 'SpoqaHanSansNeo', sans-serif;
   font-weight: 400;
 }
 
@@ -151,7 +191,8 @@ body {
 }
 
 .bg-primary {
-  background: #3c4566;
+  /* background: #3c4566; */
+  background: #4a5524;
   color: #fff;
 }
 
