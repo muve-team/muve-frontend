@@ -110,7 +110,7 @@ export function HeroSection() {
           <div className="flex items-center space-x-4">
               <div className="hidden md:block flex-shrink-0">
               </div>
-            <ModeToggle />
+            {/* <ModeToggle /> */}
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>

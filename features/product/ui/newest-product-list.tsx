@@ -21,10 +21,11 @@ export const NewestProductList = ({
     const checkScreenSize = () => {
       setLayout(window.innerWidth >= 1024 ? 'grid' : 'scroll');
     };
-    
-    checkScreenSize();
-    setIsMounted(true);
+
+    setIsMounted(true); // 마운트 완료 후 렌더링 상태로 전환
+    checkScreenSize();  // 화면 크기 체크
     window.addEventListener('resize', checkScreenSize);
+
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
@@ -43,7 +44,7 @@ export const NewestProductList = ({
   }
 
   if (!isMounted) {
-    return null;
+    return null; // 마운트 완료 전에는 아무것도 렌더링하지 않음
   }
 
   return (

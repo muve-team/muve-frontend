@@ -1,15 +1,22 @@
 // entities/product/api.ts
 import axios from 'axios';
-import { CategoryProductsApiResponse, HottestProductApiResponse, ProductDetailApiResponse } from '@/features/product/model/types';
+import { getTsid } from 'tsid-ts';
+import {
+  CategoryProductsApiResponse,
+  HottestProductApiResponse,
+  ProductDetailApiResponse,
+} from '@/features/product/model/types';
 import { ProductDetailResponse } from './types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function getHottestProductApi(): Promise<HottestProductApiResponse> {
   try {
+    const tsid = getTsid().toString();
     const { data } = await axios.get(`${API_URL}/product/random`, {
       headers: {
         'Cache-Control': 'max-age=3600',
+        'x-request-id': tsid, // tsid 추가
       },
     });
 
@@ -36,6 +43,7 @@ export async function getCategoryProductApi({
   page?: number;
   size?: number;
 }): Promise<CategoryProductsApiResponse> {
+  const tsid = getTsid().toString();
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
   const params = new URLSearchParams({
     page: page.toString(),
@@ -44,6 +52,9 @@ export async function getCategoryProductApi({
   });
 
   const response = await fetch(`${baseUrl}/category/products?${params}`, {
+    headers: {
+      'x-request-id': tsid, // tsid 추가
+    },
     // Enable cache for SSR
     next: { revalidate: 60 }, // Revalidate every 60 seconds
   });
@@ -61,21 +72,21 @@ export async function getCategoryProductApi({
   return data;
 }
 
-
 export async function getProductDetailApi(productId: string): Promise<ProductDetailResponse> {
-
+  const tsid = getTsid().toString();
   const params = new URLSearchParams({
-    productId: productId
+    productId: productId,
   });
 
   const { data } = await axios.get(`${API_URL}/product/detail?${params}`, {
     headers: {
       'Cache-Control': 'max-age=3600',
+      'x-request-id': tsid, // tsid 추가
     },
   });
 
   if (!data.data) {
-    throw new Error("상품 상세 정보를 불러올 수 없습니다.");
+    throw new Error('상품 상세 정보를 불러올 수 없습니다.');
   }
 
   return data.data;

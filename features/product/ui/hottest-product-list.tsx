@@ -19,12 +19,17 @@ export const HottestProductList = ({
 
   useEffect(() => {
     const checkScreenSize = () => {
-      setLayout(window.innerWidth >= 1024 ? 'grid' : 'scroll');
+      if (window.innerWidth >= 1024) {
+        setLayout('grid');
+      } else {
+        setLayout('scroll');
+      }
     };
     
-    checkScreenSize();
-    setIsMounted(true);
+    setIsMounted(true); // 렌더링이 완료된 후에 마운트 상태로 전환
+    checkScreenSize();  // 화면 크기 체크
     window.addEventListener('resize', checkScreenSize);
+
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
@@ -43,7 +48,7 @@ export const HottestProductList = ({
   }
 
   if (!isMounted) {
-    return null;
+    return null; // 마운트 전에는 아무것도 렌더링하지 않음
   }
 
   return (

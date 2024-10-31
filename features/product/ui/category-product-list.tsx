@@ -1,7 +1,7 @@
 "use client";
 
 import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CategoryProducts } from "@/entities/product/types";
 import { useInfiniteProducts } from "../api/useInifiniteProducts";
 import { CategoryProductsApiResponse } from "../model/types";
@@ -19,6 +19,7 @@ export function CategoryProductList({
   initialData,
 }: CategoryProductListProps) {
   const { ref, inView } = useInView();
+  const [isMounted, setIsMounted] = useState(false);
 
   const {
     data,
@@ -30,23 +31,23 @@ export function CategoryProductList({
   } = useInfiniteProducts(categoryId, initialData.data);
 
   useEffect(() => {
+    setIsMounted(true); // 컴포넌트가 마운트된 후에 isMounted를 true로 설정
+  }, []);
+
+  useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
   }, [inView, fetchNextPage, hasNextPage, isFetchingNextPage]);
 
+  if (!isMounted) {
+    return null; // 마운트 전에는 아무것도 렌더링하지 않음
+  }
+
   if (status === "error") {
     return (
       <div className="flex-1 flex justify-center items-center text-red-500">
         상품을 불러오는데 실패했습니다
-      </div>
-    );
-  }
-
-  if (data.pages[0].page) {
-    return (
-      <div className="flex-1 flex justify-center items-center text-red-500">
-        상품이 없습니다.
       </div>
     );
   }

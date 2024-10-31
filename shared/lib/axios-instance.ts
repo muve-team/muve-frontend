@@ -1,13 +1,16 @@
 // shared/api/base.ts
 import axios from 'axios';
+import { getTsid } from 'tsid-ts';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const AUTH_TOKEN_KEY = 'authToken';
+const tsid = getTsid().toString();
 
 export const api = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
+    'x-request-id': tsid
   },
   withCredentials: true
 });
