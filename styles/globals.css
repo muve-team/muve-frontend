@@ -6,6 +6,7 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
+    --secondary-text: 0 0% 42%;  /* #6a6a6a in HSL format */
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
@@ -29,6 +30,7 @@
   .dark {
     --background: 222.2 84% 2.5%;
     --foreground: 210 40% 98%;
+    --secondary-text: 0 0% 42%;  /* Keep the same color in dark mode */
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
@@ -62,16 +64,17 @@
 
   .text-foreground {
     color: hsl(var(--foreground));
-    /* Use your defined --foreground variable */
+  }
+
+  .text-secondary {
+    color: hsl(var(--secondary-text));
   }
 }
 
 @layer base {
   * {
     @apply border-border;
-    /* Use the newly defined class */
   }
-
   body {
     @apply bg-background text-foreground;
   }
@@ -258,4 +261,8 @@ a.text-primary:hover {
 .cartIcon:hover {
   opacity: 0.8;
   transition: all .5s;
+}
+
+.text-gray-custom {
+  color: hsl(var(--secondary-foreground));
 }
