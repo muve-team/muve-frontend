@@ -1,87 +1,120 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/merged/Button';
-import { useState, useEffect } from 'react';
-import { ProductCard } from './hottest-product-card';
-import { HottestProduct } from '@/entities/product/types';
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css'; // Skeleton 스타일 추가
+import { Button } from "@/components/ui/merged/Button";
+import { useState, useEffect } from "react";
+import { ProductCard } from "./hottest-product-card";
+import { HottestProduct } from "@/entities/product/types";
+import "react-loading-skeleton/dist/skeleton.css";
 
 interface HottestProductListProps {
-  initialProducts: HottestProduct[]
+  initialProducts: HottestProduct[];
 }
 
-export const HottestProductList = ({ initialProducts }: HottestProductListProps) => {
-  const [isMobileView, setIsMobileView] = useState(false);
-  const [columnCount, setColumnCount] = useState(5);
-  const [visibleCount, setVisibleCount] = useState(5);  
+export const HottestProductList = ({
+  initialProducts,
+}: HottestProductListProps) => {
+  const [visibleCount, setVisibleCount] = useState(5);
+  const [layout, setLayout] = useState<'grid' | 'scroll'>('grid');
 
   useEffect(() => {
-    const handleResize = () => {
-      const windowWidth = window.innerWidth;
-      setIsMobileView(windowWidth < 1080);
-
-      if (windowWidth >= 1300) {
-        setColumnCount(5);
-      }  else if (windowWidth < 767) {
-        setColumnCount(1); 
-      }
+    const checkScreenSize = () => {
+      setLayout(window.innerWidth >= 1024 ? 'grid' : 'scroll');
     };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
   const handleLoadMore = () => {
-    setVisibleCount((prev) => Math.min(prev + 5, 10));
+    setVisibleCount((prev) => Math.min(prev + 5, initialProducts.length));
   };
+
+  const displayProducts = layout === 'scroll' 
+    ? initialProducts 
+    : initialProducts.slice(0, visibleCount);
 
   if (!initialProducts.length) {
     return (
-      <div className="text-center text-gray-500 my-24">
-        상품이 없습니다.
-      </div>
+      <div className="text-center text-gray-500 my-24">상품이 없습니다.</div>
     );
   }
 
   return (
-    <section className="py-24 overflow-hidden w-2/3">
-      <p className="text-3xl text-center mb-8">NEW ARRIVAL</p>
-      <div
-        className={`${
-          isMobileView ? 'flex gap-2 overflow-x-auto px-4' : `grid grid-cols-${columnCount} gap-4 px-4 justify-center`
-        }`}
-        style={{
-          maxWidth: '1200px',
-          width: '100%',
-          gridTemplateColumns: `repeat(${columnCount}, minmax(150px, 1fr))`,
-          gridAutoFlow: 'dense',
-          overflowX: isMobileView ? 'scroll' : 'hidden',
-          overflowY: 'hidden',
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-        }}
-      >
-        {initialProducts.slice(0, visibleCount).map((product: HottestProduct) => (
-          <div key={product.productId} className="w-[120px] flex-none">
-            <ProductCard product={product} />
+    <section className="product-list-section">
+      <h2 className="text-2xl font-semibold text-center">NEW ARRIVAL</h2>
+      
+      <div className={`product-container ${layout}`}>
+        {displayProducts.map((product: HottestProduct, index: number) => (
+          <div key={product.productId} className="product-item">
+            <ProductCard product={product} index={index} />
           </div>
         ))}
       </div>
 
-      {(visibleCount < 10 && initialProducts.length > 10) || (visibleCount >= 5 && initialProducts.length > 5) && (
-        <div className="flex justify-center" style={{marginTop: 30}}> {/* 더보기 버튼과 리스트 사이에 간격 추가 */}
-          <Button variant="outline" className="text-black border-white" onClick={handleLoadMore}>
+      {layout === 'grid' && visibleCount < initialProducts.length && (
+        <div className="flex justify-center mt-8">
+          <Button
+            variant="outline"
+            className="text-black border-gray-200 hover:bg-gray-50"
+            onClick={handleLoadMore}
+          >
             더 보기
           </Button>
         </div>
       )}
 
       <style jsx>{`
-        div::-webkit-scrollbar {
+        .product-list-section {
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 2rem 1rem;
+        }
+
+        .product-container {
+          margin-top: 2.5rem;
+          width: 100%;
+        }
+
+        .product-container.grid {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 1.5rem;
+        }
+
+        .product-container.scroll {
+          display: flex;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          gap: 1rem;
+          padding: 0.75rem;
+          margin: 1.5rem -1rem 0;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .product-item {
+          width: 100%;
+          height: 100%;
+        }
+
+        .scroll .product-item {
+          flex: 0 0 auto;
+          width: 160px;
+          scroll-snap-align: start;
+        }
+
+        .product-container.scroll::-webkit-scrollbar {
           display: none;
+        }
+
+        @media (max-width: 1023px) {
+          .product-list-section {
+            padding: 1.5rem 0;
+          }
+          .product-container.scroll {
+            padding: 0.5rem;
+          }
         }
       `}</style>
     </section>

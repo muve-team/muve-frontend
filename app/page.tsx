@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { HeroSection } from "@/components/HeroSection";
 import { Footer } from "@/components/Footer";
 import Banner from "@/components/Banner";
@@ -8,6 +7,13 @@ import { getHottestProductApi } from "@/entities/product/api";
 import { Suspense } from "react";
 import TopBanner from "@/components/TopBanner";
 import "react-loading-skeleton/dist/skeleton.css";
+
+export const metadata = {
+  title: "Muve",
+  icons: {
+    icon: "/favicon.ico",
+  },
+};
 
 export default async function Home() {
   const { data: initialProducts } = await getHottestProductApi();
@@ -22,10 +28,10 @@ export default async function Home() {
 
   return (
     <>
-      <Head>
+      {/* <Head>
         <link rel="icon" href="/favicon.ico" />
         <title>Muve</title>
-      </Head>
+      </Head> */}
       {/* {isLoading ? (
         <Loading />  // 로딩 중일 때 표시할 컴포넌트
       ) : ( */}
@@ -51,6 +57,7 @@ export default async function Home() {
             type={ProductListType.popular}
             scrollable={true}
           /> */}
+
           <HottestProductList initialProducts={initialProducts ?? []} />
         </div>
         <Footer />
