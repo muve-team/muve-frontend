@@ -4,6 +4,7 @@ import { getTsid } from 'tsid-ts';
 import {
   CategoryProductsApiResponse,
   HottestProductApiResponse,
+  NewestProductApiResponse,
   ProductDetailApiResponse,
 } from '@/features/product/model/types';
 import { ProductDetailResponse } from './types';
@@ -13,7 +14,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 export async function getHottestProductApi(): Promise<HottestProductApiResponse> {
   try {
     const tsid = getTsid().toString();
-    const { data } = await axios.get(`${API_URL}/product/random`, {
+    const { data } = await axios.get(`${API_URL}/products/random`, {
       headers: {
         'Cache-Control': 'max-age=3600',
         'x-request-id': tsid, // tsid 추가
@@ -37,7 +38,7 @@ export async function getHottestProductApi(): Promise<HottestProductApiResponse>
 export async function getCategoryProductApi({
   categoryId,
   page = 1,
-  size = 5,
+  size = 6,
 }: {
   categoryId?: string;
   page?: number;
@@ -64,6 +65,41 @@ export async function getCategoryProductApi({
   }
 
   const data: CategoryProductsApiResponse = await response.json();
+
+  if (data.result === 'FAIL') {
+    throw new Error(data.message || 'Failed to fetch products');
+  }
+
+  return data;
+}
+
+export async function getNewestProductApi({
+  page = 1,
+  size = 6,
+}: {
+  page?: number;
+  size?: number;
+}): Promise<NewestProductApiResponse> {
+  const tsid = getTsid().toString();
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+  const params = new URLSearchParams({
+    page: page.toString(),
+    size: size.toString()
+  });
+
+  const response = await fetch(`${baseUrl}/products/newest?${params}`, {
+    headers: {
+      'x-request-id': tsid, // tsid 추가
+    },
+    // Enable cache for SSR
+    next: { revalidate: 60 }, // Revalidate every 60 seconds
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch products');
+  }
+
+  const data: NewestProductApiResponse = await response.json();
 
   if (data.result === 'FAIL') {
     throw new Error(data.message || 'Failed to fetch products');

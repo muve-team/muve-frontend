@@ -3,7 +3,7 @@ import { Footer } from "@/components/Footer";
 import Banner from "@/components/Banner";
 import { CategoryList } from "@/features/category/ui/category-list";
 import { HottestProductList } from "@/features/product/ui/hottest-product-list";
-import { getHottestProductApi } from "@/entities/product/api";
+import { getHottestProductApi, getNewestProductApi } from "@/entities/product/api";
 import { Suspense } from "react";
 import TopBanner from "@/components/TopBanner";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -19,7 +19,11 @@ export const metadata = {
 
 export default async function Home() {
   const { data: hottestInitialProducts } = await getHottestProductApi();
-  const { data: newestInitialProducts } = await getHottestProductApi();
+  const newestInitialProducts = await getNewestProductApi({
+    page: 0,
+    size: 6,
+  });
+
 
   return (
     <>
@@ -40,7 +44,7 @@ export default async function Home() {
         </div>
         <div className="w-full justify-center items-center px-4 py-10">
           <HottestProductList initialProducts={hottestInitialProducts ?? []} />
-          <NewestProductList initialProducts={newestInitialProducts ?? []} />
+          <NewestProductList initialData={newestInitialProducts} />
         </div>
         <Footer />
       </main>

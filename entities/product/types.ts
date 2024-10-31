@@ -17,6 +17,22 @@ export interface HottestProduct {
   categoryId: string;
 }
 
+export interface NewestProduct {
+  productId: string;
+  name: string;
+  price: number;
+  imageUrl: string;
+  categoryId: string;
+}
+
+export interface NewestProducts {
+  products: NewestProduct[]
+  hasMore: boolean;
+  total: number;
+  page: number;
+  size: number;
+}
+
 export interface CategoryProduct {
   productId: string;
   title: string;

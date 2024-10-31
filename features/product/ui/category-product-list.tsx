@@ -3,7 +3,7 @@
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
 import { CategoryProducts } from "@/entities/product/types";
-import { useInfiniteProducts } from "../api/useInifiniteProducts";
+import { useInfiniteCategoryProducts } from "../api/useInifiniteProducts";
 import { CategoryProductsApiResponse } from "../model/types";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -28,7 +28,7 @@ export function CategoryProductList({
     isFetchingNextPage,
     status,
     isLoading,
-  } = useInfiniteProducts(categoryId, initialData.data);
+  } = useInfiniteCategoryProducts(categoryId, initialData.data);
 
   useEffect(() => {
     setIsMounted(true); // 컴포넌트가 마운트된 후에 isMounted를 true로 설정
