@@ -8,6 +8,7 @@ import { Suspense } from "react";
 import TopBanner from "@/components/TopBanner";
 import "react-loading-skeleton/dist/skeleton.css";
 import { NewestProductList } from "@/features/product/ui/newest-product-list";
+import { SearchBar } from "@/components/SearchBar"
 
 export const metadata = {
   title: "Muve",
@@ -23,6 +24,7 @@ export default async function Home() {
   return (
     <>
       <main className="min-h-screen bg-white dark:bg-gray-900">
+        <SearchBar/>
         <HeroSection />
         <div className="container mx-auto px-4 py-6">
           <CategoryList />

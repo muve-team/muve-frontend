@@ -109,7 +109,6 @@ export function HeroSection() {
           {/* 우측 섹션: 검색바 (데스크탑), 테마 토글, 사용자 메뉴 */}
           <div className="flex items-center space-x-4">
               <div className="hidden md:block flex-shrink-0">
-                <SearchBar />
               </div>
             <ModeToggle />
             {isAuthenticated ? (
