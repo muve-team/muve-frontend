@@ -14,8 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/merged/DropdownMenu"
-import { useLogin } from '@/features/login/hooks/useLogin'
-import { useLoginStore } from '@/features/login/model/store'
+import { useLogin } from '@/features/login/hooks/useLogin' 
 import { useLogout } from '@/features/login/model/queries'
 
 export function HeroSection() {
@@ -25,7 +24,6 @@ export function HeroSection() {
   const router = useRouter()
   const pathname = usePathname()
 
-  //slide
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showSlide, setShowSlide] = useState(true);
   const slides = [
@@ -45,6 +43,9 @@ export function HeroSection() {
     },
   ];
 
+  // 스크롤 관련 상태
+  const [isSearchFixed, setIsSearchFixed] = useState(false);
+
   useEffect(() => {
     const img = new window.Image()
     img.onload = () => setLogoLoaded(true)
@@ -58,7 +59,7 @@ export function HeroSection() {
         setCurrentSlide((prev) => (prev + 1) % slides.length);
         setShowSlide(true); 
       }, 500);
-    }, 5000); 
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [slides.length]);
@@ -74,43 +75,35 @@ export function HeroSection() {
 
   const isHomePage = pathname === '/'
 
+  // 스크롤 이벤트로 SearchBar 위치 토글
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSearchFixed(window.scrollY > 200);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <div
-      className={`relative ${isHomePage ? 'bg-cover bg-center bg-no-repeat' : 'bg-gray-200'} ${!isHomePage ? '' : 'h-[60vh]'}`}
-      style={isHomePage ? { backgroundImage: `url('${slides[currentSlide].image}')`, height: '65vh' } : {}}
-    >
-      <div className="container-fluid mx-auto px-4 bg-white">
-        <nav className={`flex items-center justify-between ${!isHomePage ? 'py-5' : 'py-4'} relative`}>
-          {/* 로고 및 사이트 이름 */}
+    <div className={`relative ${isHomePage ? 'bg-cover bg-center bg-no-repeat' : 'bg-gray-200'}`} 
+         style={isHomePage ? { backgroundImage: `url('${slides[currentSlide].image}')`, height: '65vh' } : {}}>
+      
+      <div className="container-fluid mx-auto px-4 bg-white fixed top-0 left-0 right-0 z-50">
+        <nav style={{zIndex:'98'}} className={`flex items-center justify-between ${!isHomePage ? 'py-5' : 'py-4'} relative`}>
           <Link href="/" className="flex items-center z-30">
-            {!logoLoaded ? (
-              // <Skeleton className="w-32 h-12 rounded-full" />
-              <></>
-            ) : (
+            {!logoLoaded ? null : (
               <div className="relative w-28 h-10">
-                <Image
-                  src="/images/logo.png"
-                  alt="muve_logo"
-                  fill
-                  className="object-contain"
-                />
+                <Image src="/images/logo.png" alt="muve_logo" style={{zIndex: '99'}} fill className="object-contain" />
               </div>
             )}
           </Link>
-  
-          {/* 네비게이션 링크 (데스크탑) */}
-          <div className="hidden md:flex items-center justify-center space-x-6">
-            {/* <Link href="/about" className="text-black">회사 소개</Link>
-            <Link href="/careers" className="text-black">채용 정보</Link>
-            <Link href="/customer-service" className="text-black">고객센터</Link> */}
+
+          <div className={`flex flex-grow justify-center ${isSearchFixed ? 'fixed top-16' : ''}`}>
+            <SearchBar />
           </div>
-  
-          {/* 우측 섹션: 검색바 (데스크탑), 테마 토글, 사용자 메뉴 */}
+
           <div className="flex items-center space-x-4">
-              <div className="hidden md:block flex-shrink-0">
-              </div>
-            {/* <ModeToggle /> */}
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -134,14 +127,14 @@ export function HeroSection() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button variant="outline" className="hidden md:inline-flex bg-white/10 text-primary" onClick={() => router.push('/login')}>
+              <Button variant="outline" className="hidden md:inline-flex bg-white/10 text-primary" style={{ zIndex: '99'}} onClick={() => router.push('/login')}>
                 로그인
               </Button>
             )}
             <Button 
               variant="outline" 
               size="icon" 
-              className="md:hidden bg-white/10 text-blue-900 hover:bg-white/20 dark:bg-blue-800/30 dark:text-white dark:hover:bg-blue-700/50"
+              className="md:hidden bg-white/10 text-blue-900 hover:bg-white/20"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
@@ -150,80 +143,48 @@ export function HeroSection() {
             </Button>
           </div>
         </nav>
-  
+
         {isMenuOpen && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-10"
-            onClick={() => setIsMenuOpen(false)}
-          ></div>
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-10" onClick={() => setIsMenuOpen(false)}></div>
         )}
-  
+
         {isMenuOpen && (
-          <div 
-            id="mobile-menu"
-            className={`md:hidden fixed z-20 top-26 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg`}
-          >
+          <div id="mobile-menu" className="md:hidden fixed z-20 top-26 left-0 right-0 bg-white shadow-lg">
             <div className="container mx-auto px-0 py-6">
               <div className="block w-full mb-6">
                 <SearchBar />
               </div>
               <nav className="flex flex-col space-y-4">
-                {/* <Link href="/" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>홈</Link>
-                <Link href="/about" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>회사 소개</Link>
-                <Link href="/careers" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>채용 정보</Link>
-                <Link href="/customer-service" className="py-2 pl-5 text-primary" onClick={handleMenuItemClick}>고객센터</Link> */}
                 {isAuthenticated ? (
                   <>
                     <Link href="/mypage" className="py-2 ml-5 text-primary" onClick={handleMenuItemClick}>마이페이지</Link>
                     <Link href="/cart" className="py-2 ml-5 text-primary" onClick={handleMenuItemClick}>장바구니</Link>
-                    <Button 
-                      className="w-full mt-4 bg-primary text-white"
-                      onClick={() => { handleLogout(); handleMenuItemClick(); }}
-                    >
-                      로그아웃
-                    </Button>
+                    <Button className="w-full mt-4 bg-primary text-white" onClick={() => { handleLogout(); handleMenuItemClick(); }}>로그아웃</Button>
                   </>
                 ) : (
-                  <Button 
-                    className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white"
-                    onClick={() => { router.push('/login'); handleMenuItemClick(); }}
-                  >
-                    로그인
-                  </Button>
+                  <Button className="w-full z-99 mt-4 bg-blue-600 hover:bg-blue-700 text-white" onClick={() => { router.push('/login'); handleMenuItemClick(); }}>로그인</Button>
                 )}
               </nav>
             </div>
           </div>
         )}
       </div>
-  
-      {/* 메인 페이지일 경우 Hero 섹션 */}
+
       {isHomePage && (
-      <div className="container mx-auto">
-        <div className="max-w-6xl mx-auto py-40 lg:text-left text-center">
-        <h1
-          className={`text-3xl md:text-4xl lg:text-5xl font-bold leading-tight ${
-            currentSlide === 1 ? 'text-white' : 'text-black'
-          }`}
-        >
-          {slides[currentSlide].title}
-        </h1>
-        <p
-          className={`text-xl mt-4 ${
-            currentSlide === 1 ? 'text-white' : 'text-black'
-          }`}
-        >
-          {slides[currentSlide].description}
-        </p>
-          <Button
-            className="mt-6 px-6 py-3 bg-primary"
-            onClick={() => router.push(slides[currentSlide].buttonLink)}
-          >
-            {slides[currentSlide].buttonText}
-          </Button>
+        <div className="container mx-auto pt-40">
+          <div className="max-w-6xl mx-auto py-40 lg:text-left text-center">
+            <h1 className={`text-3xl md:text-4xl lg:text-5xl font-bold leading-tight ${currentSlide === 1 ? 'text-white' : 'text-black'}`}>
+              {slides[currentSlide].title}
+            </h1>
+            <p className={`text-xl mt-4 ${currentSlide === 1 ? 'text-white' : 'text-black'}`}>
+              {slides[currentSlide].description}
+            </p>
+            <Button className="mt-6 px-6 py-3 bg-primary" onClick={() => router.push(slides[currentSlide].buttonLink)}>
+              {slides[currentSlide].buttonText}
+            </Button>
+          </div>
         </div>
-      </div>
-    )}
-  </div>
-);
+      )}
+    </div>
+  );
 }
