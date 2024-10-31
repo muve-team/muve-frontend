@@ -5,76 +5,119 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ShoppingCart, CreditCard } from "lucide-react";
-import { Card, CardContent, CardFooter } from "@/components/ui/merged/Card";
-import { Button } from "@/components/ui/merged/Button";
-import { useTheme } from "@/hooks/useTheme";
+import { Icon } from '@iconify/react';
 import { CategoryProduct } from "@/entities/product/types";
-import Skeleton from "react-loading-skeleton";
 
-interface ProductCardProps {
+interface CategoryProductCardProps {
   product: CategoryProduct;
+  index: number;
 }
 
-export const ProductCard = ({ product }: ProductCardProps) => {
+export const CategoryProductCard = ({ product, index }: CategoryProductCardProps) => {
   const { productId, title, price, imageUrl } = product;
   const router = useRouter();
-  const { isDark } = useTheme();
 
-  const handlePurchase = () => {
+  const handlePurchase = (e: React.MouseEvent) => {
+    e.preventDefault();
     router.push(`/purchase/${productId}`);
   };
 
-  const handleAddToCart = () => {};
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+  };
 
   return (
-    <Card className="h-full flex flex-col justify-between hover:shadow-lg dark:bg-gray-800 dark:border-gray-700 transition-all duration-300">
-      <Link href={`/products/${productId}`}>
-        <CardContent className="p-4 flex-grow">
-          <div className="relative aspect-square mb-4 overflow-hidden rounded-lg bg-gray-100">
+    <div className="product-card">
+      <Link href={`/product?productId=${productId}`} className="block h-full">
+        <div className="p-3 flex flex-col h-full">
+          <div className="relative aspect-square mb-3 bg-gray-100 rounded-md overflow-hidden">
             <Image
               src={imageUrl || '/placeholder.png'}
               alt={title}
               fill
-              className={`
-                object-cover
-                transition-transform duration-300 
-                hover:scale-105
-                opacity-100"
-              `}
-              draggable={false}
-              sizes="(max-width: 768px) 50vw, 320px"
+              sizes="(max-width: 1023px) 160px, 20vw"
+              className="object-cover"
+              priority
             />
+            <button
+              aria-label="관심상품"
+              className="absolute top-2 right-2 bg-white/90 p-1.5 rounded-full hover:bg-white"
+            >
+              <Icon icon="mdi:heart-outline" className="h-3.5 w-3.5 text-gray-600" />
+            </button>
           </div>
-          <div className="space-y-2">
-            <p className="text-gray-300 text-sm font-light">브랜드명</p>
-            <h3 className="goodsTit text-base font-medium line-clamp-2 dark:text-gray-100">
-              {title}
-            </h3>
-            <div className="flex items-center justify-between mt-2">
-              <p className="text-xl font-bold text-primary">{price.toLocaleString()}원</p>
-              <div className="flex">
-                <a
-                  className="buyIcon p-1 bg-none"
+          
+          <div className="flex flex-col flex-grow min-h-[90px]">
+            <p className="text-xs text-gray-500 mt-2 mb-1">브랜드명</p>
+            <h3 className="text-sm font-medium mb-1 break-words line-clamp-2">{title}</h3>
+            <p className="text-base font-bold mb-2">₩{price.toLocaleString()}</p>
+            
+            <div className="flex items-center justify-end mt-auto">
+              <div className="flex gap-1.5">
+                <button
                   onClick={handlePurchase}
+                  className="p-1.5 hover:bg-gray-100 rounded-full transition-colors"
                   title="구매"
                 >
-                  <CreditCard className="h-5 w-5" />
-                </a>
-                <a
-                  className="cartIcon p-1 bg-none"
+                  <CreditCard className="h-3.5 w-3.5" />
+                </button>
+                <button
                   onClick={handleAddToCart}
+                  className="p-1.5 hover:bg-gray-100 rounded-full transition-colors"
                   title="장바구니"
                 >
-                  <ShoppingCart className="text-primary h-5 w-5" />
-                </a>
+                  <ShoppingCart className="h-3.5 w-3.5" />
+                </button>
               </div>
             </div>
           </div>
-        </CardContent>
+        </div>
       </Link>
-      <CardFooter className="p-4">
-        
-      </CardFooter>
-    </Card>
+
+      <style jsx>{`
+        .product-card {
+          height: 100%;
+          min-height: 280px;
+          width: 100%;
+          background: white;
+          border-radius: 0.5rem;
+          transition: all 0.2s ease-in-out;
+          opacity: 0;
+          animation: fadeIn 0.5s ease-out forwards;
+          animation-delay: ${index * 0.1}s;
+          box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @media (hover: hover) {
+          .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+          }
+        }
+
+        @media (max-width: 1023px) {
+          .product-card {
+            min-height: 300px;
+          }
+        }
+
+        @media (prefers-color-scheme: dark) {
+          .product-card {
+            background: rgb(31, 41, 55);
+          }
+        }
+      `}</style>
+    </div>
   );
 };

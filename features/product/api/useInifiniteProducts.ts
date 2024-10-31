@@ -9,7 +9,7 @@ export function useInfiniteProducts(categoryId?: string, initialData?: CategoryP
       const response = await getCategoryProductApi({
         categoryId,
         page: pageParam,
-        size: 5,
+        size: 6,
       });
 
       if (!response.data) {
