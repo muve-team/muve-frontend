@@ -3,12 +3,13 @@ import { Footer } from "@/components/Footer";
 import Banner from "@/components/Banner";
 import { CategoryList } from "@/features/category/ui/category-list";
 import { HottestProductList } from "@/features/product/ui/hottest-product-list";
-import { getHottestProductApi, getNewestProductApi } from "@/entities/product/api";
+import { getHottestProductApi, getNewestProductApi, getTimeDealProductApi } from "@/entities/product/api";
 import { Suspense } from "react";
 import TopBanner from "@/components/TopBanner";
 import "react-loading-skeleton/dist/skeleton.css";
 import { NewestProductList } from "@/features/product/ui/newest-product-list";
 import { SearchBar } from "@/components/SearchBar"
+import { TimeDealProductList } from "@/features/product/ui/timedeal-product-list";
 
 export const metadata = {
   title: "Muve",
@@ -19,6 +20,7 @@ export const metadata = {
 
 export default async function Home() {
   const { data: hottestInitialProducts } = await getHottestProductApi();
+  const { data: timeDealInitialProducts } = await getTimeDealProductApi();
   const newestInitialProducts = await getNewestProductApi({
     page: 0,
     size: 6,
@@ -43,6 +45,7 @@ export default async function Home() {
           />
         </div>
         <div className="w-full justify-center items-center px-4 py-10">
+          <TimeDealProductList initialProducts={timeDealInitialProducts ?? []} />
           <HottestProductList initialProducts={hottestInitialProducts ?? []} />
           <NewestProductList initialData={newestInitialProducts} />
         </div>

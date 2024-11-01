@@ -17,6 +17,16 @@ export interface HottestProduct {
   categoryId: string;
 }
 
+export interface TimeDealProduct {
+  productId: string;
+  name: string;
+  price: number;
+  imageUrl: string;
+  categoryId: string;
+  startAt: string;
+  endAt: string;
+}
+
 export interface NewestProduct {
   productId: string;
   name: string;

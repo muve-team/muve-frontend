@@ -6,6 +6,7 @@ import {
   HottestProductApiResponse,
   NewestProductApiResponse,
   ProductDetailApiResponse,
+  TimeDealProductApiResponse,
 } from '@/features/product/model/types';
 import { ProductDetailResponse } from './types';
 
@@ -30,6 +31,30 @@ export async function getHottestProductApi(): Promise<HottestProductApiResponse>
       data: [], // 에러가 발생하면 빈 배열 반환
       errorCode: 'FAIL',
       message: '인기 상품 목록 조회에 실패하였습니다.',
+      result: 'FAIL',
+    };
+  }
+}
+
+export async function getTimeDealProductApi(): Promise<TimeDealProductApiResponse> {
+  try {
+    const tsid = getTsid().toString();
+    const { data } = await axios.get(`${API_URL}/products/timedeal`, {
+      headers: {
+        'Cache-Control': 'max-age=3600',
+        'x-request-id': tsid, // tsid 추가
+      },
+    });
+
+    return {
+      ...data,
+      data: data?.data || [], // null일 경우 빈 배열을 반환
+    };
+  } catch (error) {
+    return {
+      data: [], // 에러가 발생하면 빈 배열 반환
+      errorCode: 'FAIL',
+      message: '타임딜 상품 목록 조회에 실패하였습니다.',
       result: 'FAIL',
     };
   }
