@@ -60,9 +60,9 @@ export const TimeDealProductList = ({
       </div>
 
       <div className={`product-container ${layout}`}>
-        {displayProducts.map((product: TimeDealProduct) => (
+        {displayProducts.map((product: TimeDealProduct, index: number) => (
           <div key={product.productId} className="product-item">
-            <TimeDealProductCard product={product} />
+            <TimeDealProductCard product={product} index={index} />
           </div>
         ))}
       </div>
