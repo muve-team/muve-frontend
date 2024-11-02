@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/merged/Button";
 import { ProductDetailResponse } from "@/entities/product/types";
 import { CreditCard, ShoppingCart } from "lucide-react";
+import Head from "next/head";
 import Image from "next/image";
 
 interface ProductDetailProps {
