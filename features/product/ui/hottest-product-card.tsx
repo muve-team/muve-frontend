@@ -39,6 +39,9 @@ export const HottestProductCard = ({ product, index }: ProductCardProps) => {
               className="object-cover"
               priority
             />
+            <div className={`absolute top-0 left-0 text-white text-xs w-6 h-6 p-1 rounded text-center ${index >= 3 ? 'bg-secondary' : 'bg-primary'}`}>
+              {index + 1}
+            </div>
             <button
               aria-label="관심상품"
               className="absolute top-2 right-2 bg-white/90 p-1.5 rounded-full hover:bg-white"

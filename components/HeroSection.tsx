@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/merged/Button"
 import { Menu, X, User, LogOut, ShoppingCart } from "lucide-react"
 import { ModeToggle } from "@/components/ui/ModeToggle"
 import Link from 'next/link'
+import { Icon } from '@iconify/react';
 import { useRouter, usePathname } from 'next/navigation'
 import {
   DropdownMenu,
@@ -28,18 +29,18 @@ export function HeroSection() {
   const [showSlide, setShowSlide] = useState(true);
   const slides = [
     {
-      image: '/images/banner1.png',
-      title: '2024 BEST BRAND',
-      description: '시즌오프 상품 행사 진행중',
-      buttonText: '지금 구매하기',
-      buttonLink: '/',
+      image: '/images/muve_banner.png',
+      // title: '2024 BEST BRAND',
+      // description: '시즌오프 상품 행사 진행중',
+      // buttonText: '지금 구매하기',
+      // buttonLink: '/',
     },
     {
-      image: '/images/banner2.png',
-      title: 'NEW ARRIVALS',
-      description: '최신 상품을 만나보세요!',
-      buttonText: '자세히 보기',
-      buttonLink: '/',
+      image: '/images/muve_banner2.png',
+      // title: 'NEW ARRIVALS',
+      // description: '최신 상품을 만나보세요!',
+      // buttonText: '자세히 보기',
+      // buttonLink: '/',
     },
   ];
 
@@ -77,20 +78,23 @@ export function HeroSection() {
 
   // 스크롤 이벤트로 SearchBar 위치 토글
   useEffect(() => {
-    const handleScroll = () => {
-      setIsSearchFixed(window.scrollY > 200);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    if (pathname !== '/') {
+      setIsSearchFixed(true); // 홈페이지가 아닐 때 항상 고정
+    } else {
+      const handleScroll = () => {
+        setIsSearchFixed(window.scrollY > 200);
+      };
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+  }, [pathname]);
 
   return (
     <div className={`relative ${isHomePage ? 'bg-cover bg-center bg-no-repeat' : 'bg-gray-200'}`} 
-         style={isHomePage ? { backgroundImage: `url('${slides[currentSlide].image}')`, height: '65vh' } : {}}>
+         style={isHomePage ? { backgroundImage: `url('${slides[currentSlide].image}')`, height: '50vh', marginTop: '9rem' } : {}}>
       
-      <div className="container-fluid mx-auto px-4 bg-white fixed top-0 left-0 right-0 z-50">
-        <nav style={{zIndex:'98'}} className={`flex items-center justify-between ${!isHomePage ? 'py-5' : 'py-4'} relative`}>
+      <div className="container-fluid mx-auto px-4 bg-white fixed top-0 left-0 right-0 z-50" style={{height:'4rem'}}>
+        <nav style={{zIndex:'98'}} className={`flex items-center justify-between py-3 relative`}>
           <Link href="/" className="flex items-center z-30">
             {!logoLoaded ? null : (
               <div className="relative w-28 h-10">
@@ -103,7 +107,7 @@ export function HeroSection() {
             <SearchBar />
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 z-50">
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -127,9 +131,13 @@ export function HeroSection() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button variant="outline" className="hidden md:inline-flex bg-white/10 text-primary" style={{ zIndex: '99'}} onClick={() => router.push('/login')}>
-                로그인
-              </Button>
+              <div className="flex items-center space-x-2">
+                <Icon icon="iconamoon:shopping-bag-thin" className="h-6 w-6 text-black hover:text-primary cursor-pointer" onClick={() => router.push('/cart')} />
+                <a className="cursor-pointer hidden md:inline-flex bg-white/10 text-black hover:text-primary" style={{ zIndex: '99'}} onClick={() => router.push('/login')}>
+                <Icon icon="lets-icons:user-alt-light" className='w-6 h-6'/>
+                  <span className='text-xs self-center ml-1'> 로그인</span>
+                </a>
+              </div>
             )}
             <Button 
               variant="outline" 
@@ -162,7 +170,7 @@ export function HeroSection() {
                     <Button className="w-full mt-4 bg-primary text-white" onClick={() => { handleLogout(); handleMenuItemClick(); }}>로그아웃</Button>
                   </>
                 ) : (
-                  <Button className="w-full z-99 mt-4 bg-blue-600 hover:bg-blue-700 text-white" onClick={() => { router.push('/login'); handleMenuItemClick(); }}>로그인</Button>
+                  <Button className="w-full z-99 bg-blue-600 hover:bg-blue-700 text-white" onClick={() => { router.push('/login'); handleMenuItemClick(); }}>로그인</Button>
                 )}
               </nav>
             </div>
@@ -173,7 +181,7 @@ export function HeroSection() {
       {isHomePage && (
         <div className="container mx-auto pt-40">
           <div className="max-w-6xl mx-auto py-40 lg:text-left text-center">
-            <h1 className={`text-3xl md:text-4xl lg:text-5xl font-bold leading-tight ${currentSlide === 1 ? 'text-white' : 'text-black'}`}>
+            {/* <h1 className={`text-3xl md:text-4xl lg:text-5xl font-bold leading-tight ${currentSlide === 1 ? 'text-white' : 'text-black'}`}>
               {slides[currentSlide].title}
             </h1>
             <p className={`text-xl mt-4 ${currentSlide === 1 ? 'text-white' : 'text-black'}`}>
@@ -181,7 +189,7 @@ export function HeroSection() {
             </p>
             <Button className="mt-6 px-6 py-3 bg-primary" onClick={() => router.push(slides[currentSlide].buttonLink)}>
               {slides[currentSlide].buttonText}
-            </Button>
+            </Button> */}
           </div>
         </div>
       )}

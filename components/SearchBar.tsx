@@ -1,51 +1,85 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from 'react';
 import { Input } from "@/components/ui/merged/Input";
 import { Search } from "lucide-react";
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 export function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
+  const [recentSearches, setRecentSearches] = useState(['나이키', '코르테즈', '골프화']);
+  const popularSearches = ['닥터마틴', '발마칸', '숏패딩']; 
+  
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
       router.push(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
-    }
-  };
-
-  const handleIconClick = () => {
-    if (searchTerm.trim()) {
-      handleSearch();
+      setRecentSearches((prev) => [searchTerm, ...prev].slice(0, 5));
     }
   };
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 150);
+      if (pathname === '/') {
+        setIsScrolled(window.scrollY > 150);
+      }
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+
+    if (pathname !== '/') {
+      setIsScrolled(true);
+    } else {
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+  }, [pathname]);
 
   return (
-    <div className={`fixed left-0 right-0 z-50 transition-all duration-300 ease-in-out ${isScrolled ? 'top-4 h-12' : 'top-16 h-20'} bg-white te shadow-md`}>
-      <div className={`flex items-center justify-center h-full px-4 ${isScrolled ? 'mt-2' : ''}`}>
+    <div className={`fixed left-0 right-0 z-50 transition-all duration-300 ease-in-out ${isScrolled ? 'top-0 h-16' : 'top-16 h-20'} bg-white shadow-md`}>
+      <div className={`flex items-center justify-center h-full px-4 ${isScrolled ? 'mt-3' : ''}`}>
         <div className={`relative flex items-center w-full -mt-7 ${isScrolled ? 'max-w-md' : 'max-w-2xl'}`}>
           <Input
-            style={{zIndex:'98'}}
+            style={{ zIndex: '98' }}
             type="text"
             placeholder="상품 검색"
             value={searchTerm}
+            onFocus={() => setIsFilterVisible(true)}
+            onBlur={() => setIsFilterVisible(false)}
             onChange={(e) => setSearchTerm(e.target.value)}
             className={`pl-4 pr-10 py-2 w-full text-gray-800 rounded-full border-2 ${isScrolled ? 'py-1' : 'py-2 h-14'} transition-all duration-300`}
           />
           <Search
             className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-primary transition-transform duration-300" style={{zIndex:'99'}}
-            onClick={handleIconClick}
+            onClick={handleSearch}
           />
+          {isFilterVisible && (
+            <div className="absolute top-full mt-2 w-full bg-white border rounded-md p-4 shadow-lg py-0 transition-transform duration-300 transform ease-out">
+              <div>
+                <h3 className="text-gray-600 text-sm font-semibold mt-3 mb-1">최근 검색어</h3>
+                <ul className="space-y-1 mb-3">
+                  {recentSearches.map((item, index) => (
+                    <li key={index} className="text-gray-800 cursor-pointer hover:underline inline-block text-sm mr-4">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <hr/>
+              <div className="my-4">
+                <h3 className="text-gray-600 text-sm font-semibold mt-3 mb-1">인기 검색어</h3>
+                <ul className="space-y-1">
+                  {popularSearches.map((item, index) => (
+                    <li key={index} className="text-blue-600 cursor-pointer hover:underline inline-block text-sm mr-4">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

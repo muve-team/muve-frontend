@@ -156,6 +156,10 @@ body {
   margin: 0;
 }
 
+ul li {
+  color: #333 !important;
+}
+
 .app-container {
   min-height: 100vh;
 }
@@ -195,8 +199,13 @@ body {
 
 .bg-primary {
   /* background: #3c4566; */
-  background: #4a5524;
+  background: #6c8263;
   color: #fff;
+}
+
+button.bg-primary:hover {
+  opacity: 0.85 !important;
+  transition: all .5s;
 }
 
 .bg-secondary {
@@ -210,21 +219,16 @@ body {
 
 .text-primary {
   /* color: #3c4566 */
-  color: #4a5524 !important;
+  color: #6c8263 !important;
 }
 
-.text-primary:hover {
+a.text-primary:hover {
   opacity: 0.8;
   transition: all .5s;
 }
 
-a.text-primary:hover {
-  background: #3c4566 !important;
-  color: #fff !important;
-}
-
 .border-primary {
-  border: 1px solid #3c4566
+  border: 1px solid #6c8263
 }
 
 .border-none {
@@ -236,7 +240,7 @@ a.text-primary:hover {
 }
 
 .tab-trigger[data-selected] {
-  background-color: #3c4566 !important;
+  background-color: #6c8263 !important;
   color: white;
 }
 
@@ -256,7 +260,7 @@ a.text-primary:hover {
 .shopping-bag-icon {
   width: 65px;
   height: 65px;
-  color: #3c4566;
+  color: #6c8263;
   stroke-width: 1px;
   stroke-dasharray: 100;
   stroke-dashoffset: 100;
@@ -296,7 +300,7 @@ a.text-primary:hover {
 
 .buyIcon,
 .cartIcon {
-  color: #3c4566 !important;
+  color: #6c8263 !important;
 }
 
 .buyIcon:hover,

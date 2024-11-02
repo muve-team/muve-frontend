@@ -32,19 +32,19 @@ export default async function Home() {
       <main className="min-h-screen bg-white dark:bg-gray-900">
         <SearchBar/>
         <HeroSection />
-        <div className="container mx-auto px-4 py-6">
+        <div className="container mx-auto px-4">
           <CategoryList />
           {/* <TimeDeal products={timeDealProducts} /> */}
         </div>
         <div className="flex items-center justify-center my-3">
-          <Banner
+          {/* <Banner
             title="무브 회원이라면 전상품 무료배송"
             subtitle=""
             buttonText="지금 쇼핑하기"
             backgroundColor="#ccc"
-          />
+          /> */}
         </div>
-        <div className="w-full justify-center items-center px-4 py-10">
+        <div className="w-full justify-center items-center px-4 pb-10">
           <TimeDealProductList initialProducts={timeDealInitialProducts ?? []} />
           <HottestProductList initialProducts={hottestInitialProducts ?? []} />
           <NewestProductList initialData={newestInitialProducts} />

@@ -26,8 +26,8 @@ export const TimeDealProductList = ({
       }
     };
 
-    setIsMounted(true); // 렌더링이 완료된 후에 마운트 상태로 전환
-    checkScreenSize(); // 화면 크기 체크
+    setIsMounted(true);
+    checkScreenSize();
     window.addEventListener("resize", checkScreenSize);
 
     return () => window.removeEventListener("resize", checkScreenSize);
@@ -49,7 +49,7 @@ export const TimeDealProductList = ({
   }
 
   if (!isMounted) {
-    return null; // 마운트 전에는 아무것도 렌더링하지 않음
+    return null;
   }
 
   return (
@@ -60,9 +60,9 @@ export const TimeDealProductList = ({
       </div>
 
       <div className={`product-container ${layout}`}>
-        {displayProducts.map((product: TimeDealProduct, index: number) => (
+        {displayProducts.map((product: TimeDealProduct) => (
           <div key={product.productId} className="product-item">
-            <TimeDealProductCard product={product} index={index} />
+            <TimeDealProductCard product={product} />
           </div>
         ))}
       </div>
@@ -94,7 +94,7 @@ export const TimeDealProductList = ({
 
         .product-container.grid {
           display: grid;
-          grid-template-columns: repeat(5, 1fr);
+          grid-template-columns: repeat(2, 1fr); /* 한 줄에 2개로 변경 */
           gap: 1.5rem;
         }
 
@@ -111,11 +111,15 @@ export const TimeDealProductList = ({
         .product-item {
           width: 100%;
           height: 100%;
+          border-radius: 8px; /* 카드를 둥글게 처리 */
+          overflow: hidden; /* 카드가 넘치는 부분을 숨김 */
+          border: 1px solid #eee;
+          transition: transform 0.2s, box-shadow 0.2s; /* 변환 효과 추가 */
         }
 
         .scroll .product-item {
           flex: 0 0 auto;
-          width: 160px;
+          width: 160px; /* 원하는 너비로 조정 가능 */
           scroll-snap-align: start;
         }
 

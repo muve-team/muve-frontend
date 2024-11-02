@@ -25,7 +25,7 @@ export default async function ProductDetailPage({
   return (
     <>
       <HeroSection />
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main className="max-w-7xl mt-16 mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row gap-8">
           <ProductDetail product={product} />
         </div>
