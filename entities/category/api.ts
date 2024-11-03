@@ -10,7 +10,7 @@ export const categoryApi = {
     const tsid = getTsid().toString();
 
     const { data } = await axios.get<CategoryApiResponse>(
-      `${API_URL}/category`,
+      `${API_URL}/categories`,
       {
         headers: { 'x-request-id': tsid } // 헤더에 tsid 추가
       }

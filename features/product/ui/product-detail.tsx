@@ -15,17 +15,6 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
 
   return (
     <>
-      <Head>
-        <title>{name} - Product Details</title>
-        <meta name="description" content={`${name} 상품 상세 페이지입니다.`} />
-        <meta property="og:title" content={name} />
-        <meta
-          property="og:description"
-          content={`${name} - 가격: ${price.toLocaleString()}원`}
-        />
-        <meta property="og:image" content={imageUrl} />
-        <meta property="og:type" content="product" />
-      </Head>
       <div className="flex flex-col md:flex-row gap-8 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
         <div className="md:w-1/2">
           <Image

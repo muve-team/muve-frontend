@@ -1,17 +1,21 @@
-// features/category/model/store.ts
-import { Category } from '@/entities/category/types';
+import { ParentCategory, ChildCategory } from '@/entities/category/types';
 import { create } from 'zustand';
 
 interface CategoryState {
-  categories: Category[];
-  selectedCategoryId: number | null;
-  setCategories: (categories: Category[]) => void;
-  setSelectedCategory: (categoryId: number | null) => void;
+  selectedParentCategory: ParentCategory | null;
+  selectedChildCategoryId: number | null;
+  hoveredCategoryId: number | null;
+  setSelectedParentCategory: (category: ParentCategory | null) => void;
+  setSelectedChildCategory: (categoryId: number | null) => void;
+  setHoveredCategory: (categoryId: number | null) => void;
 }
 
 export const useCategoryStore = create<CategoryState>((set) => ({
   categories: [],
-  selectedCategoryId: null,
-  setCategories: (categories) => set({ categories }),
-  setSelectedCategory: (categoryId) => set({ selectedCategoryId: categoryId }),
+  selectedParentCategory: null,
+  selectedChildCategoryId: null,
+  hoveredCategoryId: null,
+  setSelectedParentCategory: (category) => set({ selectedParentCategory: category }),
+  setSelectedChildCategory: (categoryId) => set({ selectedChildCategoryId: categoryId }),
+  setHoveredCategory: (categoryId) => set({ hoveredCategoryId: categoryId }),
 }));
