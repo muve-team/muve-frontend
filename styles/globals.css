@@ -6,7 +6,8 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-    --secondary-text: 0 0% 42%;  /* #6a6a6a in HSL format */
+    --secondary-text: 0 0% 42%;
+    /* #6a6a6a in HSL format */
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
@@ -75,6 +76,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -237,6 +239,19 @@ a.text-primary:hover {
 
 .inputCustom {
   padding: 10px 20px;
+}
+
+.inputUnderline {
+  border: none !important;
+  border-radius: 0 !important;
+  border-bottom: 2px solid #ccc !important;
+}
+
+.inputUnderline:focus,
+.inputUnderline:focus-visible {
+  border-color: #6c8263 !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .tab-trigger[data-selected] {

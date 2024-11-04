@@ -12,7 +12,8 @@ import { useLoginStore } from '@/features/login/model/store';
 import { useLoginMutation } from '@/features/login/model/queries';
 import { loginSchema } from '../../model/schema';
 import type { LoginFormData } from '../../model/types';
-import { useTheme } from '@/hooks/useTheme'
+import { useTheme } from '@/hooks/useTheme';
+import Image from 'next/Image';
 
 // const { isDark, toggleTheme } = useTheme();
 
@@ -53,32 +54,35 @@ export function LoginForm() {
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex justify-center mb-8">
+        <Image src="/images/muve_logo.png" alt="로고" width={140} height={140} />
+        </div>
       <div>
-        <Label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+        {/* <Label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
           이메일
-        </Label>
+        </Label> */}
         <Input
           id="email"
           type="email"
           {...register('email')}
           placeholder="이메일을 입력하세요"
-          className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+          className="inputUnderline mt-1 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
         />
         {errors.email && (
           <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
         )}
       </div>
 
-      <div>
-        <Label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+      <div className="my-12">
+        {/* <Label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
           비밀번호
-        </Label>
+        </Label> */}
         <Input
           id="password"
           type="password"
           {...register('password')}
           placeholder="비밀번호를 입력하세요"
-          className="mt-1 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+          className="inputUnderline mt-1 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
         />
         {errors.password && (
           <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
@@ -97,26 +101,25 @@ export function LoginForm() {
         {loginMutation.isPending ? '로그인 중...' : '로그인'}
       </Button>
 
-      <div className="mt-4 text-center">
+    <div className='flex justify-between items-center'>
+    <div className="text-center">
         <Link
           href="/forgot-password"
           className="text-sm text-primary hover:underline dark:text-white"
         >
-          비밀번호를 잊으셨나요?
+          이메일/비밀번호 찾기
         </Link>
       </div>
-
-      <div className="mt-6 text-center">
-        <p className="text-sm text-gray-600 dark:text-gray-300">
-          계정이 없으신가요?
-        </p>
+      <hr/>
+      <div className="text-center">
         <Link
           href="/join"
-          className="text-sm text-blue-600 hover:underline dark:text-white"
+          className="text-sm text-primary hover:underline dark:text-white"
         >
           회원가입
         </Link>
       </div>
+    </div>
     </form>
   );
 }

@@ -30,17 +30,12 @@ export function HeroSection() {
   const slides = [
     {
       image: '/images/muve_banner.png',
-      // title: '2024 BEST BRAND',
-      // description: '시즌오프 상품 행사 진행중',
-      // buttonText: '지금 구매하기',
-      // buttonLink: '/',
     },
     {
       image: '/images/muve_banner2.png',
-      // title: 'NEW ARRIVALS',
-      // description: '최신 상품을 만나보세요!',
-      // buttonText: '자세히 보기',
-      // buttonLink: '/',
+    },
+    {
+      image: '/images/muve_banner3.png',
     },
   ];
 
@@ -50,7 +45,7 @@ export function HeroSection() {
   useEffect(() => {
     const img = new window.Image()
     img.onload = () => setLogoLoaded(true)
-    img.src = "/images/logo.png"
+    img.src = "/images/muve_logo.png"
   }, [])
 
   useEffect(() => {
@@ -95,10 +90,10 @@ export function HeroSection() {
       
       <div className="container-fluid mx-auto px-4 bg-white fixed top-0 left-0 right-0 z-50" style={{height:'4rem'}}>
         <nav style={{zIndex:'98'}} className={`flex items-center justify-between py-3 relative`}>
-          <Link href="/" className="flex items-center z-30">
+          <Link href="/" className="flex items-center z-99">
             {!logoLoaded ? null : (
               <div className="relative w-28 h-10">
-                <Image src="/images/logo.png" alt="muve_logo" style={{zIndex: '99'}} fill className="object-contain" />
+                <Image src="/images/muve_logo.png" alt="muve_logo" style={{zIndex: '99'}} fill className="object-contain" />
               </div>
             )}
           </Link>

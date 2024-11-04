@@ -49,7 +49,7 @@ export function SearchBar() {
             onFocus={() => setIsFilterVisible(true)}
             onBlur={() => setIsFilterVisible(false)}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className={`pl-4 pr-10 py-2 w-full text-gray-800 rounded-full border-2 ${isScrolled ? 'py-1' : 'py-2 h-14'} transition-all duration-300`}
+            className={`pl-4 pr-10 py-2 w-full text-gray-800 rounded-full border-2 ${isScrolled ? 'py-1' : 'py-2 h-14'} transition-all duration-300  border-primary`}
           />
           <Search
             className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-primary transition-transform duration-300" style={{zIndex:'99'}}
