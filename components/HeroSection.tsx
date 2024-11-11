@@ -5,7 +5,6 @@ import Image from "next/image";
 import { SearchBar } from "@/components/SearchBar";
 import { Button } from "@/components/ui/merged/Button";
 import { Menu, X, User, LogOut, ShoppingCart } from "lucide-react";
-import { ModeToggle } from "@/components/ui/ModeToggle";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { useRouter, usePathname } from "next/navigation";
@@ -16,12 +15,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/merged/DropdownMenu";
 import { useLogin } from "@/features/login/hooks/useLogin";
-import { useLogout } from "@/features/login/model/queries";
 import { MobileBottomNav } from "./MobileBottomNav";
 
 export function HeroSection() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [logoLoaded, setLogoLoaded] = useState(false);
+  const [showLogo, setShowLogo] = useState(true); // Track logo visibility
   const { isAuthenticated, logout } = useLogin();
   const router = useRouter();
   const pathname = usePathname();
@@ -29,18 +28,11 @@ export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showSlide, setShowSlide] = useState(true);
   const slides = [
-    {
-      image: "/images/muve_banner.png",
-    },
-    {
-      image: "/images/muve_banner2.png",
-    },
-    {
-      image: "/images/muve_banner3.png",
-    },
+    { image: "/images/muve_banner.png" },
+    { image: "/images/muve_banner2.png" },
+    { image: "/images/muve_banner3.png" },
   ];
 
-  // 스크롤 관련 상태
   const [isSearchFixed, setIsSearchFixed] = useState(false);
 
   useEffect(() => {
@@ -66,24 +58,25 @@ export function HeroSection() {
     router.push("/");
   };
 
-  const handleMenuItemClick = () => {
-    setIsMenuOpen(false);
-  };
-
   const isHomePage = pathname === "/";
 
-  // 스크롤 이벤트로 SearchBar 위치 토글
+  // Track scroll direction to hide/show logo
   useEffect(() => {
-    if (pathname !== "/") {
-      setIsSearchFixed(true); // 홈페이지가 아닐 때 항상 고정
-    } else {
-      const handleScroll = () => {
-        setIsSearchFixed(window.scrollY > 200);
-      };
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
-    }
-  }, [pathname]);
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 150) {
+        setShowLogo(false); // Hide logo on scroll down
+      } else {
+        setShowLogo(true); // Show logo on scroll up
+      }
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div
@@ -106,17 +99,20 @@ export function HeroSection() {
       >
         <nav
           style={{ zIndex: "98" }}
-          className={`flex items-center justify-between py-3 relative`}
+          className="flex items-center justify-between py-3 relative"
         >
-          <Link href="/" className="flex items-center z-99 md:flex hidden">
-            {" "}
-            {/* Hide on mobile */}
-            {!logoLoaded ? null : (
+          {/* Logo, with fade effect based on scroll direction */}
+          <Link
+            href="/"
+            className={`flex items-center z-99 transition-opacity duration-500 ${
+              showLogo ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            {logoLoaded && (
               <div className="relative w-28 h-10">
                 <Image
                   src="/images/muve_logo.png"
                   alt="muve_logo"
-                  style={{ zIndex: "99" }}
                   fill
                   className="object-contain"
                 />
@@ -132,9 +128,7 @@ export function HeroSection() {
             <SearchBar />
           </div>
 
-          <div className="flex items-center space-x-4 z-50 md:flex hidden">
-            {" "}
-            {/* Hide on mobile */}
+          <div className="flex items-center space-x-4 z-50 hidden md:flex">
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -144,7 +138,7 @@ export function HeroSection() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="end"
-                  className="w-56 p-2 mt-2 md:mt-0 bg-white"
+                  className="w-56 p-2 mt-2 bg-white"
                   style={{ marginTop: "13px" }}
                 >
                   <DropdownMenuItem
@@ -188,82 +182,7 @@ export function HeroSection() {
               </div>
             )}
           </div>
-
-          {/* Menu button for mobile */}
-          <Button
-            variant="outline"
-            size="icon"
-            className="md:hidden bg-white/10 text-blue-900 hover:bg-white/20"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-menu"
-          >
-            {isMenuOpen ? (
-              <X className="h-5 w-5" />
-            ) : (
-              <Menu className="h-5 w-5" />
-            )}
-          </Button>
         </nav>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-10"
-            onClick={() => setIsMenuOpen(false)}
-          ></div>
-        )}
-        {isMenuOpen && (
-          <div
-            id="mobile-menu"
-            className="md:hidden fixed z-20 top-26 left-0 right-0 bg-white shadow-lg"
-          >
-            <div className="container mx-auto px-0 py-6">
-              <div className="block w-full mb-6">
-                <SearchBar />
-              </div>
-              <nav className="flex flex-col space-y-4">
-                {isAuthenticated ? (
-                  <>
-                    <Link
-                      href="/mypage"
-                      className="py-2 ml-5 text-primary"
-                      onClick={handleMenuItemClick}
-                    >
-                      마이페이지
-                    </Link>
-                    <Link
-                      href="/cart"
-                      className="py-2 ml-5 text-primary"
-                      onClick={handleMenuItemClick}
-                    >
-                      장바구니
-                    </Link>
-                    <Button
-                      className="w-full mt-4 bg-primary text-white"
-                      onClick={() => {
-                        handleLogout();
-                        handleMenuItemClick();
-                      }}
-                    >
-                      로그아웃
-                    </Button>
-                  </>
-                ) : (
-                  <Button
-                    className="w-full z-99 bg-blue-600 hover:bg-blue-700 text-white"
-                    onClick={() => {
-                      router.push("/login");
-                      handleMenuItemClick();
-                    }}
-                  >
-                    로그인
-                  </Button>
-                )}
-              </nav>
-            </div>
-          </div>
-        )}
       </div>
 
       <MobileBottomNav />

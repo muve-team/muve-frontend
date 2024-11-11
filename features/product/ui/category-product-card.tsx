@@ -111,12 +111,6 @@ export const CategoryProductCard = ({ product, index }: CategoryProductCardProps
             min-height: 300px;
           }
         }
-
-        @media (prefers-color-scheme: dark) {
-          .product-card {
-            background: rgb(31, 41, 55);
-          }
-        }
       `}</style>
     </div>
   );

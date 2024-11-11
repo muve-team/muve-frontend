@@ -16,7 +16,7 @@ const currentBanner: BannerProps = {
 
 const TopBanner: React.FC = () => {
     return (
-        <div className="relative w-full h-20 cursor-pointer">
+        <div className="relative w-full h-20 cursor-pointer mt-16">
             <Image
                 src={currentBanner.imageUrl}
                 alt="Top Banner Background"
