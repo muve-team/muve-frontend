@@ -13,7 +13,7 @@ import { useLoginMutation } from '@/features/login/model/queries';
 import { loginSchema } from '../../model/schema';
 import type { LoginFormData } from '../../model/types';
 import { useTheme } from '@/hooks/useTheme';
-import Image from 'next/Image';
+import Image from 'next/image';
 
 // const { isDark, toggleTheme } = useTheme();
 
