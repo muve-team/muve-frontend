@@ -33,6 +33,7 @@ export interface TimeDealProduct {
 export interface NewestProduct {
   productId: string;
   name: string;
+  brandName: string;
   price: number;
   imageUrl: string;
   categoryId: string;
