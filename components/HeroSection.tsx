@@ -66,7 +66,7 @@ export function HeroSection() {
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY && currentScrollY > 135) {
+      if (currentScrollY > lastScrollY && currentScrollY > 1) {
         setShowLogo(false); // Hide logo on scroll down
       } else {
         setShowLogo(true); // Show logo on scroll up

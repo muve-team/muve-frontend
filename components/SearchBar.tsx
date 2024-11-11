@@ -25,7 +25,7 @@ export function SearchBar() {
   useEffect(() => {
     const handleScroll = () => {
       // if (pathname === '/') {
-        setIsScrolled(window.scrollY > 150);
+        setIsScrolled(window.scrollY > 1);
       // }
     };
 
