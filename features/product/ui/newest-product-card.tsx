@@ -14,7 +14,7 @@ interface ProductCardProps {
 }
 
 export const NewestProductCard = ({ product, index }: ProductCardProps) => {
-  const { productId, name, price, imageUrl } = product;
+  const { productId, name, brandName, price, imageUrl } = product;
   const router = useRouter();
 
   const handlePurchase = (e: React.MouseEvent) => {
@@ -48,7 +48,7 @@ export const NewestProductCard = ({ product, index }: ProductCardProps) => {
           </div>
           
           <div className="flex flex-col flex-grow min-h-[90px]">
-            <p className="text-xs text-slate-500 mt-2 mb-1">브랜드명</p>
+            <p className="text-xs text-slate-500 mt-2 mb-1">{brandName}</p>
             <h3 className="text-sm font-medium mb-1 line-clamp-2 h-10 overflow-hidden">{name}</h3>
             <p className="text-base font-bold mb-2">₩{price.toLocaleString()}</p>
 

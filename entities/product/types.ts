@@ -4,6 +4,7 @@ import { CommonResponse } from "@/shared/types/types";
 export interface CategoryProduct {
   productId: string;
   title: string;
+  brandName: string;
   price: number;
   imageUrl: string;
   categoryId: string;
@@ -12,6 +13,7 @@ export interface CategoryProduct {
 export interface HottestProduct {
   productId: string;
   name: string;
+  brandName: string;
   price: number;
   imageUrl: string;
   categoryId: string;
@@ -20,6 +22,7 @@ export interface HottestProduct {
 export interface TimeDealProduct {
   productId: string;
   name: string;
+  brandName: string;
   price: number;
   imageUrl: string;
   categoryId: string;
