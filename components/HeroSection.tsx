@@ -81,6 +81,7 @@ export function HeroSection() {
   return (
     <div
       className={`relative ${
+        // Increase z-index here
         isHomePage ? "bg-cover bg-center bg-no-repeat" : "bg-gray-200"
       }`}
       style={
@@ -94,7 +95,7 @@ export function HeroSection() {
       }
     >
       <div
-        className="container-fluid mx-auto px-4 bg-white fixed top-0 left-0 right-0 z-50"
+        className="container-fluid mx-auto px-4 bg-white fixed top-0 left-0 right-0 z-50" // Set z-60 to ensure it is in front of SearchBar
         style={{ height: "4rem" }}
       >
         <nav
@@ -105,8 +106,9 @@ export function HeroSection() {
           <Link
             href="/"
             className={`flex items-center z-99 transition-opacity duration-500 ${
-              showLogo ? "opacity-100" : "opacity-0"
+              showLogo || window.innerWidth >= 768 ? "opacity-100" : "opacity-0"
             }`}
+            style={{ zIndex: "99" }}
           >
             {logoLoaded && (
               <div className="relative w-28 h-10">
@@ -128,7 +130,10 @@ export function HeroSection() {
             <SearchBar />
           </div>
 
-          <div className="flex items-center space-x-4 z-50 hidden md:flex">
+          <div
+            className="flex items-center space-x-4 hidden md:flex"
+            style={{ zIndex: "50" }}
+          >
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>

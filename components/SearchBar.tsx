@@ -24,23 +24,23 @@ export function SearchBar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (pathname === '/') {
+      // if (pathname === '/') {
         setIsScrolled(window.scrollY > 150);
-      }
+      // }
     };
 
-    if (pathname !== '/') {
-      setIsScrolled(true);
-    } else {
+    // if (pathname !== '/') {
+      // setIsScrolled(true);
+    // } else {
       window.addEventListener("scroll", handleScroll);
       return () => window.removeEventListener("scroll", handleScroll);
-    }
+    // }
   }, [pathname]);
 
   return (
     <div className={`fixed left-0 right-0 z-50 transition-all duration-300 ease-in-out ${isScrolled ? 'top-0 h-16' : 'top-16 h-20'} bg-white shadow-md`}>
       <div className={`flex items-center justify-center h-full px-4 ${isScrolled ? 'mt-3' : ''}`}>
-        <div className={`relative flex items-center w-full -mt-7 ${isScrolled ? 'max-w-md' : 'max-w-2xl'}`}>
+        <div className={`relative flex items-center transition-all duration-300 ease-in-out w-full -mt-7 ${isScrolled ? 'max-w-md' : 'max-w-2xl'}`}>
           <Input
             style={{ zIndex: '98' }}
             type="text"
