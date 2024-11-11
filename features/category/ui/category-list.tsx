@@ -30,8 +30,7 @@ export const CategoryList = ({ compact = false }: CategoryListProps) => {
   };
 
   const parentCategories: ParentCategory[] = categoriesResponse?.data || [];
-  const childCategories: ChildCategory[] =
-    selectedParentCategory?.children || [];
+  const childCategories: ChildCategory[] = selectedParentCategory?.children || [];
 
   return (
     <section className={`my-${compact ? "6" : "12"} p-4`}>
@@ -73,12 +72,12 @@ export const CategoryList = ({ compact = false }: CategoryListProps) => {
                   variant="ghost"
                   className={`flex flex-col items-center justify-center rounded-full transition duration-300 ${
                     hoveredCategoryId === category.categoryId
-                      ? "bg-primary shadow-lg"
+                      ? "bg-primary shadow-lg scale-105"
                       : "bg-gray-100 hover:bg-gray-200"
                   }`}
                   style={{
-                    width: "4.5rem",
-                    height: "4.5rem",
+                    width: "5rem",
+                    height: "5rem",
                   }}
                   onClick={() => handleCategoryClick(category.categoryId)}
                   onMouseEnter={() => setHoveredCategory(category.categoryId)}
@@ -86,15 +85,14 @@ export const CategoryList = ({ compact = false }: CategoryListProps) => {
                 >
                   <Icon
                     icon={category.imageUrl || "mdi:view-grid-outline"}
-                    style={{ fontSize: "1.8rem" }}
+                    style={{ fontSize: "2rem" }}
                     className={`transition duration-200 ${
                       hoveredCategoryId === category.categoryId
                         ? "text-white"
                         : "text-gray-600"
                     }`}
                   />
-
-                  <span className="text-xs mt-1 text-center">
+                  <span className="text-sm sm:text-lg mt-1 text-center">
                     {category.name}
                   </span>
                 </Button>
