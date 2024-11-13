@@ -3,21 +3,19 @@
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
 import { CategoryProducts } from "@/entities/product/types";
-import { useInfiniteCategoryProducts } from "../api/useInfiniteCategoryProducts";
-import { CategoryProductsApiResponse } from "../model/types";
+import { useInfiniteSearchProducts } from "../api/useInfiniteSearchProducts";
+import { SearchProductsApiResponse } from "../model/types";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { CategoryProductCard } from "./category-product-card";
+import { SearchProductCard } from "./search-product-card";
 
-interface CategoryProductListProps {
-  categoryId?: string;
-  initialData: CategoryProductsApiResponse;
+interface SearchProductListProps {
+  initialData: SearchProductsApiResponse;
 }
 
 export function CategoryProductList({
-  categoryId,
   initialData,
-}: CategoryProductListProps) {
+}: SearchProductListProps) {
   const { ref, inView } = useInView();
   const [isMounted, setIsMounted] = useState(false);
 
@@ -28,7 +26,7 @@ export function CategoryProductList({
     isFetchingNextPage,
     status,
     isLoading,
-  } = useInfiniteCategoryProducts(categoryId, initialData.data);
+  } = useInfiniteSearchProducts(initialData.data);
 
   useEffect(() => {
     setIsMounted(true); // 컴포넌트가 마운트된 후에 isMounted를 true로 설정
@@ -68,8 +66,8 @@ export function CategoryProductList({
   return (
     <section className="category-product-list-section">
       <div className="space-y-1">
-        <h2 className="text-lg font-semibold text-left">Category Products</h2>
-        <p className="text-sm text-left text-secondary">카테고리 상품 목록</p>
+        <h2 className="text-lg font-semibold text-left">Search Products</h2>
+        <p className="text-sm text-left text-secondary">상품 검색 목록</p>
       </div>
 
       <div className="category-product-container grid">
@@ -79,7 +77,7 @@ export function CategoryProductList({
               key={`${pageIndex}-${product.productId}`}
               className="product-item"
             >
-              <CategoryProductCard product={product} index={index} />
+              <SearchProductCard product={product} index={index} />
             </div>
           ))
         )}

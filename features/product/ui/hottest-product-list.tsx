@@ -43,7 +43,7 @@ export const HottestProductList = ({
 
   if (!initialProducts.length) {
     return (
-      <div className="text-center text-gray-500 my-24">상품이 없습니다.</div>
+      <></>
     );
   }
 

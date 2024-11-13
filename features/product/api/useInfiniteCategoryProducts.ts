@@ -4,7 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 export function useInfiniteCategoryProducts(categoryId?: string, initialData?: CategoryProducts | null) {
   return useInfiniteQuery({
-    queryKey: ["products", categoryId],
+    queryKey: ["categoryProducts", categoryId],
     queryFn: async ({ pageParam = 1 }) => {
       const response = await getCategoryProductApi({
         categoryId,

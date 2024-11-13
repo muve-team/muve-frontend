@@ -47,14 +47,6 @@ export interface NewestProducts {
   size: number;
 }
 
-export interface CategoryProduct {
-  productId: string;
-  title: string;
-  price: number;
-  imageUrl: string;
-  categoryId: string;
-}
-
 export interface CategoryProducts {
   products: CategoryProduct[];
   hasMore: boolean;
