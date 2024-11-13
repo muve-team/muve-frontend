@@ -20,12 +20,12 @@ import { MobileBottomNav } from "./MobileBottomNav";
 export function HeroSection() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [logoLoaded, setLogoLoaded] = useState(false);
-  const [showLogo, setShowLogo] = useState(true); // Track logo visibility
+  const [showLogo, setShowLogo] = useState(true);
   const { isAuthenticated, logout } = useLogin();
   const router = useRouter();
   const pathname = usePathname();
-  const [windowWidth, setWindowWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 0);
-
+  const [windowWidth, setWindowWidth] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showSlide, setShowSlide] = useState(true);
@@ -37,21 +37,22 @@ export function HeroSection() {
 
   const [isSearchFixed, setIsSearchFixed] = useState(false);
 
-  if (!window) {
-    return <></>;
-  }
-
+  // Initialize window width after mount
   useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-
+  // Initialize logo loading after mount
   useEffect(() => {
-    const img = new window.Image();
-    img.onload = () => setLogoLoaded(true);
-    img.src = "/images/muve_logo.png";
+    if (typeof window !== "undefined") {
+      const img = new window.Image();
+      img.onload = () => setLogoLoaded(true);
+      img.src = "/images/muve_logo.png";
+    }
   }, []);
 
   useEffect(() => {
@@ -73,28 +74,31 @@ export function HeroSection() {
 
   const isHomePage = pathname === "/";
 
-  // Track scroll direction to hide/show logo
+  // Track scroll with useEffect
   useEffect(() => {
-    let lastScrollY = window.scrollY;
+    const handleScroll = () => {
+      if (typeof window !== "undefined") {
+        const currentScrollY = window.scrollY;
+        setScrollY(currentScrollY);
+        
+        if (windowWidth < 768) {
+          setShowLogo(false);
+          return;
+        }
 
-    const handleScroll = () => { 
-      if (windowWidth < 768) {
-        setShowLogo(false);
-        return;
+        if (currentScrollY > windowWidth && currentScrollY > 0.1) {
+          setShowLogo(false);
+        } else {
+          setShowLogo(true);
+        }
       }
-
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY && currentScrollY > 0.1) {
-        setShowLogo(false); // Hide logo on scroll down
-      } else {
-        setShowLogo(true); // Show logo on scroll up
-      }
-      lastScrollY = currentScrollY;
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+  }, [windowWidth]);
 
   useEffect(() => {
     if (windowWidth >= 768) {
@@ -104,12 +108,11 @@ export function HeroSection() {
       setShowLogo(false);
       setLogoLoaded(false);
     }
-  }, [windowWidth])
+  }, [windowWidth]);
 
   return (
     <div
       className={`relative ${
-        // Increase z-index here
         isHomePage ? "bg-cover bg-center bg-no-repeat" : "bg-gray-200"
       }`}
       style={
@@ -123,18 +126,17 @@ export function HeroSection() {
       }
     >
       <div
-        className="container-fluid mx-auto px-4 bg-white fixed top-0 left-0 right-0 z-50" // Set z-60 to ensure it is in front of SearchBar
+        className="container-fluid mx-auto px-4 bg-white fixed top-0 left-0 right-0 z-50"
         style={{ height: "4rem" }}
       >
         <nav
           style={{ zIndex: "98" }}
           className="flex items-center justify-between py-3 relative"
         >
-          {/* Logo, with fade effect based on scroll direction */}
           <Link
             href="/"
             className={`flex items-center z-99 ${
-              showLogo || window.innerWidth >= 768 ? "opacity-100" : "opacity-0"
+              showLogo || windowWidth >= 768 ? "opacity-100" : "opacity-0"
             }`}
             style={{ zIndex: "99" }}
           >

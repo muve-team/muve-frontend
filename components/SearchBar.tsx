@@ -10,10 +10,22 @@ export function SearchBar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [recentSearches, setRecentSearches] = useState(['나이키', '코르테즈', '골프화']);
+  const [windowWidth, setWindowWidth] = useState(0);
   const popularSearches = ['닥터마틴', '발마칸', '숏패딩']; 
   
   const router = useRouter();
   const pathname = usePathname();
+
+  // Initialize window width after mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setWindowWidth(window.innerWidth);
+      
+      const handleResize = () => setWindowWidth(window.innerWidth);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, []);
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
@@ -25,22 +37,52 @@ export function SearchBar() {
   useEffect(() => {
     const handleScroll = () => {
       if (pathname === '/') {
-        setIsScrolled(window.scrollY > 0.1);
+        if (typeof window !== 'undefined') {
+          setIsScrolled(window.scrollY > 0.1);
+        }
       }
     };
 
     if (pathname !== '/') {
       setIsScrolled(true);
-    } else {
+    } else if (typeof window !== 'undefined') {
       window.addEventListener("scroll", handleScroll);
       return () => window.removeEventListener("scroll", handleScroll);
     }
-  }, [pathname, window.scrollY]);
+  }, [pathname]);
+
+  const getTopClass = () => {
+    if (isScrolled) {
+      return 'top-0 h-16';
+    }
+    return windowWidth >= 768 ? 'top-16 h-20' : 'top-0 h-16';
+  };
+
+  const getMaxWidthClass = () => {
+    if (isScrolled) {
+      return 'max-w-md';
+    }
+    return windowWidth >= 768 ? 'max-w-2xl' : 'max-w-md';
+  };
+
+  const getPaddingClass = () => {
+    if (isScrolled) {
+      return 'py-1';
+    }
+    return windowWidth >= 768 ? 'py-2 h-14' : 'py-1';
+  };
+
+  const getMarginClass = () => {
+    if (isScrolled) {
+      return 'mt-3';
+    }
+    return windowWidth >= 768 ? '' : 'mt-3';
+  };
 
   return (
-    <div className={`fixed left-0 right-0 z-50 transition-all duration-300 ease-in-out ${isScrolled ? 'top-0 h-16' : window.innerWidth >= 768 ? 'top-16 h-20' : 'top-0 h-16'} bg-white shadow-md`}>
-      <div className={`flex items-center justify-center h-full px-4 ${isScrolled ? 'mt-3' : window.innerWidth >= 768 ? '' : 'mt-3'}`}>
-        <div className={`relative flex items-center transition-all duration-300 ease-in-out w-full -mt-7 ${isScrolled ? 'max-w-md' : window.innerWidth >= 768 ? 'max-w-2xl': 'max-w-md'}`}>
+    <div className={`fixed left-0 right-0 z-50 transition-all duration-300 ease-in-out ${getTopClass()} bg-white shadow-md`}>
+      <div className={`flex items-center justify-center h-full px-4 ${getMarginClass()}`}>
+        <div className={`relative flex items-center transition-all duration-300 ease-in-out w-full -mt-7 ${getMaxWidthClass()}`}>
           <Input
             style={{ zIndex: '98' }}
             type="text"
@@ -49,10 +91,11 @@ export function SearchBar() {
             onFocus={() => setIsFilterVisible(true)}
             onBlur={() => setIsFilterVisible(false)}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className={`pl-4 pr-10 py-2 w-full text-gray-800 rounded-full border-2 ${isScrolled ? 'py-1' : window.innerWidth >= 768 ? 'py-2 h-14' : 'py-1'} transition-all duration-300  border-primary`}
+            className={`pl-4 pr-10 w-full text-gray-800 rounded-full border-2 ${getPaddingClass()} transition-all duration-300 border-primary`}
           />
           <Search
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-primary transition-transform" style={{zIndex:'99'}}
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-primary transition-transform"
+            style={{zIndex:'99'}}
             onClick={handleSearch}
           />
           {isFilterVisible && (
