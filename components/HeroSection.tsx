@@ -24,6 +24,8 @@ export function HeroSection() {
   const { isAuthenticated, logout } = useLogin();
   const router = useRouter();
   const pathname = usePathname();
+  const [windowWidth, setWindowWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 0);
+
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showSlide, setShowSlide] = useState(true);
@@ -34,6 +36,17 @@ export function HeroSection() {
   ];
 
   const [isSearchFixed, setIsSearchFixed] = useState(false);
+
+  if (!window) {
+    return <></>;
+  }
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
 
   useEffect(() => {
     const img = new window.Image();
@@ -64,9 +77,14 @@ export function HeroSection() {
   useEffect(() => {
     let lastScrollY = window.scrollY;
 
-    const handleScroll = () => {
+    const handleScroll = () => { 
+      if (windowWidth < 768) {
+        setShowLogo(false);
+        return;
+      }
+
       const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY && currentScrollY > 1) {
+      if (currentScrollY > lastScrollY && currentScrollY > 0.1) {
         setShowLogo(false); // Hide logo on scroll down
       } else {
         setShowLogo(true); // Show logo on scroll up
@@ -77,6 +95,16 @@ export function HeroSection() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (windowWidth >= 768) {
+      setShowLogo(true);
+      setLogoLoaded(true);
+    } else {
+      setShowLogo(false);
+      setLogoLoaded(false);
+    }
+  }, [windowWidth])
 
   return (
     <div
@@ -105,7 +133,7 @@ export function HeroSection() {
           {/* Logo, with fade effect based on scroll direction */}
           <Link
             href="/"
-            className={`flex items-center z-99 transition-opacity duration-500 ${
+            className={`flex items-center z-99 ${
               showLogo || window.innerWidth >= 768 ? "opacity-100" : "opacity-0"
             }`}
             style={{ zIndex: "99" }}
