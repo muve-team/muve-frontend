@@ -1,142 +1,74 @@
 "use client";
 
+import React from "react";
 import { useInView } from "react-intersection-observer";
-import { useEffect, useState } from "react";
-import { CategoryProducts } from "@/entities/product/types";
-import { useInfiniteSearchProducts } from "../api/useInfiniteSearchProducts";
-import { SearchProductsApiResponse } from "../model/types";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 import { SearchProductCard } from "./search-product-card";
+import { SearchProduct } from "@/entities/search/types";
+import { useInfiniteSearchProducts } from "../api/useInfiniteSearchProducts";
+import { Spinner } from "@/components/ui/merged/Spinner";
+import { SearchProductsApiResponse } from "../model/types";
 
 interface SearchProductListProps {
+  keyword: string;
   initialData: SearchProductsApiResponse;
 }
 
-export function SearchProductList({
-  initialData,
-}: SearchProductListProps) {
-  const { ref, inView } = useInView();
-  const [isMounted, setIsMounted] = useState(false);
-
+export function SearchProductList({ keyword, initialData }: SearchProductListProps) {
+  const { ref: intersectionRef, inView } = useInView();
+  
   const {
     data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    status,
     isLoading,
-  } = useInfiniteSearchProducts(initialData.data);
+  } = useInfiniteSearchProducts(keyword, initialData.data);
 
-  useEffect(() => {
-    setIsMounted(true); // 컴포넌트가 마운트된 후에 isMounted를 true로 설정
-  }, []);
-
-  useEffect(() => {
+  React.useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [inView, fetchNextPage, hasNextPage, isFetchingNextPage]);
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  if (!isMounted) {
-    return null; // 마운트 전에는 아무것도 렌더링하지 않음
-  }
-
-  if (status === "error") {
+  if (isLoading) {
     return (
-      <div className="flex-1 flex justify-center items-center text-red-500">
-        상품을 불러오는데 실패했습니다
+      <div className="flex justify-center items-center min-h-[200px]">
+        <Spinner />
       </div>
     );
   }
 
-  const isEmpty =
-    !data ||
-    data.pages.length === 0 ||
-    data.pages.every((page) => page.products.length === 0);
-
-  if (isEmpty) {
+  if (!data?.pages[0].products.length) {
     return (
-      <div className="flex-1 flex justify-center items-center text-gray-500">
-        상품이 없습니다
+      <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
+        <h2 className="text-xl font-semibold mb-2">검색 결과가 없습니다</h2>
+        <p className="text-gray-500">
+          다른 검색어로 시도해보세요
+        </p>
       </div>
     );
   }
 
   return (
-    <section className="category-product-list-section">
-      <div className="space-y-1">
-        <h2 className="text-lg font-semibold text-left">Search Products</h2>
-        <p className="text-sm text-left text-secondary">상품 검색 목록</p>
-      </div>
-
-      <div className="category-product-container grid">
+    <div className="space-y-6">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
         {data.pages.map((page, pageIndex) =>
-          page.products.map((product, index) => (
-            <div
-              key={`${pageIndex}-${product.productId}`}
-              className="product-item"
-            >
-              <SearchProductCard product={product} index={index} />
-            </div>
+          page.products.map((product, productIndex) => (
+            <SearchProductCard
+              key={product.productId}
+              product={product}
+              index={pageIndex * page.size + productIndex}
+            />
           ))
         )}
       </div>
 
-      <div ref={ref} className="loading-indicator">
-        {isFetchingNextPage && (
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900" />
-        )}
+      <div
+        ref={intersectionRef}
+        className="flex justify-center items-center h-20"
+      >
+        {isFetchingNextPage && <Spinner />}
       </div>
-
-      <style jsx>{`
-        .category-product-list-section {
-          width: 100%;
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 2rem 1rem;
-        }
-
-        .category-product-container {
-          margin-top: 2.5rem;
-          display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          gap: 1.5rem;
-          width: 100%;
-        }
-
-        .product-item {
-          width: 100%;
-          height: 100%;
-        }
-
-        .loading-indicator {
-          width: 100%;
-          height: 10vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-top: 1rem;
-        }
-
-        @media (max-width: 1023px) {
-          .category-product-container {
-            grid-template-columns: repeat(5, 1fr);
-          }
-        }
-
-        @media (max-width: 768px) {
-          .category-product-container {
-            grid-template-columns: repeat(3, 1fr);
-          }
-        }
-
-        @media (max-width: 480px) {
-          .category-product-container {
-            grid-template-columns: repeat(2, 1fr);
-          }
-        }
-      `}</style>
-    </section>
+    </div>
   );
 }

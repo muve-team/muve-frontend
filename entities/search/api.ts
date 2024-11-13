@@ -25,9 +25,12 @@ export async function getSearchProductApi({
   const response = await fetch(`${baseUrl}/search?${params}`, {
     headers: {
       'x-request-id': tsid, // tsid 추가
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
     },
     // Enable cache for SSR
-    next: { revalidate: 60 }, // Revalidate every 60 seconds
+    cache: 'no-store',
   });
 
   if (!response.ok) {

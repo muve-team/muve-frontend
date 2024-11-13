@@ -9,15 +9,17 @@ import { SearchProductList } from "@/features/search/ui/search-product-list";
 import { Key } from "lucide-react";
 import { getSearchProductApi } from "@/entities/search/api";
 
-export default async function SearchPage({
-  searchParams,
-}: {
-  searchParams: { keyword?: string };
-}) {
+interface SearchPageProps {
+  searchParams: {
+    keyword?: string;
+  };
+}
 
+export default async function SearchPage({ searchParams }: SearchPageProps) {
+  const keyword = searchParams.keyword || ''; // 기본값을 빈 문자열로 설정
 
   const initialData = await getSearchProductApi({
-    keyword: searchParams.keyword,
+    keyword,
     page: 0,
     size: 6,
   });
@@ -28,7 +30,10 @@ export default async function SearchPage({
       <HeroSection />
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-col gap-8">
-          <SearchProductList initialData={initialData}/>
+          <SearchProductList 
+            keyword={keyword}
+            initialData={initialData}
+          />
         </div>
       </main>
       <Footer />
