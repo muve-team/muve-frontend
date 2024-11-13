@@ -11,7 +11,7 @@ export function SearchBar() {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [recentSearches, setRecentSearches] = useState(['나이키', '코르테즈', '골프화']);
   const [windowWidth, setWindowWidth] = useState(0);
-  const popularSearches = ['닥터마틴', '발마칸', '숏패딩']; 
+  const popularSearches = ['구현 중 입니다.']; 
   
   const router = useRouter();
   const pathname = usePathname();
@@ -29,7 +29,7 @@ export function SearchBar() {
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
+      router.push(`/search?keyword=${encodeURIComponent(searchTerm.trim())}`);
       setRecentSearches((prev) => [searchTerm, ...prev].slice(0, 5));
     }
   };
@@ -91,6 +91,11 @@ export function SearchBar() {
             onFocus={() => setIsFilterVisible(true)}
             onBlur={() => setIsFilterVisible(false)}
             onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSearch();
+              }
+            }}
             className={`pl-4 pr-10 w-full text-gray-800 rounded-full border-2 ${getPaddingClass()} transition-all duration-300 border-primary`}
           />
           <Search

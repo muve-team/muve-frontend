@@ -13,7 +13,7 @@ interface SearchProductListProps {
   initialData: SearchProductsApiResponse;
 }
 
-export function CategoryProductList({
+export function SearchProductList({
   initialData,
 }: SearchProductListProps) {
   const { ref, inView } = useInView();

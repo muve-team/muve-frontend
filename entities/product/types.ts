@@ -3,8 +3,10 @@ import { CommonResponse } from "@/shared/types/types";
 
 export interface CategoryProduct {
   productId: string;
-  title: string;
-  brandName: string;
+  koreanName: string;
+  englishName: string;
+  brandKoreanName: string;
+  brandEnglishName: string;
   price: number;
   imageUrl: string;
   categoryId: string;
@@ -12,8 +14,10 @@ export interface CategoryProduct {
 
 export interface HottestProduct {
   productId: string;
-  name: string;
-  brandName: string;
+  koreanName: string;
+  englishName: string;
+  brandKoreanName: string;
+  brandEnglishName: string;
   price: number;
   imageUrl: string;
   categoryId: string;
@@ -21,8 +25,10 @@ export interface HottestProduct {
 
 export interface TimeDealProduct {
   productId: string;
-  name: string;
-  brandName: string;
+  koreanName: string;
+  englishName: string;
+  brandKoreanName: string;
+  brandEnglishName: string;
   price: number;
   imageUrl: string;
   categoryId: string;
@@ -32,8 +38,10 @@ export interface TimeDealProduct {
 
 export interface NewestProduct {
   productId: string;
-  name: string;
-  brandName: string;
+  koreanName: string;
+  englishName: string;
+  brandKoreanName: string;
+  brandEnglishName: string;
   price: number;
   imageUrl: string;
   categoryId: string;

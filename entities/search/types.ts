@@ -3,8 +3,10 @@ import { CommonResponse } from "@/shared/types/types";
 
 export interface SearchProduct {
   productId: string;
-  title: string;
-  brandName: string;
+  koreanName: string;
+  englishName: string;
+  brandKoreanName: string;
+  brandEnglishName: string;
   price: number;
   imageUrl: string;
   categoryId: string;

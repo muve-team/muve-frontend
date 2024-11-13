@@ -14,7 +14,7 @@ interface ProductCardProps {
 }
 
 export const NewestProductCard = ({ product, index }: ProductCardProps) => {
-  const { productId, name, brandName, price, imageUrl } = product;
+  const { productId, koreanName, englishName, brandKoreanName, brandEnglishName, price, imageUrl } = product;
   const router = useRouter();
 
   const handlePurchase = (e: React.MouseEvent) => {
@@ -33,7 +33,7 @@ export const NewestProductCard = ({ product, index }: ProductCardProps) => {
           <div className="relative aspect-square mb-3 rounded-md overflow-hidden">
             <Image
               src={imageUrl || '/placeholder.png'}
-              alt={name}
+              alt={englishName}
               fill
               sizes="(max-width: 1023px) 160px, 20vw"
               className="object-cover"
@@ -48,8 +48,8 @@ export const NewestProductCard = ({ product, index }: ProductCardProps) => {
           </div>
           
           <div className="flex flex-col flex-grow min-h-[90px]">
-            <p className="text-xs text-slate-500 mt-2 mb-1">{brandName}</p>
-            <h3 className="text-sm font-medium mb-1 line-clamp-2 h-10 overflow-hidden">{name}</h3>
+            <p className="text-xs text-slate-500 mt-2 mb-1">{brandEnglishName}</p>
+            <h3 className="text-sm font-medium mb-1 line-clamp-2 h-10 overflow-hidden">{`${brandEnglishName} ${englishName}`}</h3>
             <p className="text-base font-bold mb-2">₩{price.toLocaleString()}</p>
 
             {/* <div className="flex items-center justify-end mt-auto">
