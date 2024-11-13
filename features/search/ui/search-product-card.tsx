@@ -48,8 +48,8 @@ export const SearchProductCard = ({ product, index }: SearchProductCardProps) =>
           </div>
           
           <div className="flex flex-col flex-grow min-h-[90px]">
-            <p className="text-xs text-gray-500 mt-2 mb-1">{brandEnglishName}</p>
-            <h3 className="text-sm font-medium mb-1 break-words line-clamp-2">{`${brandEnglishName} ${englishName}}`}</h3>
+            <p className="text-xs text-gray-500 mt-2 mb-1">{englishName}</p>
+            <h3 className="text-sm font-medium mb-1 break-words line-clamp-2">{`${brandEnglishName} ${englishName}`}</h3>
             <p className="text-base font-bold mb-2">₩{price.toLocaleString()}</p>
             
             <div className="flex items-center justify-end mt-auto">
