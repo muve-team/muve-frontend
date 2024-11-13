@@ -3,7 +3,7 @@
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
 import { HottestProduct, NewestProduct } from "@/entities/product/types";
-import { useInfiniteNewestProducts } from "../api/useInifiniteProducts";
+import { useInfiniteNewestProducts } from "../api/useInfiniteProducts";
 import "react-loading-skeleton/dist/skeleton.css";
 import { NewestProductCard } from "./newest-product-card";
 import { NewestProductApiResponse } from "../model/types";

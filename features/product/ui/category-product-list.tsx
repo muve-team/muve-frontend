@@ -3,7 +3,7 @@
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
 import { CategoryProducts } from "@/entities/product/types";
-import { useInfiniteCategoryProducts } from "../api/useInfiniteCategoryProducts";
+import { useInfiniteCategoryProducts } from "../api/useInfiniteProducts";
 import { CategoryProductsApiResponse } from "../model/types";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
