@@ -3,23 +3,41 @@
 import { useState, useEffect } from 'react';
 import { Input } from "@/components/ui/merged/Input";
 import { Search } from "lucide-react";
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 export function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isFilterVisible, setIsFilterVisible] = useState(false);
-  const [recentSearches, setRecentSearches] = useState(['나이키', '코르테즈', '골프화']);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [windowWidth, setWindowWidth] = useState(0);
-  const popularSearches = ['구현 중 입니다.']; 
+  const popularSearches = ['구현 중 입니다.'];
   
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  // Initialize window width after mount
+  // Add search term to recent searches
+  const addToRecentSearches = (term: string) => {
+    if (!term.trim()) return;
+    
+    setRecentSearches(prev => {
+      const updatedSearches = [term, ...prev.filter(s => s !== term)].slice(0, 5);
+      localStorage.setItem('recentSearches', JSON.stringify(updatedSearches));
+      return updatedSearches;
+    });
+  };
+
+  // Initialize window width and load recent searches from localStorage after mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setWindowWidth(window.innerWidth);
+      
+      // Load recent searches from localStorage
+      const savedSearches = localStorage.getItem('recentSearches');
+      if (savedSearches) {
+        setRecentSearches(JSON.parse(savedSearches));
+      }
       
       const handleResize = () => setWindowWidth(window.innerWidth);
       window.addEventListener('resize', handleResize);
@@ -27,10 +45,19 @@ export function SearchBar() {
     }
   }, []);
 
+  // Check URL parameters for search term
+  useEffect(() => {
+    const keyword = searchParams.get('keyword');
+    if (keyword) {
+      setSearchTerm(keyword);
+      addToRecentSearches(keyword);
+    }
+  }, [searchParams]);
+
   const handleSearch = () => {
     if (searchTerm.trim()) {
       router.push(`/search?keyword=${encodeURIComponent(searchTerm.trim())}`);
-      setRecentSearches((prev) => [searchTerm, ...prev].slice(0, 5));
+      addToRecentSearches(searchTerm);
     }
   };
 
@@ -107,13 +134,24 @@ export function SearchBar() {
             <div className="absolute top-full mt-2 w-full bg-white border rounded-md p-4 shadow-lg py-0 transition-transform duration-300 transform ease-out">
               <div>
                 <h3 className="text-gray-600 text-sm font-semibold mt-3 mb-1">최근 검색어</h3>
-                <ul className="space-y-1 mb-3">
-                  {recentSearches.map((item, index) => (
-                    <li key={index} className="text-gray-800 cursor-pointer hover:underline inline-block text-sm mr-4">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                {recentSearches.length > 0 ? (
+                  <ul className="space-y-1 mb-3">
+                    {recentSearches.map((item, index) => (
+                      <li 
+                        key={index} 
+                        className="text-gray-800 cursor-pointer hover:underline inline-block text-sm mr-4"
+                        onClick={() => {
+                          setSearchTerm(item);
+                          handleSearch();
+                        }}
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-gray-500 text-sm mb-3">최근 검색 결과가 없습니다.</p>
+                )}
               </div>
               <hr/>
               <div className="my-4">
@@ -133,3 +171,5 @@ export function SearchBar() {
     </div>
   );
 }
+
+export default SearchBar;

@@ -110,6 +110,14 @@ export function HeroSection() {
     }
   }, [windowWidth]);
 
+  const handleLogoClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!showLogo && windowWidth < 768) {
+      e.preventDefault();
+      return;
+    }
+    router.push('/');
+  };
+
   return (
     <div
       className={`relative ${
@@ -133,10 +141,12 @@ export function HeroSection() {
           style={{ zIndex: "98" }}
           className="flex items-center justify-between py-3 relative"
         >
-          <Link
-            href="/"
+          <div
+            onClick={handleLogoClick}
             className={`flex items-center z-99 ${
-              showLogo || windowWidth >= 768 ? "opacity-100" : "opacity-0"
+              showLogo || windowWidth >= 768 
+                ? "opacity-100 cursor-pointer" 
+                : "opacity-0 pointer-events-none"
             }`}
             style={{ zIndex: "99" }}
           >
@@ -150,7 +160,7 @@ export function HeroSection() {
                 />
               </div>
             )}
-          </Link>
+          </div>
 
           <div
             className={`flex flex-grow justify-center ${
