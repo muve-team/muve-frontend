@@ -49,7 +49,7 @@ export const NewestProductList = ({ initialData }: NewestProductListProps) => {
   if (isEmpty) {
     return (
       <div className="flex-1 flex justify-center items-center text-gray-500">
-        상품이 없습니다
+        <></>
       </div>
     );
   }
