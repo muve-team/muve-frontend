@@ -327,3 +327,16 @@ a.text-primary:hover {
 .text-gray-custom {
   color: hsl(var(--secondary-foreground));
 }
+
+.input-custom {
+  height: 3rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid hsl(var(--input));
+  background-color: hsl(var(--background));
+  transition: border-color 0.2s ease-in-out;
+}
+
+.input-custom:hover {
+  border-color: hsl(var(--primary));
+}

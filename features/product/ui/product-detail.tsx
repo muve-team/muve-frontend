@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/merged/Badge";
 import { Button } from "@/components/ui/merged/Button";
 import { Card, CardContent } from "@/components/ui/merged/Card";
@@ -19,123 +21,428 @@ import {
   Truck,
 } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 interface ProductDetailProps {
   product: ProductDetailResponse;
 }
 
 export const ProductDetail = ({ product }: ProductDetailProps) => {
-  const { name, price, imageUrl } = product;
+  const { productId, name, price, imageUrl } = product;
+  const router = useRouter();
+  const routeToBuy = () => {
+    router.push(`/buy?productId=${productId}`);
+  };
+
+  const fadeIn = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.4 },
+  };
 
   return (
     <div className="container h-screen mx-auto py-16">
       <div className="flex flex-col md:flex-row lg:flex-row lg:gap-8">
         {/* 좌측 고정 영역 - 이미지와 배지 */}
         <aside className="w-full lg:w-1/2 lg:sticky lg:top-8 space-y-4 pt-16">
-          <Card className="overflow-hidden">
-            <div className="relative aspect-square">
-              <Image
-                src={imageUrl}
-                alt={name}
-                fill
-                className="object-cover"
-                priority
-                sizes="(max-width: 768px) 100vw, 480px"
-              />
-            </div>
-            <div className="flex flex-wrap gap-2 p-4 bg-background/60 backdrop-blur-sm">
-              <Badge variant="secondary" className="px-2 py-1 text-xs">
-                무료배송
-              </Badge>
-              <Badge variant="secondary" className="px-2 py-1 text-xs">
-                당일발송
-              </Badge>
-              <Badge variant="secondary" className="px-2 py-1 text-xs">
-                품질보증
-              </Badge>
-            </div>
-          </Card>
-          
+          <motion.div {...fadeIn}>
+            <Card className="overflow-hidden">
+              <div className="relative aspect-square">
+                <Image
+                  src={imageUrl}
+                  alt={name}
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 480px"
+                />
+              </div>
+              <div className="flex flex-wrap gap-2 p-4 bg-background/60 backdrop-blur-sm">
+                <Badge variant="secondary" className="px-2 py-1 text-xs">
+                  무료배송
+                </Badge>
+                <Badge variant="secondary" className="px-2 py-1 text-xs">
+                  당일발송
+                </Badge>
+                <Badge variant="secondary" className="px-2 py-1 text-xs">
+                  품질보증
+                </Badge>
+              </div>
+            </Card>
+          </motion.div>
+
           {/* 모바일에서는 숨겨지는 delivery info card */}
-          <Card className="hidden lg:block p-4 space-y-4">
-            <h3 className="font-semibold">배송 정보</h3>
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center gap-2">
-                <Truck className="w-4 h-4" />
-                <span>오늘 주문시 내일 도착</span>
+          <motion.div {...fadeIn} transition={{ delay: 0.1 }}>
+            <Card className="hidden lg:block p-4 space-y-4">
+              <h3 className="font-semibold">배송 정보</h3>
+              <div className="space-y-3 text-sm">
+                <div className="flex items-center gap-2">
+                  <Truck className="w-4 h-4" />
+                  <span>오늘 주문시 내일 도착</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Shield className="w-4 h-4" />
+                  <span>안전한 포장 보장</span>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4" />
-                <span>안전한 포장 보장</span>
-              </div>
-            </div>
-          </Card>
+            </Card>
+          </motion.div>
         </aside>
 
         {/* 우측 스크롤 영역 - 상품 정보 */}
-        <div className="w-full lg:w-1/2 lg:max-h-screen lg:overflow-y-auto" style={{height:'100vh', overflowY: 'auto'}}>
+        <div
+          className="w-full lg:w-1/2 lg:max-h-screen lg:overflow-y-auto"
+          style={{ height: "100vh", overflowY: "auto" }}
+        >
           <div className="space-y-6">
             {/* 상품 기본 정보 */}
-            <Card className="p-6">
-              <span className="text-xs">브랜드명</span>
-              <h1 className="text-xl mb-2">{name}상품명왜 안나오지</h1>
-              <p className="text-3xl font-bold text-primary mb-6">
-                {price.toLocaleString()}원
-              </p>
-              <div className=" mb-6">
+            <motion.div {...fadeIn} transition={{ delay: 0.2 }}>
+              <Card className="p-6">
+                <span className="text-xs">브랜드명</span>
+                <h1 className="text-xl mb-2">상품명왜 안나오지</h1>
+                <p className="text-3xl font-bold text-primary mb-6">
+                  {price.toLocaleString()}원
+                </p>
+                <div className="mb-6">
                   <p className="text-xs mb-2">배송비</p>
                   <p className="text-xs">수량선택</p>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <Button size="lg" className="w-full">
-                  <CreditCard className="mr-2 h-4 w-4" />
-                  구매하기
-                </Button>
-                <Button size="lg" variant="secondary" className="w-full">
-                  <ShoppingCart className="mr-2 h-4 w-4" />
-                  장바구니
-                </Button>
-              </div>
-            </Card>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <Button
+                    size="lg"
+                    className="w-full"
+                    onClick={() => routeToBuy()}
+                  >
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    구매하기
+                  </Button>
+                  <Button size="lg" variant="secondary" className="w-full">
+                    <ShoppingCart className="mr-2 h-4 w-4" />
+                    장바구니
+                  </Button>
+                </div>
+              </Card>
+            </motion.div>
 
             {/* 상품 상세 정보 탭 */}
-            <Card>
-              <Tabs defaultValue="detail" className="w-full">
-                <TabsList className="sticky top-0 z-10 bg-background/95 backdrop-blur flex w-full grid-cols-3 justify-start">
-                  <TabsTrigger value="detail">상품정보</TabsTrigger>
-                  <TabsTrigger value="shipping">배송안내</TabsTrigger>
-                  <TabsTrigger value="refund">교환/반품</TabsTrigger>
-                </TabsList>
-                {/* 탭 콘텐츠 */}
-                <TabsContent value="detail">
-                  <CardContent className="space-y-8">
-                    <div className="p-5">
-                      <h2 className="text-lg font-bold mb-4">상품 상세정보</h2>
-                      <p className="text-muted-foreground">상품 설명입니다.</p>
-                      <p className="text-muted-foreground"><p>임시로 가짜 내용 적어둠 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing tristique. Mi eget mauris pharetra et. Non tellus orci ac auctor augue. Elit at imperdiet dui accumsan sit. Ornare arcu dui vivamus arcu felis. Egestas integer eget aliquet nibh praesent. In hac habitasse platea dictumst quisque sagittis purus. Pulvinar elementum integer enim neque volutpat ac.</p><p>Senectus et netus et malesuada. Nunc pulvinar sapien et ligula ullamcorper malesuada proin. Neque convallis a cras semper auctor. Libero id faucibus nisl tincidunt eget. Leo a diam sollicitudin tempor id. A lacus vestibulum sed arcu non odio euismod lacinia. In tellus integer feugiat scelerisque. Feugiat in fermentum posuere urna nec tincidunt praesent. Porttitor rhoncus dolor purus non enim praesent elementum facilisis. Nisi scelerisque eu ultrices vitae auctor eu augue ut lectus. Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus. Et malesuada fames ac turpis egestas sed. Sit amet nisl suscipit adipiscing bibendum est ultricies. Arcu ac tortor dignissim convallis aenean et tortor at. Pretium viverra suspendisse potenti nullam ac tortor vitae purus. Eros donec ac odio tempor orci dapibus ultrices. Elementum nibh tellus molestie nunc. Et magnis dis parturient montes nascetur. Est placerat in egestas erat imperdiet. Consequat interdum varius sit amet mattis vulputate enim.</p><p>Sit amet nulla facilisi morbi tempus. Nulla facilisi cras fermentum odio eu. Etiam erat velit scelerisque in dictum non consectetur a erat. Enim nulla aliquet porttitor lacus luctus accumsan tortor posuere. Ut sem nulla pharetra diam. Fames ac turpis egestas maecenas. Bibendum neque egestas congue quisque egestas diam. Laoreet id donec ultrices tincidunt arcu non sodales neque. Eget felis eget nunc lobortis mattis aliquam faucibus purus. Faucibus interdum posuere lorem ipsum dolor sit.</p></p>
-                    </div>
-                    {/* 필수정보 */}
-                    <div className="space-y-4">
-                      <h3 className="text-base font-bold">상품 필수정보</h3>
-                      <div className="divide-y">
-                        <div className="grid grid-cols-3 py-3">
-                          <span className="text-muted-foreground">제조사</span>
-                          <span className="col-span-2">제조사 정보</span>
-                        </div>
-                        <div className="grid grid-cols-3 py-3">
-                          <span className="text-muted-foreground">원산지</span>
-                          <span className="col-span-2">원산지 정보</span>
-                        </div>
-                        <div className="grid grid-cols-3 py-3">
-                          <span className="text-muted-foreground">제조일자</span>
-                          <span className="col-span-2">제조일자 정보</span>
+            <motion.div {...fadeIn} transition={{ delay: 0.3 }}>
+              <Card>
+                <Tabs defaultValue="detail" className="w-full">
+                  <TabsList className="sticky top-0 z-10 bg-background/95 backdrop-blur flex w-full grid-cols-3 justify-start">
+                    <TabsTrigger value="detail">상품정보</TabsTrigger>
+                    <TabsTrigger value="shipping">배송안내</TabsTrigger>
+                    <TabsTrigger value="refund">교환/반품</TabsTrigger>
+                  </TabsList>
+                  {/* 탭 콘텐츠 */}
+                  <TabsContent value="detail">
+                    <CardContent className="space-y-8">
+                      <div className="p-5">
+                        <h2 className="text-lg font-bold mb-4">
+                          상품 상세정보
+                        </h2>
+                        <div className="text-muted-foreground">
+                          <div className="space-y-4">
+                            국회의원은 현행범인인 경우를 제외하고는 회기중
+                            국회의 동의없이 체포 또는 구금되지 아니한다. 국가는
+                            재해를 예방하고 그 위험으로부터 국민을 보호하기
+                            위하여 노력하여야 한다. 탄핵소추의 의결을 받은 자는
+                            탄핵심판이 있을 때까지 그 권한행사가 정지된다.
+                            국가는 여자의 복지와 권익의 향상을 위하여 노력하여야
+                            한다. 사면·감형 및 복권에 관한 사항은 법률로 정한다.
+                            모든 국민은 인간다운 생활을 할 권리를 가진다. 군인
+                            또는 군무원이 아닌 국민은 대한민국의 영역안에서는
+                            중대한 군사상
+                            기밀·초병·초소·유독음식물공급·포로·군용물에 관한
+                            죄중 법률이 정한 경우와 비상계엄이 선포된 경우를
+                            제외하고는 군사법원의 재판을 받지 아니한다. 대통령은
+                            제4항과 제5항의 규정에 의하여 확정된 법률을 지체없이
+                            공포하여야 한다. 제5항에 의하여 법률이 확정된 후
+                            또는 제4항에 의한 확정법률이 정부에 이송된 후 5일
+                            이내에 대통령이 공포하지 아니할 때에는 국회의장이
+                            이를 공포한다. 행정각부의 장은 국무위원 중에서
+                            국무총리의 제청으로 대통령이 임명한다. 모든 국민은
+                            직업선택의 자유를 가진다. 국방상 또는 국민경제상
+                            긴절한 필요로 인하여 법률이 정하는 경우를
+                            제외하고는, 사영기업을 국유 또는 공유로 이전하거나
+                            그 경영을 통제 또는 관리할 수 없다. 대통령은 헌법과
+                            법률이 정하는 바에 의하여 국군을 통수한다. 국회에서
+                            의결된 법률안은 정부에 이송되어 15일 이내에 대통령이
+                            공포한다. 연소자의 근로는 특별한 보호를 받는다.
+                            대통령은 제3항과 제4항의 사유를 지체없이 공포하여야
+                            한다. 모든 국민은 법률이 정하는 바에 의하여
+                            공무담임권을 가진다. 제1항의 해임건의는 국회재적의원
+                            3분의 1 이상의 발의에 의하여 국회재적의원 과반수의
+                            찬성이 있어야 한다. 비상계엄하의 군사재판은
+                            군인·군무원의 범죄나 군사에 관한 간첩죄의 경우와
+                            초병·초소·유독음식물공급·포로에 관한 죄중 법률이
+                            정한 경우에 한하여 단심으로 할 수 있다. 다만, 사형을
+                            선고한 경우에는 그러하지 아니하다. 선거에 관한
+                            경비는 법률이 정하는 경우를 제외하고는 정당 또는
+                            후보자에게 부담시킬 수 없다. 헌법에 의하여
+                            체결·공포된 조약과 일반적으로 승인된 국제법규는
+                            국내법과 같은 효력을 가진다. 타인의 범죄행위로
+                            인하여 생명·신체에 대한 피해를 받은 국민은 법률이
+                            정하는 바에 의하여 국가로부터 구조를 받을 수 있다.
+                            국무총리는 대통령을 보좌하며, 행정에 관하여 대통령의
+                            명을 받아 행정각부를 통할한다. 모든 국민은 능력에
+                            따라 균등하게 교육을 받을 권리를 가진다. 위원은 탄핵
+                            또는 금고 이상의 형의 선고에 의하지 아니하고는
+                            파면되지 아니한다. 법원은 최고법원인 대법원과
+                            각급법원으로 조직된다. 이 헌법시행 당시의 법령과
+                            조약은 이 헌법에 위배되지 아니하는 한 그 효력을
+                            지속한다. 대한민국의 국민이 되는 요건은 법률로
+                            정한다. 대통령은 내우·외환·천재·지변 또는 중대한
+                            재정·경제상의 위기에 있어서 국가의 안전보장 또는
+                            공공의 안녕질서를 유지하기 위하여 긴급한 조치가
+                            필요하고 국회의 집회를 기다릴 여유가 없을 때에
+                            한하여 최소한으로 필요한 재정·경제상의 처분을 하거나
+                            이에 관하여 법률의 효력을 가지는 명령을 발할 수
+                            있다. 정부는 예산에 변경을 가할 필요가 있을 때에는
+                            추가경정예산안을 편성하여 국회에 제출할 수 있다.
+                            국민의 자유와 권리는 헌법에 열거되지 아니한 이유로
+                            경시되지 아니한다. 헌법재판소는 법률에 저촉되지
+                            아니하는 범위안에서 심판에 관한 절차, 내부규율과
+                            사무처리에 관한 규칙을 제정할 수 있다. 형사피고인은
+                            유죄의 판결이 확정될 때까지는 무죄로 추정된다.
+                            평화통일정책의 수립에 관한 대통령의 자문에 응하기
+                            위하여 민주평화통일자문회의를 둘 수 있다. 대법원장은
+                            국회의 동의를 얻어 대통령이 임명한다.
+                            국가안전보장회의는 대통령이 주재한다. 대한민국의
+                            주권은 국민에게 있고, 모든 권력은 국민으로부터
+                            나온다. 대법원과 각급법원의 조직은 법률로 정한다.
+                            모든 국민은 건강하고 쾌적한 환경에서 생활할 권리를
+                            가지며, 국가와 국민은 환경보전을 위하여 노력하여야
+                            한다. 제3항의 승인을 얻지 못한 때에는 그 처분 또는
+                            명령은 그때부터 효력을 상실한다. 이 경우 그 명령에
+                            의하여 개정 또는 폐지되었던 법률은 그 명령이 승인을
+                            얻지 못한 때부터 당연히 효력을 회복한다. 국가는
+                            농수산물의 수급균형과 유통구조의 개선에 노력하여
+                            가격안정을 도모함으로써 농·어민의 이익을 보호한다.
+                            대한민국의 영토는 한반도와 그 부속도서로 한다.
+                            대통령의 임기는 5년으로 하며, 중임할 수 없다. 법률이
+                            헌법에 위반되는 여부가 재판의 전제가 된 경우에는
+                            법원은 헌법재판소에 제청하여 그 심판에 의하여
+                            재판한다. 행정권은 대통령을 수반으로 하는 정부에
+                            속한다. 모든 국민은 법률이 정하는 바에 의하여 국방의
+                            의무를 진다. 모든 국민은 언론·출판의 자유와
+                            집회·결사의 자유를 가진다. 공공필요에 의한 재산권의
+                            수용·사용 또는 제한 및 그에 대한 보상은 법률로써
+                            하되, 정당한 보상을 지급하여야 한다. 국회는 상호원조
+                            또는 안전보장에 관한 조약, 중요한 국제조직에 관한
+                            조약, 우호통상항해조약, 주권의 제약에 관한 조약,
+                            강화조약, 국가나 국민에게 중대한 재정적 부담을
+                            지우는 조약 또는 입법사항에 관한 조약의 체결·비준에
+                            대한 동의권을 가진다. 국회의원은 법률이 정하는 직을
+                            겸할 수 없다. 대통령은 법률이 정하는 바에 의하여
+                            사면·감형 또는 복권을 명할 수 있다. 국가는 청원에
+                            대하여 심사할 의무를 진다. 헌법재판소의 장은 국회의
+                            동의를 얻어 재판관중에서 대통령이 임명한다. 대통령의
+                            임기연장 또는 중임변경을 위한 헌법개정은 그 헌법개정
+                            제안 당시의 대통령에 대하여는 효력이 없다. 선거와
+                            국민투표의 공정한 관리 및 정당에 관한 사무를
+                            처리하기 위하여 선거관리위원회를 둔다. 국가는 농업
+                            및 어업을 보호·육성하기 위하여 농·어촌종합개발과 그
+                            지원등 필요한 계획을 수립·시행하여야 한다. 정부는
+                            회계연도마다 예산안을 편성하여 회계연도 개시
+                            90일전까지 국회에 제출하고, 국회는 회계연도 개시
+                            30일전까지 이를 의결하여야 한다. 제1항의 탄핵소추는
+                            국회재적의원 3분의 1 이상의 발의가 있어야 하며, 그
+                            의결은 국회재적의원 과반수의 찬성이 있어야 한다.
+                            다만, 대통령에 대한 탄핵소추는 국회재적의원 과반수의
+                            발의와 국회재적의원 3분의 2 이상의 찬성이 있어야
+                            한다. 혼인과 가족생활은 개인의 존엄과 양성의 평등을
+                            기초로 성립되고 유지되어야 하며, 국가는 이를
+                            보장한다. 위원은 정당에 가입하거나 정치에 관여할 수
+                            없다. 국회는 국민의 보통·평등·직접·비밀선거에 의하여
+                            선출된 국회의원으로 구성한다. 교육의
+                            자주성·전문성·정치적 중립성 및 대학의 자율성은
+                            법률이 정하는 바에 의하여 보장된다. 선거에 있어서
+                            최고득표자가 2인 이상인 때에는 국회의 재적의원
+                            과반수가 출석한 공개회의에서 다수표를 얻은 자를
+                            당선자로 한다. 환경권의 내용과 행사에 관하여는
+                            법률로 정한다. 중앙선거관리위원회는 법령의
+                            범위안에서 선거관리·국민투표관리 또는 정당사무에
+                            관한 규칙을 제정할 수 있으며, 법률에 저촉되지
+                            아니하는 범위안에서 내부규율에 관한 규칙을 제정할 수
+                            있다. 모든 국민은 헌법과 법률이 정한 법관에 의하여
+                            법률에 의한 재판을 받을 권리를 가진다. 헌법재판소는
+                            법관의 자격을 가진 9인의 재판관으로 구성하며,
+                            재판관은 대통령이 임명한다. 국가는 대외무역을
+                            육성하며, 이를 규제·조정할 수 있다.
+                            국가원로자문회의의 조직·직무범위 기타 필요한 사항은
+                            법률로 정한다. 각급 선거관리위원회의 조직·직무범위
+                            기타 필요한 사항은 법률로 정한다. 국군의 조직과
+                            편성은 법률로 정한다. 대통령후보자가 1인일 때에는 그
+                            득표수가 선거권자 총수의 3분의 1 이상이 아니면
+                            대통령으로 당선될 수 없다. 모든 국민은 행위시의
+                            법률에 의하여 범죄를 구성하지 아니하는 행위로
+                            소추되지 아니하며, 동일한 범죄에 대하여 거듭
+                            처벌받지 아니한다. 국회는 국무총리 또는 국무위원의
+                            해임을 대통령에게 건의할 수 있다. 대통령은 법률이
+                            정하는 바에 의하여 훈장 기타의 영전을 수여한다. 모든
+                            국민은 사생활의 비밀과 자유를 침해받지 아니한다.
+                            재판의 심리와 판결은 공개한다. 다만, 심리는 국가의
+                            안전보장 또는 안녕질서를 방해하거나 선량한 풍속을
+                            해할 염려가 있을 때에는 법원의 결정으로 공개하지
+                            아니할 수 있다. 각급 선거관리위원회는 선거인명부의
+                            작성등 선거사무와 국민투표사무에 관하여 관계
+                            행정기관에 필요한 지시를 할 수 있다. 대통령의 선거에
+                            관한 사항은 법률로 정한다. 대통령은 법률에서
+                            구체적으로 범위를 정하여 위임받은 사항과 법률을
+                            집행하기 위하여 필요한 사항에 관하여 대통령령을 발할
+                            수 있다. 모든 국민은 보건에 관하여 국가의 보호를
+                            받는다. 국가안전보장회의의 조직·직무범위 기타 필요한
+                            사항은 법률로 정한다. 재판의 전심절차로서 행정심판을
+                            할 수 있다. 행정심판의 절차는 법률로 정하되,
+                            사법절차가 준용되어야 한다. 대법관은 대법원장의
+                            제청으로 국회의 동의를 얻어 대통령이 임명한다.
+                            법관은 헌법과 법률에 의하여 그 양심에 따라 독립하여
+                            심판한다. 저작자·발명가·과학기술자와 예술가의 권리는
+                            법률로써 보호한다. 언론·출판에 대한 허가나 검열과
+                            집회·결사에 대한 허가는 인정되지 아니한다. 모든
+                            국민은 거주·이전의 자유를 가진다. 공무원의 직무상
+                            불법행위로 손해를 받은 국민은 법률이 정하는 바에
+                            의하여 국가 또는 공공단체에 정당한 배상을 청구할 수
+                            있다. 이 경우 공무원 자신의 책임은 면제되지
+                            아니한다. 헌법재판소 재판관은 정당에 가입하거나
+                            정치에 관여할 수 없다. 훈장등의 영전은 이를 받은
+                            자에게만 효력이 있고, 어떠한 특권도 이에 따르지
+                            아니한다. 대통령은 취임에 즈음하여 다음의 선서를
+                            한다. 국회의원이 회기전에 체포 또는 구금된 때에는
+                            현행범인이 아닌 한 국회의 요구가 있으면 회기중
+                            석방된다. 의무교육은 무상으로 한다. 나는 헌법을
+                            준수하고 국가를 보위하며 조국의 평화적 통일과 국민의
+                            자유와 복리의 증진 및 민족문화의 창달에 노력하여
+                            대통령으로서의 직책을 성실히 수행할 것을 국민 앞에
+                            엄숙히 선서합니다. 누구든지 체포 또는 구속을 당한
+                            때에는 적부의 심사를 법원에 청구할 권리를 가진다.
+                            국회의원은 그 지위를 남용하여 국가·공공단체 또는
+                            기업체와의 계약이나 그 처분에 의하여 재산상의
+                            권리·이익 또는 직위를 취득하거나 타인을 위하여 그
+                            취득을 알선할 수 없다. 국군은 국가의 안전보장과
+                            국토방위의 신성한 의무를 수행함을 사명으로 하며, 그
+                            정치적 중립성은 준수된다. 민주평화통일자문회의의
+                            조직·직무범위 기타 필요한 사항은 법률로 정한다.
+                            국민의 모든 자유와 권리는 국가안전보장·질서유지 또는
+                            공공복리를 위하여 필요한 경우에 한하여 법률로써
+                            제한할 수 있으며, 제한하는 경우에도 자유와 권리의
+                            본질적인 내용을 침해할 수 없다. 국회는 헌법개정안이
+                            공고된 날로부터 60일 이내에 의결하여야 하며, 국회의
+                            의결은 재적의원 3분의 2 이상의 찬성을 얻어야 한다.
+                            모든 국민은 자기의 행위가 아닌 친족의 행위로 인하여
+                            불이익한 처우를 받지 아니한다. 제2항과 제3항의
+                            처분에 대하여는 법원에 제소할 수 없다. 정당은 그
+                            목적·조직과 활동이 민주적이어야 하며, 국민의 정치적
+                            의사형성에 참여하는데 필요한 조직을 가져야 한다.
+                            국무총리는 국회의 동의를 얻어 대통령이 임명한다.
+                            공무원의 신분과 정치적 중립성은 법률이 정하는 바에
+                            의하여 보장된다. 국회의원의 선거구와 비례대표제 기타
+                            선거에 관한 사항은 법률로 정한다. 이 헌법은 1988년
+                            2월 25일부터 시행한다. 다만, 이 헌법을 시행하기
+                            위하여 필요한 법률의 제정·개정과 이 헌법에 의한
+                            대통령 및 국회의원의 선거 기타 이 헌법시행에 관한
+                            준비는 이 헌법시행 전에 할 수 있다. 국가는
+                            과학기술의 혁신과 정보 및 인력의 개발을 통하여
+                            국민경제의 발전에 노력하여야 한다. 국회가 재적의원
+                            과반수의 찬성으로 계엄의 해제를 요구한 때에는
+                            대통령은 이를 해제하여야 한다. 헌법재판소에서 법률의
+                            위헌결정, 탄핵의 결정, 정당해산의 결정 또는
+                            헌법소원에 관한 인용결정을 할 때에는 재판관 6인
+                            이상의 찬성이 있어야 한다. 모든 국민은 법 앞에
+                            평등하다. 누구든지 성별·종교 또는 사회적 신분에
+                            의하여 정치적·경제적·사회적·문화적 생활의 모든
+                            영역에 있어서 차별을 받지 아니한다. 누구든지 체포
+                            또는 구속의 이유와 변호인의 조력을 받을 권리가
+                            있음을 고지받지 아니하고는 체포 또는 구속을 당하지
+                            아니한다. 체포 또는 구속을 당한 자의 가족등 법률이
+                            정하는 자에게는 그 이유와 일시·장소가 지체없이
+                            통지되어야 한다. 모든 국민은 고문을 받지 아니하며,
+                            형사상 자기에게 불리한 진술을 강요당하지 아니한다.
+                            국가안전보장에 관련되는 대외정책·군사정책과
+                            국내정책의 수립에 관하여 국무회의의 심의에 앞서
+                            대통령의 자문에 응하기 위하여 국가안전보장회의를
+                            둔다. 국가는 농·어민과 중소기업의 자조조직을
+                            육성하여야 하며, 그 자율적 활동과 발전을 보장한다.
+                            대한민국은 민주공화국이다. 새로운 회계연도가 개시될
+                            때까지 예산안이 의결되지 못한 때에는 정부는 국회에서
+                            예산안이 의결될 때까지 다음의 목적을 위한 경비는
+                            전년도 예산에 준하여 집행할 수 있다. 공무원인
+                            근로자는 법률이 정하는 자에 한하여 단결권·단체교섭권
+                            및 단체행동권을 가진다. 국민경제의 발전을 위한
+                            중요정책의 수립에 관하여 대통령의 자문에 응하기
+                            위하여 국민경제자문회의를 둘 수 있다. 정당의
+                            목적이나 활동이 민주적 기본질서에 위배될 때에는
+                            정부는 헌법재판소에 그 해산을 제소할 수 있고, 정당은
+                            헌법재판소의 심판에 의하여 해산된다. 국회의원의 수는
+                            법률로 정하되, 200인 이상으로 한다. 외국인은
+                            국제법과 조약이 정하는 바에 의하여 그 지위가
+                            보장된다. 공무원은 국민전체에 대한 봉사자이며,
+                            국민에 대하여 책임을 진다. 모든 국민은 종교의 자유를
+                            가진다. 국무총리는 국무위원의 해임을 대통령에게
+                            건의할 수 있다. 농업생산성의 제고와 농지의 합리적인
+                            이용을 위하거나 불가피한 사정으로 발생하는 농지의
+                            임대차와 위탁경영은 법률이 정하는 바에 의하여
+                            인정된다. 비상계엄이 선포된 때에는 법률이 정하는
+                            바에 의하여 영장제도, 언론·출판·집회·결사의 자유,
+                            정부나 법원의 권한에 관하여 특별한 조치를 할 수
+                            있다. 계엄을 선포한 때에는 대통령은 지체없이 국회에
+                            통고하여야 한다. 이 헌법시행 당시에 이 헌법에 의하여
+                            새로 설치될 기관의 권한에 속하는 직무를 행하고 있는
+                            기관은 이 헌법에 의하여 새로운 기관이 설치될 때까지
+                            존속하며 그 직무를 행한다. 국무회의는
+                            대통령·국무총리와 15인 이상 30인 이하의 국무위원으로
+                            구성한다. 대통령은 조약을 체결·비준하고, 외교사절을
+                            신임·접수 또는 파견하며, 선전포고와 강화를 한다.
+                            지방자치단체는 주민의 복리에 관한 사무를 처리하고
+                            재산을 관리하며, 법령의 범위안에서 자치에 관한
+                            규정을 제정할 수 있다. 사법권은 법관으로 구성된
+                            법원에 속한다. 국회는 국정을 감사하거나 특정한
+                            국정사안에 대하여 조사할 수 있으며, 이에 필요한
+                            서류의 제출 또는 증인의 출석과 증언이나 의견의
+                            진술을 요구할 수 있다. 대통령은 내란 또는 외환의
+                            죄를 범한 경우를 제외하고는 재직중 형사상의 소추를
+                            받지 아니한다. 국가유공자·상이군경 및 전몰군경의
+                            유가족은 법률이 정하는 바에 의하여 우선적으로 근로의
+                            기회를 부여받는다. 이 헌법에 의한 최초의 대통령의
+                            임기는 이 헌법시행일로부터 개시한다. 국가는 모성의
+                            보호를 위하여 노력하여야 한다. 신체장애자 및
+                            질병·노령 기타의 사유로 생활능력이 없는 국민은
+                            법률이 정하는 바에 의하여 국가의 보호를 받는다.
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </TabsContent>
-              </Tabs>
-            </Card>
+                      {/* 필수정보 */}
+                      <div className="space-y-4">
+                        <h3 className="text-base font-bold py-5">
+                          상품 필수정보
+                        </h3>
+                        <div className="divide-y">
+                          <div className="grid grid-cols-3 py-3">
+                            <span className="text-muted-foreground">
+                              제조사
+                            </span>
+                            <span className="col-span-2">제조사 정보</span>
+                          </div>
+                          <div className="grid grid-cols-3 py-3">
+                            <span className="text-muted-foreground">
+                              원산지
+                            </span>
+                            <span className="col-span-2">원산지 정보</span>
+                          </div>
+                          <div className="grid grid-cols-3 py-3">
+                            <span className="text-muted-foreground">
+                              제조일자
+                            </span>
+                            <span className="col-span-2">제조일자 정보</span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </TabsContent>
+                </Tabs>
+              </Card>
+            </motion.div>
           </div>
         </div>
       </div>
