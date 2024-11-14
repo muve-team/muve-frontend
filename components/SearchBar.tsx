@@ -44,16 +44,19 @@ export function SearchBar() {
 
   // 드롭다운 외부 클릭 처리
   const handleClickOutside = useCallback((event: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
       setIsFilterVisible(false);
     }
   }, []);
 
   // 드롭다운 외부 클릭 이벤트 리스너
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [handleClickOutside]);
 
@@ -87,7 +90,7 @@ export function SearchBar() {
     const fetchPopularSearches = async () => {
       try {
         const response = await getPopularSearchesApi();
-        console.log('API Response:', response); // 응답 확인용
+        console.log("API Response:", response); // 응답 확인용
         // response.data가 있는 경우에만 설정
         if (Array.isArray(response)) {
           setPopularSearches(response);
@@ -99,7 +102,7 @@ export function SearchBar() {
         setPopularSearches([]);
       }
     };
-  
+
     fetchPopularSearches();
   }, []);
 
@@ -262,7 +265,7 @@ export function SearchBar() {
                           onClick={() => handleItemClick(suggestion)}
                         >
                           <Search className="w-4 h-4 text-gray-400 group-hover:text-primary" />
-                          <span className="text-sm text-gray-700 group-hover:text-gray-900">
+                          <span className="text-sm text-gray-700 group-hover:text-gray-900 truncate max-w-[200px]">
                             {suggestion}
                           </span>
                         </li>
@@ -280,51 +283,79 @@ export function SearchBar() {
                 // 검색어가 없을 때 최근 검색어와 인기 검색어 표시
                 <>
                   <div className="p-3">
-                    <h3 className="text-gray-600 text-sm font-semibold">
-                      최근 검색어
-                    </h3>
+                    <div className="flex justify-between items-center mb-2">
+                      <h3 className="text-gray-600 text-sm font-semibold">
+                        최근 검색어
+                      </h3>
+                      {recentSearches.length > 0 && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            localStorage.removeItem("recentSearches");
+                            setRecentSearches([]);
+                          }}
+                          className="text-xs text-gray-400 hover:text-gray-600"
+                        >
+                          전체 삭제
+                        </button>
+                      )}
+                    </div>
                     {recentSearches.length > 0 ? (
-                      <ul className="mt-2 space-y-1">
+                      <ul className="flex flex-wrap gap-2">
                         {recentSearches.map((item, index) => (
                           <li
                             key={index}
-                            className="flex items-center gap-3 px-2 py-1.5 rounded-md cursor-pointer hover:bg-gray-50 transition-colors group"
-                            onClick={() => handleItemClick(item)}
+                            className="flex items-center gap-2 px-2 py-1 rounded-md cursor-pointer hover:bg-gray-50 transition-colors group border border-gray-200"
                           >
-                            <Search className="w-4 h-4 text-gray-400 group-hover:text-primary" />
-                            <span className="text-sm text-gray-700 group-hover:text-gray-900">
+                            <span className="text-sm text-gray-700 group-hover:text-gray-900 max-w-[150px] truncate">
                               {item}
                             </span>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                const newSearches = recentSearches.filter(
+                                  (_, i) => i !== index
+                                );
+                                setRecentSearches(newSearches);
+                                localStorage.setItem(
+                                  "recentSearches",
+                                  JSON.stringify(newSearches)
+                                );
+                              }}
+                              className="text-gray-400 hover:text-gray-600 text-xs"
+                            >
+                              ×
+                            </button>
                           </li>
                         ))}
                       </ul>
                     ) : (
-                      <p className="mt-2 text-sm text-gray-500 px-2 py-1.5">
+                      <p className="text-sm text-gray-500">
                         최근 검색 결과가 없습니다.
                       </p>
                     )}
                   </div>
 
                   <div className="p-3">
-                    <h3 className="text-gray-600 text-sm font-semibold">
+                    <h3 className="text-gray-600 text-sm font-semibold mb-2">
                       인기 검색어
                     </h3>
-                    <ul className="mt-2 space-y-1">
+                    <div className="grid grid-cols-2 gap-2">
                       {popularSearches.map((item, index) => (
                         <li
                           key={item.id}
                           className="flex items-center gap-3 px-2 py-1.5 rounded-md cursor-pointer hover:bg-gray-50 transition-colors group"
                           onClick={() => handleItemClick(item.keyword)}
                         >
-                          <span className="w-4 h-4 flex items-center justify-center text-sm font-semibold text-primary">
+                          <span className="min-w-[20px] h-5 flex items-center justify-center text-sm font-semibold text-primary">
                             {index + 1}
                           </span>
-                          <span className="text-sm text-gray-700 group-hover:text-gray-900">
+                          <span className="text-sm text-gray-700 group-hover:text-gray-900 truncate">
                             {item.keyword}
                           </span>
                         </li>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 </>
               )}

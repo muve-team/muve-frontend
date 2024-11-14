@@ -1,4 +1,6 @@
 // entities/product/api.ts
+"use client";
+
 import { AutoCompleteApiResponse, HottestSearchApiResponse, SearchProductsApiResponse } from '@/features/search/model/types';
 import axios from 'axios';
 import { getTsid } from 'tsid-ts';
