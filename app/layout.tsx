@@ -14,11 +14,11 @@ const notoSans = Noto_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL('https://muve.kr'),
   title: {
-    default: 'Muve - 패션 커뮤니티',
+    default: 'Muve - 쇼핑몰',
     template: '%s | Muve'
   },
   description: 'Muve에서 새로운 패션을 발견하세요. 트렌디한 패션 아이템과 스타일 정보를 공유하는 커뮤니티입니다.',
-  keywords: ['패션', '의류', '쇼핑', '커뮤니티', 'Muve', '뮤브', '스타일', '트렌드'],
+  keywords: ['패션', '의류', '쇼핑', '커뮤니티', 'Muve', '무브', '스타일', '트렌드'],
   authors: [{ name: 'Muve' }],
   category: 'fashion',
   viewport: {
@@ -42,8 +42,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: 'Muve',
-    title: 'Muve - 패션 커뮤니티',
-    description: 'Muve에서 새로운 패션을 발견하세요. 트렌디한 패션 아이템과 스타일 정보를 공유하는 커뮤니티입니다.',
+    title: 'Muve - 쇼핑몰',
+    description: 'Muve에서 새로운 패션을 발견하세요. 트렌디한 패션 아이템과 스타일 정보를 공유하는 쇼핑몰입니다.',
     url: 'https://muve.kr',
     locale: 'ko_KR',
     images: [
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Muve',
+    title: 'Muve - 쇼핑몰',
     description: 'Muve에서 새로운 패션을 발견하세요. 트렌디한 패션 아이템과 스타일 정보를 공유하는 쇼핑몰입니다.',
     site: '@muve_kr',
     creator: '@muve_kr',
