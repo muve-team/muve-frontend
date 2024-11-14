@@ -14,7 +14,14 @@ export default async function ProductDetailPage({
   }
 
   const product = await getProductDetailApi(searchParams.productId);
-  const { koreanName, englishName, brandKoreanName, brandEnglishName, price, imageUrl } = product;
+  const {
+    koreanName,
+    englishName,
+    brandKoreanName,
+    brandEnglishName,
+    price,
+    imageUrl,
+  } = product;
 
   // 공통으로 사용될 메타 정보
   const siteName = "Muve";
@@ -27,43 +34,87 @@ export default async function ProductDetailPage({
   return (
     <>
       <Head>
-        {/* 기본 메타태그 */}
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta name="keywords" content={`${englishName}, ${koreanName}, Muve, 뮤브, 쇼핑`} />
-        <link rel="canonical" href={currentURL} />
-
-        {/* Open Graph 메타태그 (페이스북, 카카오톡 등) */}
+        {/* 기본 Open Graph 메타태그 */}
         <meta property="og:type" content="product" />
         <meta property="og:title" content={title} />
-        <meta property="og:description" content={`${englishName} - ₩ ${priceText}`} />
+        <meta
+          property="og:description"
+          content={`${englishName} - ₩ ${priceText}`}
+        />
         <meta property="og:image" content={imageUrl} />
         <meta property="og:url" content={currentURL} />
         <meta property="og:site_name" content={siteName} />
         <meta property="og:price:amount" content={price.toString()} />
         <meta property="og:price:currency" content="KRW" />
-        
+
+        {/* Open Graph의 추가 메타태그 */}
+        <meta property="og:locale" content="ko_KR" />
+        <meta
+          property="product:brand"
+          content={brandKoreanName || brandEnglishName}
+        />
+        <meta property="product:availability" content="in stock" />
+        <meta property="product:condition" content="new" />
+        <meta
+          property="product:retailer_item_id"
+          content={searchParams.productId}
+        />
+
+        {/* 기본 메타태그 */}
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta
+          name="keywords"
+          content={`${englishName}, ${koreanName}, Muve, 뮤브, 쇼핑`}
+        />
+        <link rel="canonical" href={currentURL} />
+
+        {/* Open Graph 메타태그 (페이스북, 카카오톡 등) */}
+        <meta property="og:type" content="product" />
+        <meta property="og:title" content={title} />
+        <meta
+          property="og:description"
+          content={`${englishName} - ₩ ${priceText}`}
+        />
+        <meta property="og:image" content={imageUrl} />
+        <meta property="og:url" content={currentURL} />
+        <meta property="og:site_name" content={siteName} />
+        <meta property="og:price:amount" content={price.toString()} />
+        <meta property="og:price:currency" content="KRW" />
+
         {/* 트위터 카드 */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={`${englishName} - ₩ ${priceText}`} />
+        <meta
+          name="twitter:description"
+          content={`${englishName} - ₩ ${priceText}`}
+        />
         <meta name="twitter:image" content={imageUrl} />
         <meta name="twitter:site" content="@muve_kr" />
         <meta name="twitter:creator" content="@muve_kr" />
 
         {/* 카카오톡 */}
         <meta property="kakao:title" content={title} />
-        <meta property="kakao:description" content={`${englishName} - ₩ ${priceText}`} />
+        <meta
+          property="kakao:description"
+          content={`${englishName} - ₩ ${priceText}`}
+        />
         <meta property="kakao:image" content={imageUrl} />
 
         {/* 네이버 블로그/카페 */}
         <meta property="naver:title" content={title} />
-        <meta property="naver:description" content={`${englishName} - ₩ ${priceText}`} />
+        <meta
+          property="naver:description"
+          content={`${englishName} - ₩ ${priceText}`}
+        />
         <meta property="naver:image" content={imageUrl} />
 
         {/* Pinterest */}
         <meta name="pinterest:title" content={title} />
-        <meta name="pinterest:description" content={`${englishName} - ₩ ${priceText}`} />
+        <meta
+          name="pinterest:description"
+          content={`${englishName} - ₩ ${priceText}`}
+        />
         <meta name="pinterest:image" content={imageUrl} />
 
         {/* iOS 메타태그 */}
@@ -98,20 +149,20 @@ export default async function ProductDetailPage({
                 url: currentURL,
                 seller: {
                   "@type": "Organization",
-                  name: siteName
-                }
+                  name: siteName,
+                },
               },
               brand: {
                 "@type": "Brand",
                 name: siteName,
-                logo: `${siteURL}/logo.png`
+                logo: `${siteURL}/logo.png`,
               },
               manufacturer: {
                 "@type": "Organization",
                 name: siteName,
-                url: siteURL
-              }
-            })
+                url: siteURL,
+              },
+            }),
           }}
         />
 
