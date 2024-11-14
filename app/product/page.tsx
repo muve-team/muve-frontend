@@ -36,7 +36,7 @@ export default async function ProductDetailPage({
         {/* Open Graph 메타태그 (페이스북, 카카오톡 등) */}
         <meta property="og:type" content="product" />
         <meta property="og:title" content={title} />
-        <meta property="og:description" content={`${name} - 가격: ${priceText}`} />
+        <meta property="og:description" content={`${englishName} - ₩ ${priceText}`} />
         <meta property="og:image" content={imageUrl} />
         <meta property="og:url" content={currentURL} />
         <meta property="og:site_name" content={siteName} />
@@ -46,24 +46,24 @@ export default async function ProductDetailPage({
         {/* 트위터 카드 */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={`${name} - 가격: ${priceText}`} />
+        <meta name="twitter:description" content={`${englishName} - ₩ ${priceText}`} />
         <meta name="twitter:image" content={imageUrl} />
         <meta name="twitter:site" content="@muve_kr" />
         <meta name="twitter:creator" content="@muve_kr" />
 
         {/* 카카오톡 */}
         <meta property="kakao:title" content={title} />
-        <meta property="kakao:description" content={`${name} - 가격: ${priceText}`} />
+        <meta property="kakao:description" content={`${englishName} - ₩ ${priceText}`} />
         <meta property="kakao:image" content={imageUrl} />
 
         {/* 네이버 블로그/카페 */}
         <meta property="naver:title" content={title} />
-        <meta property="naver:description" content={`${name} - 가격: ${priceText}`} />
+        <meta property="naver:description" content={`${englishName} - ₩ ${priceText}`} />
         <meta property="naver:image" content={imageUrl} />
 
         {/* Pinterest */}
         <meta name="pinterest:title" content={title} />
-        <meta name="pinterest:description" content={`${name} - 가격: ${priceText}`} />
+        <meta name="pinterest:description" content={`${englishName} - ₩ ${priceText}`} />
         <meta name="pinterest:image" content={imageUrl} />
 
         {/* iOS 메타태그 */}
@@ -87,7 +87,7 @@ export default async function ProductDetailPage({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Product",
-              name: name,
+              name: englishName,
               image: imageUrl,
               description: description,
               offers: {
