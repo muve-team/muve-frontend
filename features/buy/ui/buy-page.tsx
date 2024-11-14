@@ -47,12 +47,6 @@ interface Address {
   address2: string;
 }
 
-declare global {
-  interface Window {
-    daum: any;
-  }
-}
-
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -138,11 +132,8 @@ export const BuyPage = ({ product }: { product: ProductDetailResponse }) => {
             });
             setIsAddressDialogOpen(false);
           },
-          width: "100%",
-          height: "100%",
           animation: true,
-          autoMapping: true,
-        }).embed(document.getElementById("postcode-container"));
+        }).embed("postcode-container");
       } else {
         console.error("Daum Postcode script not loaded");
       }
