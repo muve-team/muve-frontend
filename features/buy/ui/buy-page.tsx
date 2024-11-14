@@ -77,7 +77,7 @@ export const BuyPage = ({ product }: { product: ProductDetailResponse }) => {
     deliveryRequest: "",
   });
 
-  const { productId, name, price, imageUrl } = product;
+  const { productId, koreanName, englishName, brandKoreanName, brandEnglishName, price, imageUrl } = product;
 
   // isAuthenticated 상태에 따른 로그인 페이지 이동 제어
   useEffect(() => {
