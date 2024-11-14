@@ -205,7 +205,7 @@ export const BuyPage = ({ product }: { product: ProductDetailResponse }) => {
                   <div className="relative w-40 h-40 rounded-lg overflow-hidden flex-shrink-0 border">
                     <Image
                       src={imageUrl}
-                      alt={name}
+                      alt={englishName}
                       fill
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -214,7 +214,7 @@ export const BuyPage = ({ product }: { product: ProductDetailResponse }) => {
                   </div>
                   <div className="flex-1">
                     <span className="text-sm text-gray-500">주문 상품</span>
-                    <h3 className="text-xl font-semibold mt-1 mb-2">{name}</h3>
+                    <h3 className="text-xl font-semibold mt-1 mb-2">{englishName}</h3>
                     <p className="text-2xl font-bold text-blue-600">
                       {price.toLocaleString()}원
                     </p>
