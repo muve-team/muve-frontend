@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Input } from "@/components/ui/merged/Input";
 import { Search } from "lucide-react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
@@ -223,6 +223,7 @@ export function SearchBar() {
             type="text"
             placeholder="상품 검색"
             value={searchTerm}
+            maxLength={20} // 최대 20자로 제한
             onFocus={() => setIsFilterVisible(true)}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => {
@@ -341,20 +342,66 @@ export function SearchBar() {
                       인기 검색어
                     </h3>
                     <div className="grid grid-cols-2 gap-2">
-                      {popularSearches.map((item, index) => (
-                        <li
-                          key={item.id}
-                          className="flex items-center gap-3 px-2 py-1.5 rounded-md cursor-pointer hover:bg-gray-50 transition-colors group"
-                          onClick={() => handleItemClick(item.keyword)}
-                        >
-                          <span className="min-w-[20px] h-5 flex items-center justify-center text-sm font-semibold text-primary">
-                            {index + 1}
-                          </span>
-                          <span className="text-sm text-gray-700 group-hover:text-gray-900 truncate">
-                            {item.keyword}
-                          </span>
-                        </li>
-                      ))}
+                      {/* 세로 방향으로 정렬하기 위해 데이터 재구성 */}
+                      {Array.from(
+                        { length: Math.ceil(popularSearches.length / 2) },
+                        (_, row) => (
+                          <React.Fragment key={row}>
+                            {/* 왼쪽 열 */}
+                            {popularSearches[row] && (
+                              <li
+                                key={popularSearches[row].id}
+                                className="flex items-center gap-3 px-2 py-1.5 rounded-md cursor-pointer hover:bg-gray-50 transition-colors group"
+                                onClick={() =>
+                                  handleItemClick(popularSearches[row].keyword)
+                                }
+                              >
+                                <span className="min-w-[20px] h-5 flex items-center justify-center text-sm font-semibold text-primary">
+                                  {row + 1}
+                                </span>
+                                <span className="text-sm text-gray-700 group-hover:text-gray-900 truncate max-w-[120px]">
+                                  {popularSearches[row].keyword}
+                                </span>
+                              </li>
+                            )}
+                            {/* 오른쪽 열 */}
+                            {popularSearches[
+                              row + Math.ceil(popularSearches.length / 2)
+                            ] && (
+                              <li
+                                key={
+                                  popularSearches[
+                                    row + Math.ceil(popularSearches.length / 2)
+                                  ].id
+                                }
+                                className="flex items-center gap-3 px-2 py-1.5 rounded-md cursor-pointer hover:bg-gray-50 transition-colors group"
+                                onClick={() =>
+                                  handleItemClick(
+                                    popularSearches[
+                                      row +
+                                        Math.ceil(popularSearches.length / 2)
+                                    ].keyword
+                                  )
+                                }
+                              >
+                                <span className="min-w-[20px] h-5 flex items-center justify-center text-sm font-semibold text-primary">
+                                  {row +
+                                    Math.ceil(popularSearches.length / 2) +
+                                    1}
+                                </span>
+                                <span className="text-sm text-gray-700 group-hover:text-gray-900 truncate max-w-[120px]">
+                                  {
+                                    popularSearches[
+                                      row +
+                                        Math.ceil(popularSearches.length / 2)
+                                    ].keyword
+                                  }
+                                </span>
+                              </li>
+                            )}
+                          </React.Fragment>
+                        )
+                      )}
                     </div>
                   </div>
                 </>
