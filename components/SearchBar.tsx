@@ -4,8 +4,12 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Input } from "@/components/ui/merged/Input";
 import { Search } from "lucide-react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { getAutocompleteApi, getPopularSearchesApi } from "@/entities/search/api";
+import {
+  getAutocompleteApi,
+  getPopularSearchesApi,
+} from "@/entities/search/api";
 import debounce from "lodash/debounce";
+import { HottestSearch } from "@/entities/search/types";
 
 export function SearchBar() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,7 +17,7 @@ export function SearchBar() {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [windowWidth, setWindowWidth] = useState(0);
-  const [popularSearches, setPopularSearches] = useState<string[]>([]);
+  const [popularSearches, setPopularSearches] = useState<HottestSearch[]>([]);
   const [autocompleteSuggestions, setAutocompleteSuggestions] = useState<
     string[]
   >([]);
@@ -22,6 +26,7 @@ export function SearchBar() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Add search term to recent searches
   const addToRecentSearches = (term: string) => {
@@ -36,6 +41,21 @@ export function SearchBar() {
       return updatedSearches;
     });
   };
+
+  // 드롭다운 외부 클릭 처리
+  const handleClickOutside = useCallback((event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setIsFilterVisible(false);
+    }
+  }, []);
+
+  // 드롭다운 외부 클릭 이벤트 리스너
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [handleClickOutside]);
 
   // Initialize window width and load recent searches from localStorage after mount
   useEffect(() => {
@@ -63,26 +83,39 @@ export function SearchBar() {
     }
   }, [searchParams]);
 
-  // 인기 검색어를 가져오는 useEffect 추가
-useEffect(() => {
-  const fetchPopularSearches = async () => {
-    try {
-      const keywords = await getPopularSearchesApi();
-      setPopularSearches(keywords);
-    } catch (error) {
-      console.error('Failed to fetch popular searches:', error);
-      setPopularSearches([]); // 에러 시 빈 배열로 설정
+  useEffect(() => {
+    const fetchPopularSearches = async () => {
+      try {
+        const response = await getPopularSearchesApi();
+        console.log('API Response:', response); // 응답 확인용
+        // response.data가 있는 경우에만 설정
+        if (Array.isArray(response)) {
+          setPopularSearches(response);
+        } else {
+          setPopularSearches([]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch popular searches:", error);
+        setPopularSearches([]);
+      }
+    };
+  
+    fetchPopularSearches();
+  }, []);
+
+  const handleSearch = (customTerm?: string) => {
+    const termToSearch = customTerm || searchTerm;
+    if (termToSearch.trim()) {
+      router.push(`/search?keyword=${encodeURIComponent(termToSearch.trim())}`);
+      addToRecentSearches(termToSearch);
+      setIsFilterVisible(false);
     }
   };
 
-  fetchPopularSearches();
-}, []); // 컴포넌트 마운트 시 한 번만 실행
-
-  const handleSearch = () => {
-    if (searchTerm.trim()) {
-      router.push(`/search?keyword=${encodeURIComponent(searchTerm.trim())}`);
-      addToRecentSearches(searchTerm);
-    }
+  const handleItemClick = (term: string) => {
+    setSearchTerm(term);
+    handleSearch(term);
+    setIsFilterVisible(false);
   };
 
   const fetchAutocompleteSuggestions = async (query: string) => {
@@ -188,11 +221,10 @@ useEffect(() => {
             placeholder="상품 검색"
             value={searchTerm}
             onFocus={() => setIsFilterVisible(true)}
-            onBlur={() => setIsFilterVisible(false)}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                handleSearch();
+                handleSearch(searchTerm);
               }
             }}
             className={`pl-4 pr-10 w-full text-gray-800 rounded-full border-2 ${getPaddingClass()} transition-all duration-300 border-primary`}
@@ -200,11 +232,14 @@ useEffect(() => {
           <Search
             className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-primary transition-transform hover:scale-110"
             style={{ zIndex: "99" }}
-            onClick={handleSearch}
+            onClick={() => handleSearch(searchTerm)}
           />
 
           {isFilterVisible && (
-            <div className="absolute top-full mt-2 w-full bg-white border rounded-md shadow-lg divide-y divide-gray-100">
+            <div
+              ref={dropdownRef}
+              className="absolute top-full mt-2 w-full bg-white border rounded-md shadow-lg divide-y divide-gray-100"
+            >
               {searchTerm ? (
                 // 검색어가 있을 때 자동완성 결과 표시
                 <div className="p-3">
@@ -224,11 +259,7 @@ useEffect(() => {
                         <li
                           key={index}
                           className="flex items-center gap-3 px-2 py-1.5 rounded-md cursor-pointer hover:bg-gray-50 transition-colors group"
-                          onClick={() => {
-                            setSearchTerm(suggestion);
-                            handleSearch();
-                          }}
-                          onMouseDown={(e) => e.preventDefault()} // onBlur 이벤트와의 충돌 방지
+                          onClick={() => handleItemClick(suggestion)}
                         >
                           <Search className="w-4 h-4 text-gray-400 group-hover:text-primary" />
                           <span className="text-sm text-gray-700 group-hover:text-gray-900">
@@ -258,11 +289,7 @@ useEffect(() => {
                           <li
                             key={index}
                             className="flex items-center gap-3 px-2 py-1.5 rounded-md cursor-pointer hover:bg-gray-50 transition-colors group"
-                            onClick={() => {
-                              setSearchTerm(item);
-                              handleSearch();
-                            }}
-                            onMouseDown={(e) => e.preventDefault()}
+                            onClick={() => handleItemClick(item)}
                           >
                             <Search className="w-4 h-4 text-gray-400 group-hover:text-primary" />
                             <span className="text-sm text-gray-700 group-hover:text-gray-900">
@@ -285,19 +312,15 @@ useEffect(() => {
                     <ul className="mt-2 space-y-1">
                       {popularSearches.map((item, index) => (
                         <li
-                          key={index}
+                          key={item.id}
                           className="flex items-center gap-3 px-2 py-1.5 rounded-md cursor-pointer hover:bg-gray-50 transition-colors group"
-                          onClick={() => {
-                            setSearchTerm(item);
-                            handleSearch();
-                          }}
-                          onMouseDown={(e) => e.preventDefault()}
+                          onClick={() => handleItemClick(item.keyword)}
                         >
                           <span className="w-4 h-4 flex items-center justify-center text-sm font-semibold text-primary">
                             {index + 1}
                           </span>
                           <span className="text-sm text-gray-700 group-hover:text-gray-900">
-                            {item}
+                            {item.keyword}
                           </span>
                         </li>
                       ))}

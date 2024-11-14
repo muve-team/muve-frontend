@@ -2,6 +2,7 @@
 import { AutoCompleteApiResponse, HottestSearchApiResponse, SearchProductsApiResponse } from '@/features/search/model/types';
 import axios from 'axios';
 import { getTsid } from 'tsid-ts';
+import { HottestSearch } from './types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -86,7 +87,7 @@ export async function getAutocompleteApi({
 }
 
 // 인기 검색어 API
-export async function getPopularSearchesApi(): Promise<string[]> {
+export async function getPopularSearchesApi(): Promise<HottestSearch[]> {
     try {
         const tsid = getTsid().toString();
         

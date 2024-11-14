@@ -21,5 +21,11 @@ export interface SearchProducts {
 }
 
 export interface HottestSearches {
-    keywords: string[]
+    keywords: HottestSearch[]
+}
+
+export interface HottestSearch {
+    id: string,
+    keyword: string,
+    count: number
 }
