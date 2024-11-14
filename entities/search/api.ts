@@ -1,5 +1,5 @@
 // entities/product/api.ts
-import { AutoCompleteApiResponse, SearchProductsApiResponse } from '@/features/search/model/types';
+import { AutoCompleteApiResponse, HottestSearchApiResponse, SearchProductsApiResponse } from '@/features/search/model/types';
 import axios from 'axios';
 import { getTsid } from 'tsid-ts';
 
@@ -83,4 +83,33 @@ export async function getAutocompleteApi({
     }
     throw error;
   }
+}
+
+// 인기 검색어 API
+export async function getPopularSearchesApi(): Promise<string[]> {
+    try {
+        const tsid = getTsid().toString();
+        
+        const response = await axios.get<HottestSearchApiResponse>(`${API_URL}/popular-searches`, {
+            headers: {
+                'x-request-id': tsid,
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache',
+                'Expires': '0',
+            },
+        });
+
+        if (response.data.result === 'FAIL') {
+            throw new Error(response.data.message || 'Failed to fetch popular searches');
+        }
+
+        // data가 null인 경우 빈 배열 반환
+        return response.data.data?.keywords ?? [];
+
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            throw new Error(error.response?.data?.message || 'Failed to fetch popular searches');
+        }
+        throw error;
+    }
 }

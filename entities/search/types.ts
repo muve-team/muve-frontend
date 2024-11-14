@@ -19,3 +19,7 @@ export interface SearchProducts {
   page: number;
   size: number;
 }
+
+export interface HottestSearches {
+    keywords: string[]
+}

@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Input } from "@/components/ui/merged/Input";
 import { Search } from "lucide-react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { getAutocompleteApi } from "@/entities/search/api";
+import { getAutocompleteApi, getPopularSearchesApi } from "@/entities/search/api";
 import debounce from "lodash/debounce";
 
 export function SearchBar() {
@@ -13,7 +13,7 @@ export function SearchBar() {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [windowWidth, setWindowWidth] = useState(0);
-  const popularSearches = ["구현 중 입니다."];
+  const [popularSearches, setPopularSearches] = useState<string[]>([]);
   const [autocompleteSuggestions, setAutocompleteSuggestions] = useState<
     string[]
   >([]);
@@ -62,6 +62,21 @@ export function SearchBar() {
       addToRecentSearches(keyword);
     }
   }, [searchParams]);
+
+  // 인기 검색어를 가져오는 useEffect 추가
+useEffect(() => {
+  const fetchPopularSearches = async () => {
+    try {
+      const keywords = await getPopularSearchesApi();
+      setPopularSearches(keywords);
+    } catch (error) {
+      console.error('Failed to fetch popular searches:', error);
+      setPopularSearches([]); // 에러 시 빈 배열로 설정
+    }
+  };
+
+  fetchPopularSearches();
+}, []); // 컴포넌트 마운트 시 한 번만 실행
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
