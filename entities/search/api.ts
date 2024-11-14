@@ -57,7 +57,7 @@ export async function getAutocompleteApi({
   try {
     const tsid = getTsid().toString();
     
-    const response = await axios.get<AutoCompleteApiResponse>(`${API_URL}/autocomplete`, {
+    const response = await axios.get<AutoCompleteApiResponse>(`${API_URL}/search/autocomplete`, {
       params: {
         keyword,
         size,
@@ -90,7 +90,7 @@ export async function getPopularSearchesApi(): Promise<string[]> {
     try {
         const tsid = getTsid().toString();
         
-        const response = await axios.get<HottestSearchApiResponse>(`${API_URL}/popular-searches`, {
+        const response = await axios.get<HottestSearchApiResponse>(`${API_URL}/search/hottest`, {
             headers: {
                 'x-request-id': tsid,
                 'Cache-Control': 'no-cache',
