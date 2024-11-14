@@ -14,14 +14,14 @@ export default async function ProductDetailPage({
   }
 
   const product = await getProductDetailApi(searchParams.productId);
-  const { name, price, imageUrl } = product;
+  const { koreanName, englishName, brandKoreanName, brandEnglishName, price, imageUrl } = product;
 
   // 공통으로 사용될 메타 정보
   const siteName = "Muve";
   const siteURL = "https://muve.kr";
-  const title = `${name} - ${siteName}`;
-  const description = `${name} 상품 상세 페이지입니다.`;
-  const priceText = `${price.toLocaleString()}원`;
+  const title = `${englishName} - ${siteName}`;
+  const description = `${koreanName}`;
+  const priceText = `₩${price.toLocaleString()}`;
   const currentURL = `${siteURL}/product?productId=${searchParams.productId}`;
 
   return (
@@ -30,7 +30,7 @@ export default async function ProductDetailPage({
         {/* 기본 메타태그 */}
         <title>{title}</title>
         <meta name="description" content={description} />
-        <meta name="keywords" content={`${name}, Muve, 뮤브, 쇼핑`} />
+        <meta name="keywords" content={`${englishName}, ${koreanName}, Muve, 뮤브, 쇼핑`} />
         <link rel="canonical" href={currentURL} />
 
         {/* Open Graph 메타태그 (페이스북, 카카오톡 등) */}

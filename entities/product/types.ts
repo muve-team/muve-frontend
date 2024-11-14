@@ -65,7 +65,10 @@ export interface CategoryProducts {
 
 export interface ProductDetailResponse {
   productId: number;
-  name: string;
+  koreanName: string;
+  englishName: string;
+  brandKoreanName: string;
+  brandEnglishName: string;
   price: number;
   imageUrl: string;
   stockQuantity: number;

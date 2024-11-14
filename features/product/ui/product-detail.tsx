@@ -29,7 +29,7 @@ interface ProductDetailProps {
 }
 
 export const ProductDetail = ({ product }: ProductDetailProps) => {
-  const { productId, name, price, imageUrl } = product;
+  const { productId, koreanName, englishName, brandKoreanName, brandEnglishName, price, imageUrl } = product;
   const router = useRouter();
   const routeToBuy = () => {
     router.push(`/buy?productId=${productId}`);
@@ -51,7 +51,7 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
               <div className="relative aspect-square">
                 <Image
                   src={imageUrl}
-                  alt={name}
+                  alt={englishName}
                   fill
                   className="object-cover"
                   priority
@@ -99,10 +99,12 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
             {/* 상품 기본 정보 */}
             <motion.div {...fadeIn} transition={{ delay: 0.2 }}>
               <Card className="p-6">
-                <span className="text-xs">브랜드명</span>
-                <h1 className="text-xl mb-2">상품명왜 안나오지</h1>
+                <span className="text-xs">{brandKoreanName}</span>
+                <span className="text-xs">{brandEnglishName}</span>
+                <h1 className="text-xl mb-2">{koreanName}</h1>
+                <h1 className="text-xl mb-2">{englishName}</h1>
                 <p className="text-3xl font-bold text-primary mb-6">
-                  {price.toLocaleString()}원
+                  ₩{price.toLocaleString()}
                 </p>
                 <div className="mb-6">
                   <p className="text-xs mb-2">배송비</p>
