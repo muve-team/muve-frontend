@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     initialScale: 1,
     maximumScale: 1,
     minimumScale: 1,
-    userScalable: 'no',
+    userScalable: false
   },
   applicationName: 'Muve',
   generator: 'Next.js',
