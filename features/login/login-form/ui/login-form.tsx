@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Input } from '@/components/ui/merged/Input';
 import { Button } from '@/components/ui/merged/Button';
@@ -21,6 +21,8 @@ export function LoginForm() {
   const router = useRouter();
   const login = useLoginStore((state) => state.setLogin);
   const loginMutation = useLoginMutation();
+  const searchParams = useSearchParams();
+  const redirectPath = searchParams.get('redirect') || '/'; // 기본 경로를 '/'로 설정
   
   const {
     register,
@@ -37,7 +39,7 @@ export function LoginForm() {
       
       if (response.result === 'SUCCESS' && response.data) {
         login(response.data.token, response.data.user);
-        router.push('/');
+        router.push(redirectPath);
       } else {
         setError('root', {
           type: 'manual',

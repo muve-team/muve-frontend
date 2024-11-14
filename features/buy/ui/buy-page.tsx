@@ -38,6 +38,8 @@ import {
 } from "@/components/ui/merged/Dialog";
 import { motion } from "framer-motion";
 import { ProductDetailResponse } from "@/entities/product/types";
+import { useLogin } from "@/features/login/hooks/useLogin";
+import { useRouter } from "next/navigation";
 
 interface Address {
   postcode: string;
@@ -64,6 +66,9 @@ export const BuyPage = ({ product }: { product: ProductDetailResponse }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState("card");
   const [isPostcodeScriptLoaded, setIsPostcodeScriptLoaded] = useState(false);
+  const { isAuthenticated, logout } = useLogin();
+  const router = useRouter();
+
   const [address, setAddress] = useState<Address>({
     postcode: "",
     address1: "",
@@ -78,7 +83,17 @@ export const BuyPage = ({ product }: { product: ProductDetailResponse }) => {
     deliveryRequest: "",
   });
 
-  const { name, price, imageUrl } = product;
+  const { productId, name, price, imageUrl } = product;
+
+  // isAuthenticated 상태에 따른 로그인 페이지 이동 제어
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.replace(`/login?redirect=product?productId=${productId}`);
+    }
+  }, [isAuthenticated, router]);
+
+  // 로그인 상태가 확인되기 전에는 아무것도 렌더링하지 않도록 early return
+  if (!isAuthenticated) return null;
 
   useEffect(() => {
     const handleResize = () => {

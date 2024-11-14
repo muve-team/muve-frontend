@@ -90,7 +90,6 @@ export function SearchBar() {
     const fetchPopularSearches = async () => {
       try {
         const response = await getPopularSearchesApi();
-        console.log("API Response:", response); // 응답 확인용
         // response.data가 있는 경우에만 설정
         if (Array.isArray(response)) {
           setPopularSearches(response);
