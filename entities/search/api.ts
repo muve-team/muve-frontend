@@ -1,5 +1,5 @@
 // entities/product/api.ts
-import { SearchProductsApiResponse } from '@/features/search/model/types';
+import { AutoCompleteApiResponse, SearchProductsApiResponse } from '@/features/search/model/types';
 import axios from 'axios';
 import { getTsid } from 'tsid-ts';
 
@@ -44,4 +44,43 @@ export async function getSearchProductApi({
   }
 
   return data;
+}
+
+// 자동완성 API
+export async function getAutocompleteApi({
+  keyword,
+  size = 5,
+}: {
+  keyword: string;
+  size?: number;
+}): Promise<string[]> {
+  try {
+    const tsid = getTsid().toString();
+    
+    const response = await axios.get<AutoCompleteApiResponse>(`${API_URL}/autocomplete`, {
+      params: {
+        keyword,
+        size,
+      },
+      headers: {
+        'x-request-id': tsid,
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      },
+    });
+
+    // API 응답 실패 처리
+    if (response.data.result === 'FAIL') {
+      throw new Error(response.data.message || 'Failed to fetch autocomplete suggestions');
+    }
+
+    return response.data.data || [];
+  } catch (error) {
+    // axios 에러 처리
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || 'Failed to fetch autocomplete suggestions');
+    }
+    throw error;
+  }
 }
