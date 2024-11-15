@@ -31,9 +31,9 @@ export const useLoginMutation = () => {
       if (!data) {
         setError('root', {
           type: 'manual',
-          message: '로그인에 실패했습니다.',
+          message: response.message,
         });
-        throw new Error("로그인에 실패했습니다.");
+        throw new Error(response.message);
       }
 
       setLogin(data.token, data.user);

@@ -24,13 +24,16 @@ export async function createOrderApi(
     const tsid = getTsid().toString();
 
     const { data } = await axios.post(`${API_URL}/order`, props, {
-    withCredentials: true,
-      headers: { 'x-request-id': tsid },
+        withCredentials: true,
+        headers: { 
+            'x-request-id': tsid,
+            'Content-Type': 'application/json',
+         },
     });
-  
+
     if (!data.data) {
-      throw new Error('상품 상세 정보를 불러올 수 없습니다.');
+        throw new Error('주문 생성에 실패하였습니다.');
     }
-  
+
     return data.data;
 }
