@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useLogin } from "@/features/login/hooks/useLogin";
-import { getOrderCompleteApi } from "@/entities/order/complete/api";
 import OrderCompletePage from "@/features/order/complete/ui/order-complete-page";
 import { Footer } from "@/components/Footer";
 import { HeroSection } from "@/components/HeroSection";
 import { useRouter } from "next/navigation";
 import { OrderCompleteLoadingPage } from "@/features/order/complete/ui/order-complete-loading-page";
+import { getOrderCompleteApi } from "@/entities/order/complete/api";
 
 export default function OrderCompletePageWrapper({ searchParams }: any) {
   const router = useRouter();
