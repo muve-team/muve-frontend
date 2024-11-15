@@ -35,5 +35,5 @@ export async function createOrderApi(
         throw new Error('주문 생성에 실패하였습니다.');
     }
 
-    return data.data;
+    return data;
 }
