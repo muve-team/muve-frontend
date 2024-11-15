@@ -29,7 +29,7 @@ interface ProductDetailProps {
 }
 
 export const ProductDetail = ({ product }: ProductDetailProps) => {
-  const { productId, koreanName, englishName, brandKoreanName, brandEnglishName, price, imageUrl } = product;
+  const { productId, koreanName, englishName, brandKoreanName, brandEnglishName, price, imageUrl, stockQuantity } = product;
   const router = useRouter();
   const routeToBuy = () => {
     router.push(`/buy?productId=${productId}`);
@@ -109,6 +109,7 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
                 <div className="mb-6">
                   <p className="text-xs mb-2">배송비</p>
                   <p className="text-xs">수량선택</p>
+                  <p className="text-xs">{`남은 재고: ${stockQuantity}개`}</p>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <Button
