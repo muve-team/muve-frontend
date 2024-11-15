@@ -16,16 +16,18 @@ import {
 } from "@/components/ui/merged/DropdownMenu";
 import { useLogin } from "@/features/login/hooks/useLogin";
 import { MobileBottomNav } from "./MobileBottomNav";
+import { HeroSectionLoading } from "./HeroSectionLoading";
 
 export function HeroSection() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [logoLoaded, setLogoLoaded] = useState(false);
   const [showLogo, setShowLogo] = useState(true);
-  const { isAuthenticated, logout } = useLogin();
+  const { isAuthenticated, isValidating, logout } = useLogin();
   const router = useRouter();
   const pathname = usePathname();
   const [windowWidth, setWindowWidth] = useState(0);
   const [scrollY, setScrollY] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showSlide, setShowSlide] = useState(true);
@@ -37,22 +39,33 @@ export function HeroSection() {
 
   const [isSearchFixed, setIsSearchFixed] = useState(false);
 
-  // Initialize window width after mount
+  // Initialize window width and check images after mount
   useEffect(() => {
     setWindowWidth(window.innerWidth);
-    
+
+    // 이미지들 프리로드
+    Promise.all([
+      new Promise((resolve) => {
+        const logo = document.createElement("img");
+        logo.onload = resolve;
+        logo.src = "/images/muve_logo.png";
+      }),
+      ...slides.map(
+        (slide) =>
+          new Promise((resolve) => {
+            const img = document.createElement("img");
+            img.onload = resolve;
+            img.src = slide.image;
+          })
+      ),
+    ]).then(() => {
+      setLogoLoaded(true);
+      setLoading(false);
+    });
+
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Initialize logo loading after mount
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const img = new window.Image();
-      img.onload = () => setLogoLoaded(true);
-      img.src = "/images/muve_logo.png";
-    }
   }, []);
 
   useEffect(() => {
@@ -80,7 +93,7 @@ export function HeroSection() {
       if (typeof window !== "undefined") {
         const currentScrollY = window.scrollY;
         setScrollY(currentScrollY);
-        
+
         if (windowWidth < 768) {
           setShowLogo(false);
           return;
@@ -115,8 +128,13 @@ export function HeroSection() {
       e.preventDefault();
       return;
     }
-    router.push('/');
+    router.push("/");
   };
+
+  // If still loading or validating auth, show loading state
+  if (loading || isValidating) {
+    return <HeroSectionLoading />;
+  }
 
   return (
     <div
@@ -144,8 +162,8 @@ export function HeroSection() {
           <div
             onClick={handleLogoClick}
             className={`flex items-center z-99 ${
-              showLogo || windowWidth >= 768 
-                ? "opacity-100 cursor-pointer" 
+              showLogo || windowWidth >= 768
+                ? "opacity-100 cursor-pointer"
                 : "opacity-0 pointer-events-none"
             }`}
             style={{ zIndex: "99" }}
@@ -189,9 +207,9 @@ export function HeroSection() {
                   <DropdownMenuItem
                     onSelect={() => {
                       if (isAuthenticated) {
-                        router.push("/mypage")
+                        router.push("/mypage");
                       } else {
-                        router.push("/login")
+                        router.push("/login");
                       }
                     }}
                     className="cursor-pointer"

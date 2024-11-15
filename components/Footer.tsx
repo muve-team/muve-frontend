@@ -1,9 +1,20 @@
+"use client";
+
 import { Input } from "@/components/ui/merged/Input"
 import { Button } from "@/components/ui/merged/Button"
 import { Facebook, Twitter, Instagram, Youtube } from "lucide-react"
 import Link from 'next/link'
+import { FooterLoading } from "./FooterLoading";
 
-export function Footer() {
+interface FooterProps {
+  isLoading?: boolean;
+}
+
+export function Footer({ isLoading = false }: FooterProps) {
+  if (isLoading) {
+    return <FooterLoading />;
+  }
+
   return (
     <footer className="bg-gray-100 dark:bg-gray-900 pt-12 pb-8">
       <div className="container mx-auto px-4">
@@ -58,5 +69,5 @@ export function Footer() {
         <div className="h-36 md:h-20" />
       </div>
     </footer>
-  )
+  );
 }
