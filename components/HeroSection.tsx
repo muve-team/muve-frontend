@@ -187,7 +187,13 @@ export function HeroSection() {
                   style={{ marginTop: "13px" }}
                 >
                   <DropdownMenuItem
-                    onSelect={() => router.push("/mypage")}
+                    onSelect={() => {
+                      if (isAuthenticated) {
+                        router.push("/mypage")
+                      } else {
+                        router.push("/login")
+                      }
+                    }}
                     className="cursor-pointer"
                   >
                     <User className="mr-2 h-4 w-4" />

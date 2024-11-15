@@ -133,7 +133,7 @@ export function OrderForm({ product }: OrderFormProps) {
       const response = await createOrderApi(orderData);
 
       if (response.result === "SUCCESS") {
-        router.push(`/order/complete/${response.data}`);
+        router.push(`/order?orderId=${response.data}`);
       } else {
         setError("root", {
           type: "manual",
