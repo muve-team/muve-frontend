@@ -8,8 +8,7 @@ export const useLogin = () => {
   const router = useRouter();
   const { token, user, isAuthenticated, setLogin, clearLogin } = useLoginStore();
   const { mutateAsync: logoutMutation } = useLogout();
-
-  useValidateToken();
+  const { isLoading: isValidating, status } = useValidateToken();
 
   const handleLogout = async () => {
     try {
@@ -29,6 +28,8 @@ export const useLogin = () => {
     token,
     user,
     isAuthenticated,
+    isValidating,
+    status,
     logout: handleLogout,
   };
 };

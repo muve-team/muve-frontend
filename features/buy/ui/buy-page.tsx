@@ -1,21 +1,27 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLogin } from '@/features/login/hooks/useLogin';
 import { ProductDetailResponse } from '@/entities/product/types';
 import { motion } from 'framer-motion';
 import { OrderForm } from '@/features/order/order-form/ui/order-form';
+import { BuyPageLoadingPage } from './buy-page-loading';
 
 export const BuyPage = ({ product }: { product: ProductDetailResponse }) => {
-  const { isAuthenticated } = useLogin();
+  const { isAuthenticated, isValidating: isAuthLoading } = useLogin();
   const router = useRouter();
 
   // 로그인 상태 확인
   useEffect(() => {
+    if (isAuthLoading) {
+      return;
+    }
+
     if (!isAuthenticated) {
       router.replace(`/login?redirect=buy?productId=${product.productId}`);
     }
+
   }, [isAuthenticated, router, product.productId]);
 
   // 페이지 진입 애니메이션
@@ -25,8 +31,11 @@ export const BuyPage = ({ product }: { product: ProductDetailResponse }) => {
     transition: { duration: 0.4 }
   };
 
-  // 로그인 상태가 아니면 아무것도 렌더링하지 않음
-  if (!isAuthenticated) return null;
+  // 인증 확인 중이거나 데이터 로딩 중일 때
+  if (isAuthLoading) {
+    return <BuyPageLoadingPage />;
+  }
+
 
   return (
     <div className="min-h-screen bg-gray-50">

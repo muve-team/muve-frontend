@@ -51,7 +51,7 @@ export const useValidateToken = () => {
 
   return useQuery({
     queryKey: ['validateToken'],
-    queryFn: async () => {
+    queryFn: async (): Promise<boolean> => {
       try {
         const { data } = await loginApi.validateToken();
 
@@ -67,11 +67,21 @@ export const useValidateToken = () => {
           return false;
         }
       } catch (error) {
+        // 에러 타입 체크
+        if (error instanceof Error) {
+          console.error('Token validation error:', error.message);
+        } else {
+          console.error('Unknown error during token validation:', error);
+        }
         clearLogin();
         return false;
       }
     },
     retry: false,
+    // 추가 옵션들
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 };
 
