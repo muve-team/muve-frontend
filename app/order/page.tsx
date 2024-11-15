@@ -4,7 +4,7 @@ import { HeroSection } from "@/components/HeroSection";
 import Head from "next/head";
 import { BuyPage } from "@/features/buy/ui/buy-page";
 import OrderCompletePage from "@/features/order/complete/ui/order-complete-page";
-import { getOrderCompleteApi } from "@/entities/order/\bcomplete/api";
+import { getOrderCompleteApi } from "@/entities/order/complete/api";
 
 export default async function OrderComplete({
   searchParams,

@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/merged/Button';
 import { CheckCircle, Home, ShoppingBag } from 'lucide-react';
 import Image from 'next/image';
 import { CategoryProduct } from '@/entities/product/types';
-import { OrderCompleteProduct } from '@/entities/order/\bcomplete/types';
+import { OrderCompleteProduct } from '@/entities/order/complete/types';
 
 interface OrderCompletePageProps {
     orderId: number;
