@@ -20,7 +20,7 @@ export default async function CategoryPage({
 
   return (
     <>
-      <TopBanner />
+      {/* <TopBanner /> */}
       <HeroSection />
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-col gap-8">
