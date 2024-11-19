@@ -121,13 +121,13 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
                 <div className="grid grid-cols-2 gap-4">
                   <Button
                     size="lg"
-                    className="w-full"
+                    className="w-full" style={{borderRadius: "25px"}}
                     onClick={() => routeToBuy()}
                   >
                     <CreditCard className="mr-2 h-4 w-4" />
                     구매하기
                   </Button>
-                  <Button size="lg" variant="secondary" className="w-full">
+                  <Button size="lg" variant="secondary" className="w-full" style={{borderRadius: "25px"}}>
                     <ShoppingCart className="mr-2 h-4 w-4" />
                     장바구니
                   </Button>
