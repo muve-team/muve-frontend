@@ -156,6 +156,12 @@ html,
 body {
   height: 100%;
   margin: 0;
+  font-family: 'SpoqaHanSansNeo', sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
 }
 
 ul li {

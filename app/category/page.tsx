@@ -22,7 +22,7 @@ export default async function CategoryPage({
     <>
       {/* <TopBanner /> */}
       <HeroSection />
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main className="max-w-7xl mx-auto px-4 py-8 flex-grow">
         <div className="flex flex-col md:flex-col gap-8">
           <CategoryList />
           <CategoryProductList
