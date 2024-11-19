@@ -152,107 +152,108 @@ export function HeroSection() {
       }
     >
       <div
-        className="container-fluid mx-auto px-4 bg-white fixed top-0 left-0 right-0 z-50"
-        style={{ height: "4rem" }}
-      >
-        <nav
-          style={{ zIndex: "98" }}
-          className="flex items-center justify-between py-3 relative"
+  className="container-fluid mx-auto px-4 bg-white fixed top-0 left-0 right-0 z-50" style={{ height: "4rem",width: "100% !important" }}
+>
+  <nav
+    style={{ zIndex: "98" }}
+    className="flex items-center justify-between py-3 relative"
+  >
+    <div
+      onClick={handleLogoClick}
+      className={`flex items-center z-99 ${
+        showLogo || windowWidth >= 768
+          ? "opacity-100 cursor-pointer"
+          : "opacity-0 pointer-events-none"
+      }`}
+      style={{ zIndex: "99" }}
+    >
+      {logoLoaded && (
+        <div className="relative w-28 h-10">
+          <Image
+            src="/images/muve_logo.png"
+            alt="muve_logo"
+            fill
+            className="object-contain"
+          />
+        </div>
+      )}
+    </div>
+
+    <div
+      className={`flex flex-grow justify-center ${
+        isSearchFixed ? "fixed top-16" : ""
+      }`}
+    >
+      <SearchBar />
+    </div>
+
+    <div className="flex items-center space-x-4 hidden md:flex" style={{ zIndex: "50" }}>
+  {isAuthenticated ? (
+    <div className="flex items-center space-x-4">
+      {/* 장바구니 아이콘 */}
+      <Icon
+        icon="iconamoon:shopping-bag-thin"
+        className="h-7 w-7 text-black hover:text-primary cursor-pointer"
+        onClick={() => router.push("/cart")}
+      />
+
+      {/* 마이페이지 아이콘 및 화살표 버튼 */}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" size="icon" className="outline-none focus:ring-0 focus-visible:ring-0">
+            <Icon icon="lets-icons:user-alt-light" className="w-8 h-8" />
+            <Icon icon="bx:chevron-down" className="w-4 h-4 text-black" />
+          </Button>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent
+          align="end"
+          className="w-56 p-2 mt-2 bg-white"
+          style={{ marginTop: "13px" }}
         >
-          <div
-            onClick={handleLogoClick}
-            className={`flex items-center z-99 ${
-              showLogo || windowWidth >= 768
-                ? "opacity-100 cursor-pointer"
-                : "opacity-0 pointer-events-none"
-            }`}
-            style={{ zIndex: "99" }}
+          <DropdownMenuItem
+            onSelect={() => {
+              router.push("/mypage");
+            }}
+            className="cursor-pointer"
           >
-            {logoLoaded && (
-              <div className="relative w-28 h-10">
-                <Image
-                  src="/images/muve_logo.png"
-                  alt="muve_logo"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            )}
-          </div>
+            <User className="mr-2 h-4 w-4" />
+            <span>마이페이지</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onSelect={handleLogout}
+            className="cursor-pointer"
+          >
+            <LogOut className="mr-2 h-4 w-4" />
+            <span>로그아웃</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  ) : (
+    <div className="flex items-center space-x-4">
+      {/* 장바구니 아이콘 */}
+      <Icon
+        icon="iconamoon:shopping-bag-thin"
+        className="h-7 w-7 text-black hover:text-primary cursor-pointer"
+        onClick={() => router.push("/cart")}
+      />
 
-          <div
-            className={`flex flex-grow justify-center ${
-              isSearchFixed ? "fixed top-16" : ""
-            }`}
-          >
-            <SearchBar />
-          </div>
+      {/* 로그인 아이콘 */}
+      <a
+        className="cursor-pointer hidden md:inline-flex bg-white/10 text-black hover:text-primary"
+        style={{ zIndex: "99" }}
+        onClick={() => router.push("/login")}
+      >
+        <Icon icon="lets-icons:user-alt-light" className="w-7 h-7" />
+      </a>
+    </div>
+  )}
+</div>
 
-          <div
-            className="flex items-center space-x-4 hidden md:flex"
-            style={{ zIndex: "50" }}
-          >
-            {isAuthenticated ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-primary">
-                    <User className="h-5 w-5" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="end"
-                  className="w-56 p-2 mt-2 bg-white"
-                  style={{ marginTop: "13px" }}
-                >
-                  <DropdownMenuItem
-                    onSelect={() => {
-                      if (isAuthenticated) {
-                        router.push("/mypage");
-                      } else {
-                        router.push("/login");
-                      }
-                    }}
-                    className="cursor-pointer"
-                  >
-                    <User className="mr-2 h-4 w-4" />
-                    <span>마이페이지</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onSelect={() => router.push("/cart")}
-                    className="cursor-pointer"
-                  >
-                    <ShoppingCart className="mr-2 h-4 w-4" />
-                    <span>장바구니</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onSelect={handleLogout}
-                    className="cursor-pointer"
-                  >
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>로그아웃</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <Icon
-                  icon="iconamoon:shopping-bag-thin"
-                  className="h-6 w-6 text-black hover:text-primary cursor-pointer"
-                  onClick={() => router.push("/cart")}
-                />
-                <a
-                  className="cursor-pointer hidden md:inline-flex bg-white/10 text-black hover:text-primary"
-                  style={{ zIndex: "99" }}
-                  onClick={() => router.push("/login")}
-                >
-                  <Icon icon="lets-icons:user-alt-light" className="w-6 h-6" />
-                  <span className="text-xs self-center ml-1"> 로그인</span>
-                </a>
-              </div>
-            )}
-          </div>
-        </nav>
-      </div>
+  </nav>
+</div>
+
 
       <MobileBottomNav />
     </div>

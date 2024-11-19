@@ -192,8 +192,8 @@ ul li {
 }
 
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 0px;
+  height: 0px;
   background: #f0f0f0;
 }
 
