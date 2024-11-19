@@ -106,8 +106,8 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
             {/* 상품 기본 정보 */}
             <motion.div {...fadeIn} transition={{ delay: 0.2 }}>
               <Card className="p-6">
-                <span className="text-sm">{brandKoreanName}</span>
-                <span className="text-sm"> {brandEnglishName}</span>
+                <span className="text-sm text-gray-500">{brandKoreanName}</span>
+                <span className="text-sm text-gray-500"> {brandEnglishName}</span>
                 <h1 className="text-lg mt-2">{koreanName}</h1>
                 <h1 className="text-2xl mb-2 font-bold">{englishName}</h1>
                 <p className="text-3xl font-bold text-primary mb-6">

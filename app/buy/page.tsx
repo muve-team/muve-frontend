@@ -21,7 +21,6 @@ export default async function ProductDetailPage({
       {/* <main className="flex-1 px-4 py-8"> */}
           <BuyPage product={product} />
       {/* </main> */}
-      <Footer />
     </>
   );
 }

@@ -149,11 +149,11 @@ export function OrderForm({ product }: OrderFormProps) {
   };
 
   return (
-    <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+    <form className="space-y-6 flex-grow" onSubmit={handleSubmit(onSubmit)}>
       {/* 주문 상품 정보 */}
       <Card>
         <CardContent className="p-6">
-          <div className="flex items-center gap-8">
+          <div className="flex flex-col md:flex-row items-center md:gap-8">
             <div
               style={{
                 position: "relative",
@@ -163,6 +163,7 @@ export function OrderForm({ product }: OrderFormProps) {
                 borderRadius: "0.5rem",
                 overflow: "hidden",
               }}
+              className="mb-4 md:mb-0"
             >
               <Image
                 src={product.imageUrl}
@@ -173,18 +174,20 @@ export function OrderForm({ product }: OrderFormProps) {
                 sizes="160px"
               />
             </div>
+
             <div className="flex-1">
               <span className="text-sm text-gray-500">주문 상품</span>
               <h3 className="text-xl font-semibold mt-1 mb-2">
                 {product.englishName}
               </h3>
-              <p className="text-2xl font-bold text-blue-600">
+              <p className="text-2xl font-bold text-primary">
                 {product.price.toLocaleString()}원
               </p>
             </div>
           </div>
         </CardContent>
       </Card>
+
       {/* 주문자 정보 */}
       <Card>
         <CardHeader className="p-6 border-b bg-gray-50">
@@ -298,10 +301,10 @@ export function OrderForm({ product }: OrderFormProps) {
               <Button
                 type="button"
                 onClick={() => setIsAddressDialogOpen(true)}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 btn bg-gray"
               >
                 <Search className="w-4 h-4" />
-                주소찾기
+                찾기
               </Button>
             </div>
             {errors.postcode && (
@@ -355,7 +358,7 @@ export function OrderForm({ product }: OrderFormProps) {
         <CardHeader className="p-6 border-b bg-gray-50">
           <CardTitle>결제 수단</CardTitle>
         </CardHeader>
-        <CardContent className="p-6">
+        <CardContent className="p-6 sm:block" style={{paddingBottom: '10rem'}}>
           <RadioGroup
             defaultValue="card"
             onValueChange={(value: PaymentMethodType) =>
@@ -424,7 +427,8 @@ export function OrderForm({ product }: OrderFormProps) {
           </div>
           <Button
             type="submit"
-            className="w-36 h-12 bg-blue-600 hover:bg-blue-700 text-black font-semibold"
+            className="bg-primary px-8"
+            style={{borderRadius: '25px'}}
           >
             결제하기
           </Button>

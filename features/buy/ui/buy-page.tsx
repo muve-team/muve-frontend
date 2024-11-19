@@ -39,13 +39,13 @@ export const BuyPage = ({ product }: { product: ProductDetailResponse }) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="h-20 md:h-20" />
+      <div className="h-20 md:h-20 flex-grow" />
 
       {/* 헤더 */}
       <div className="bg-white border-b sticky top-16 md:top-24 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.h1 
-            className="text-3xl font-bold text-black py-8"
+            className="text-3xl font-bold text-black py-8 px-6"
             {...fadeIn}
           >
             주문/결제
