@@ -106,16 +106,16 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
             {/* 상품 기본 정보 */}
             <motion.div {...fadeIn} transition={{ delay: 0.2 }}>
               <Card className="p-6">
-                <span className="text-xs">{brandKoreanName}</span>
-                <span className="text-xs"> {brandEnglishName}</span>
-                <h1 className="text-xl mt-2">{koreanName}</h1>
+                <span className="text-sm">{brandKoreanName}</span>
+                <span className="text-sm"> {brandEnglishName}</span>
+                <h1 className="text-lg mt-2">{koreanName}</h1>
                 <h1 className="text-2xl mb-2 font-bold">{englishName}</h1>
                 <p className="text-3xl font-bold text-primary mb-6">
                   ₩{price.toLocaleString()}
                 </p>
                 <div className="mb-6">
-                  <p className="text-xs mb-2">배송비 : 3000 원</p>
-                  <p className="text-xs">{`남은 재고 : ${stockQuantity} 개`}</p>
+                  <p className="text-sm mb-2">배송비 : 3000 원</p>
+                  <p className="text-sm">{`남은 재고 : ${stockQuantity} 개`}</p>
                 </div>
                 <hr className="mt-3 mb-6" />
                 <div className="grid grid-cols-2 gap-4">
@@ -140,9 +140,9 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
               <Card>
                 <Tabs defaultValue="detail" className="w-full">
                   <TabsList className="sticky top-0 z-10 bg-background/95 backdrop-blur flex w-full grid-cols-3 justify-start px-4">
-                    <TabsTrigger value="detail" onClick={() => handleTabClick("detail")} className={`text-lg ${activeTab === "detail" ? "text-primary" : ""}`}>상품정보</TabsTrigger>
-                    <TabsTrigger value="shipping"  onClick={() => handleTabClick("shipping")} className={`text-lg ${activeTab === "shipping" ? "text-primary" : ""}`} >배송안내</TabsTrigger>
-                    <TabsTrigger value="refund" onClick={() => handleTabClick("refund")} className={`text-lg ${activeTab === "refund" ? "text-primary" : ""}`} >교환/반품</TabsTrigger>
+                    <TabsTrigger value="detail" onClick={() => handleTabClick("detail")} className={`text-md ${activeTab === "detail" ? "text-primary" : ""}`}>상품정보</TabsTrigger>
+                    <TabsTrigger value="shipping"  onClick={() => handleTabClick("shipping")} className={`text-md ${activeTab === "shipping" ? "text-primary" : ""}`} >배송안내</TabsTrigger>
+                    <TabsTrigger value="refund" onClick={() => handleTabClick("refund")} className={`text-md ${activeTab === "refund" ? "text-primary" : ""}`} >교환/반품</TabsTrigger>
                   </TabsList>
                   {/* 탭 콘텐츠 */}
                   <TabsContent value="detail">
