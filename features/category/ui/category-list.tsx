@@ -84,9 +84,9 @@ export const CategoryList = ({ compact = false }: CategoryListProps) => {
                 onMouseEnter={() => setHoveredCategory(category.categoryId)}
                 onMouseLeave={() => setHoveredCategory(null)}
               >
-                {category.icon ? (
+                {category.imageUrl ? (
                   <Icon
-                    icon={category.icon}
+                    icon={category.imageUrl}
                     style={{ fontSize: "2rem" }}
                     className={`transition duration-200 ${
                       hoveredCategoryId === category.categoryId ? "text-white" : "text-gray-600"
