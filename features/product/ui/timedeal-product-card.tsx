@@ -19,7 +19,7 @@ export const TimeDealProductCard = ({ product, index }: TimeDealProductCardProps
 
   const handlePurchase = (e: React.MouseEvent) => {
     e.preventDefault();
-    router.push(`/purchase/${productId}`);
+    router.replace(`/purchase/${productId}`);
   };
 
   const handleAddToCart = (e: React.MouseEvent) => {

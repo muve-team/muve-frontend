@@ -9,20 +9,20 @@ import { OrderForm } from '@/features/order/order-form/ui/order-form';
 import { BuyPageLoadingPage } from './buy-page-loading';
 
 export const BuyPage = ({ product }: { product: ProductDetailResponse }) => {
-  const { isAuthenticated, isValidating: isAuthLoading } = useLogin();
+  // const { isAuthenticated, isValidating: isAuthLoading } = useLogin();
   const router = useRouter();
 
   // 로그인 상태 확인
-  useEffect(() => {
-    if (isAuthLoading) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (isAuthLoading) {
+  //     return;
+  //   }
 
-    if (!isAuthenticated) {
-      router.replace(`/login?redirect=buy?productId=${product.productId}`);
-    }
+  //   if (!isAuthenticated) {
+  //     router.replace(`/login?redirect=buy?productId=${product.productId}`);
+  //   }
 
-  }, [isAuthenticated, router, product.productId]);
+  // }, [isAuthenticated, router, product.productId]);
 
   // 페이지 진입 애니메이션
   const fadeIn = {
@@ -32,7 +32,11 @@ export const BuyPage = ({ product }: { product: ProductDetailResponse }) => {
   };
 
   // 인증 확인 중이거나 데이터 로딩 중일 때
-  if (isAuthLoading) {
+  // if (isAuthLoading) {
+  //   return <BuyPageLoadingPage />;
+  // }
+
+  if (!product) {
     return <BuyPageLoadingPage />;
   }
 
